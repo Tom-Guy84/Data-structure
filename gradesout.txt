@@ -1,0 +1,23 @@
+
+<!-- saved from url=(0124)https://grades.cs.technion.ac.il/grades.cgi?dbfbffghbf36506720b1ded5925adc+2+234218+Winter2021-2022+hw/WCFiles/test.out+6600 -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"></head><body>Init done.
+AddGroup: SUCCESS
+AddPlayer: SUCCESS
+AddPlayer: FAILURE
+AddGroup: SUCCESS
+AddGroup: FAILURE
+AddPlayer: SUCCESS
+GroupIndex	||	Player
+1	||	1
+2	||	2
+and there are no more players!
+ReplaceGroup: SUCCESS
+Highest level player is: 2
+IncreaseLevel: SUCCESS
+Highest level player is: 1
+RemovePlayer: SUCCESS
+Rank	||	Player
+1	||	1
+and there are no more players!
+Quit done.
+</body></html>

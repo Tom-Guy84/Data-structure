@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/tomgu/source/semester3/dast/wet1/library1.h
+
+C:/Users/tomgu/source/semester3/dast/wet1/main1.cpp
+assert.h
+-
+stdio.h
+-
+stdlib.h
+-
+string.h
+-
+library1.h
+C:/Users/tomgu/source/semester3/dast/wet1/library1.h
+iostream
+-
+
