@@ -16,7 +16,7 @@ namespace wet1_dast {
 
         ~Player() = default;
 
-        Player(const Player &p) = default;
+        Player(const Player &p) = delete;
 
         void setLevel(int level_to_set);// p->level_to_set=level_to_set.
         int getLevel() const;
@@ -27,7 +27,7 @@ namespace wet1_dast {
 
         friend bool operator==(const Player &p, int p_id);
 
-        bool operator<=(const Player &p1);
+        bool operator<=(const Player &p1) const;
 
         friend ostream &operator<<(ostream &os, const Player &p);
 

@@ -1,10 +1,6 @@
-cmake_minimum_required(VERSION 3.19)
-project(wet1)
+cmake_minimum_required(VERSION 3.16)
+project(DaSt)
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 11)
 
-include_directories(.)
-
-add_executable(wet1
-        library1.h
-        main1.cpp)
+add_executable(DaSt library1.h AVLTree.h Player.cpp Player.h main.cpp Group.h PlayerManager.h Group.cpp)
