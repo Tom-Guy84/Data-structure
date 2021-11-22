@@ -29,7 +29,7 @@ namespace wet1_dast {
         return (p.getId() == p_id);
     }
 
-    bool Player::operator<=(const Player &p1) { //this->level<p1.level ||
+    bool Player::operator<=(const Player &p1) const { //this->level<p1.level ||
         return (this->level <= p1.getLevel()) || (this->level == p1.getLevel() && this->getId() >= p1.getId());
     }
 

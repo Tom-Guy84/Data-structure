@@ -9,36 +9,36 @@
 namespace wet1_dast {
     class Group {
     private:
-        Player *Highest_Player = nullptr;
+        Player *Highest_Player ;
         int Group_Id;
-        AVLTree<Player *> players;
-        int size = 0;
+        AVLTree<Player*> players;
+        int size ;
 
 
     public:
-        explicit Group(int Group_id)=default;
+         explicit Group(int Group_id);
 
         Player* Get_Highest_Player();
 
         ~Group() = default;
 
-        Group(const Group &group) = delete;//todo
-        void operator=(const Group &other) = delete;//todo
-        bool operator==(const Group &group);
+        Group(const Group &group) =delete;//todo
+        Group& operator=(const Group &other) =delete;//todo
+        bool operator==(const Group &group) const;
 
-        bool operator==(int Other_Group_id);
+        bool operator==(int Other_Group_id) const;
 
-        bool operator<=(const Group &group);//todo
+        bool operator<=(const Group &group) const;//todo
         //group1<= group2 <=> GroupId1<=groupid2;
 
-        bool operator<=(int Other_Group_id);//todo
+        bool operator<=(int Other_Group_id) const;//todo
 
-        int GetSize();//todo
+        int GetSize() const;//todo
 
         void CombineGroups(const Group &g);//maybe not const but & for sure todo
         void AddPlayer(int id, int Level);//may be subjected to changes todo
         void RemovePlayer(int id);
-    }
+    };
 
 
 }
