@@ -137,7 +137,7 @@ AVLTree<T>::Node* Tree_Creator_AUX(int* size, int height)
     if(Root->left_son!= nullptr)
     Root->left_son->father=Root;
     if(Root->right_son!= nullptr)
-    vertex->right_son->father=Root;
+    Root->right_son->father=Root;
     return Root;
 }
 
