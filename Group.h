@@ -25,7 +25,7 @@ namespace wet1_dast {
         ~Group() = default;
 
         Group(const Group &group) =delete;//todo
-        Group& operator=(const Group &other) =delete;//todo
+        Group& operator=(const Group &other) ;//todo
         bool operator==(const Group &group) const;
 
         bool operator==(int Other_Group_id) const;

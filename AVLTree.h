@@ -13,7 +13,6 @@ namespace wet1_dast {
     private:
         class Node {
             friend class AVLTree<T>;
-
             T *value;
             Node *father;
             Node *right_son;
@@ -21,11 +20,13 @@ namespace wet1_dast {
             int height;
             Node *root;
 
-            explicit Node(T *val= nullptr, Node *father=nullptr, Node *right_son=nullptr, Node *left_son=nullptr , Node *r=nullptr) : value(val),
+             Node(T *val= nullptr, Node *father=nullptr, Node *right_son=nullptr, Node *left_son=nullptr , Node *r=nullptr) : value(val),
                                                                                    father(father),
                                                                                    right_son(right_son),
                                                                                    left_son(left_son),
-                                                                                   root(r), height(0) {}
+                                                                                   root(r), height(0) {
+
+            }
 
 
             ~Node() {
@@ -116,10 +117,10 @@ namespace wet1_dast {
             }
         }
 
-        AVLTree &operator=(const AVLTree<T> &other) = delete;
+        AVLTree &operator=(const AVLTree<T> &other)=delete;
 
         template<class S>
-        T &find(const S &val);
+        T* find(const S &val);
 
         void insert(const T &val);
 
@@ -350,22 +351,22 @@ namespace wet1_dast {
 
     template<class T>
     template<class S>
-    T &AVLTree<T>::find(const S &val) {
-        Node **loc, father_of_loc;
-        return find_in_tree(root, val, &loc, &father_of_loc);
+    T* AVLTree<T>::find(const S &val) {
+        Node **loc, **father_of_loc;
+        return find_in_tree(root, val, *loc, *father_of_loc);
     }
 
     template<class T>
     void AVLTree<T>::insert(const T &val) {
-        Node **loc, father_of_loc;
+        Node **loc, **father_of_loc;
         if (root == nullptr) {
-            Node new_node(val);
+             Node new_node(val,nullptr,nullptr,nullptr,nullptr);
             *root = new_node;
             root->root=root;
             size++;
             return;
         }
-        if (find_in_tree(root, val, &loc, &father_of_loc)) {
+        if (find_in_tree(root, val, *loc, *father_of_loc)) {
             throw; //TODO
         }
         Node new_node(val, *father_of_loc);
@@ -374,8 +375,8 @@ namespace wet1_dast {
         } else {
             *father_of_loc->right_son = &new_node;
         }
-        correctHeight(new_node->father, new_node);
-        check_for_rolls(new_node);
+        correctHeight(&(new_node->father), &new_node);
+        checkForRolls(&new_node);
         size++;
     }
 

@@ -41,15 +41,16 @@ namespace wet1_dast {
     //with add or Remove,essentially it goes like that
     //in add,WE ASSUME the player doesn't exist in the game!! (we'll have to check it later ofc in playermanager.)
     //in remove we assume the player IS IN this game.
-    void Group::AddPlayer(int id, int Level) {
-
+    void Group::AddPlayer(int id, int level) {
+        Player* p=new Player(id,
+                 level); //remember it should throw here in case of not good parameters, we want to catch it in PlayerManager.
+        players.insert(p);
     }
-
     void Group::RemovePlayer(int id) {
 
     }
 
-     Group::Group(int Group_id){
+     Group::Group(int Group_id):players(){
        if(Group_id<=0)
        {
          throw;
@@ -57,10 +58,6 @@ namespace wet1_dast {
        this->Group_Id=Group_id;
        size=0;
        this->Highest_Player=nullptr;
-       this->players
-
     }
-
-
 }
 
