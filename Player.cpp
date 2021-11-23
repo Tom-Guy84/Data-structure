@@ -29,7 +29,7 @@ namespace wet1_dast {
         return (p.getId() == p_id);
     }
 
-    bool Player::operator<=(const Player &p1) { //this->level<p1.level ||
+    bool Player::operator<=(const Player &p1) const { //this->level<p1.level ||
         return (this->level <= p1.getLevel()) || (this->level == p1.getLevel() && this->getId() >= p1.getId());
     }
 
@@ -38,7 +38,7 @@ namespace wet1_dast {
         return this->player_id;
     }
 
-    ostream &operator<<(ostream &os, const Player &p) {
+    std::ostream &operator<<(std::ostream &os, const Player &p) {
         os << "Player id: " << p.player_id<<std::endl;
         os << "Player level:" << p.level<<std::endl;
         return os;
