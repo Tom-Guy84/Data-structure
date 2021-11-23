@@ -1,11 +1,12 @@
 //
 // Created by proje on 20/11/2021.
 //
-#include "Player.h"
-#include "AVLTree.h"
 
 #ifndef DAST_GROUP_H
 #define DAST_GROUP_H
+
+#include "Player.h"
+#include "AVLTree.h"
 
 
 namespace wet1_dast {
@@ -13,12 +14,13 @@ namespace wet1_dast {
     private:
         Player *Highest_Player ;
         int Group_Id;
-        AVLTree<Player*> players;
+        AVLTree<Player> players;
         int size ;
 
 
     public:
          explicit Group(int Group_id);
+         Group();
 
         Player* Get_Highest_Player();
 

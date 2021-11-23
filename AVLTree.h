@@ -1,6 +1,8 @@
 //
 // Created by Tom Guy on 11/18/2021.
 //
+#ifndef AVLTREE_H_
+#define AVLTREE_H_
 #include <cmath>
 
 namespace wet1_dast {
@@ -20,13 +22,9 @@ namespace wet1_dast {
             int height;
             Node *root;
 
-             Node(T *val= nullptr, Node *father=nullptr, Node *right_son=nullptr, Node *left_son=nullptr , Node *r=nullptr) : value(val),
-                                                                                   father(father),
-                                                                                   right_son(right_son),
-                                                                                   left_son(left_son),
-                                                                                   root(r), height(0) {
-
-            }
+            explicit Node(T* val= nullptr, Node* father = nullptr) : value(val), father(father), right_son(nullptr),
+                                                                           left_son(nullptr),
+                                                                           root(nullptr), height(0) {}
 
 
             ~Node() {
@@ -45,8 +43,7 @@ namespace wet1_dast {
             bool operator<=(Node *other) {
                 return (*value <= *(other->value));
             }
-
-            friend Node *Tree_Creator_AUX( int *size, int height);
+            void Tree_Creator_AUX(int *size, int height);
         };
 
         Node *root; //belongs to AVLTree
@@ -101,14 +98,10 @@ namespace wet1_dast {
 
             void inorderIn(T *values, int index, Node *ver);
 
-            friend AVLTree<T> &createEmptyTree(int size); //
-
+            void createEmptyTree(int size);
 
     public:
-        AVLTree() {
-            size = 0;
-            root = nullptr; //todo
-        }
+        AVLTree(): size(0) {}
 
         AVLTree(const AVLTree<T> &other) = delete; //TODO
         ~AVLTree() {
@@ -122,7 +115,7 @@ namespace wet1_dast {
         template<class S>
         T* find(const S &val);
 
-        void insert(const T &val);
+        void insert(T& val);
 
         void remove(const T &val);
 
@@ -130,26 +123,64 @@ namespace wet1_dast {
 
         void combineTrees(const AVLTree<T> &to_delete);
 
+    class exceptions: public std::exception
+    {
+    };
+    class ItemExist: public exceptions
+    {
+    public:
+        const char* what() const noexcept override
+        {
+            return "Item already in the tree";
+        }
+    };
+    class ItemNotExist: public exceptions
+    {
+    public:
+        const char* what() const noexcept override
+        {
+            return "There is no such an item in the tree";
+        }
     };
 
-    template<class T>
-    typename AVLTree<T>::Node * Tree_Creator_AUX(int *size, int height) {
-        if (*size == -1 || height == -1) {
-            return nullptr;
+    class ItemInBothTrees: public exceptions
+    {
+    public:
+        const char * what() const noexcept override
+        {
+            return "The same item is in both trees";
         }
-        auto *Root = new typename AVLTree<T>::Node();
-        Root->father = nullptr;
+    };
+
+    };
+
+    template <class T>
+    void AVLTree<T>::Node::Tree_Creator_AUX(int *size, int height)
+    {
+        if (*size == -1 || height == -1) {
+            return;
+        }
+        father = nullptr;
+        value = nullptr;
         (*size)--;
-        Root->left_son = Tree_Creator_AUX<T>(size, height - 1);
-        Root->right_son = Tree_Creator_AUX<T>(size, height - 1);
-        if (Root->left_son != nullptr)
-            Root->left_son->father = Root;
-        if (Root->right_son != nullptr)
-            Root->right_son->father = Root;
-        return Root;
+        left_son->AVLTree<T>::Node::Tree_Creator_AUX(size, height - 1);
+        right_son->AVLTree<T>::Node::Tree_Creator_AUX(size, height - 1);
+        if (left_son != nullptr)
+            left_son->father = this;
+        if (right_son != nullptr)
+            right_son->father = this;
+        return;
     }
+
     template<class T>
-    static AVLTree<T> &createEmptyTree(int size);
+    void  AVLTree<T>::createEmptyTree(int size)
+    {
+        //calculate the height based on size.
+        //create the tree, for each conjunction , alloc node, perfferably in recursive way.
+        int height = (int) ceil(log2(size + 1)) - 1;
+        root->Tree_Creator_AUX(&size, height);
+        return;
+    }
 
     template<class T>
     int AVLTree<T>::getHeight(Node *ver) {
@@ -357,25 +388,25 @@ namespace wet1_dast {
     }
 
     template<class T>
-    void AVLTree<T>::insert(const T &val) {
+    void AVLTree<T>::insert(T& val) {
         Node **loc, **father_of_loc;
         if (root == nullptr) {
-             Node new_node(val,nullptr,nullptr,nullptr,nullptr);
+             Node new_node(&val);
             *root = new_node;
             root->root=root;
             size++;
             return;
         }
         if (find_in_tree(root, val, *loc, *father_of_loc)) {
-            throw; //TODO
+            throw ItemExist();
         }
-        Node new_node(val, *father_of_loc);
-        if (val <= *father_of_loc->value) {
-            *father_of_loc->left_son = &new_node;
+        Node new_node(&val, *father_of_loc);
+        if (val <= *((*father_of_loc)->value)) {
+            (*father_of_loc)->left_son = &new_node;
         } else {
-            *father_of_loc->right_son = &new_node;
+            (*father_of_loc)->right_son = &new_node;
         }
-        correctHeight(&(new_node->father), &new_node);
+        correctHeight(new_node.father, &new_node);
         checkForRolls(&new_node);
         size++;
     }
@@ -384,9 +415,8 @@ namespace wet1_dast {
     void AVLTree<T>::remove(const T &val) {
         Node** loc, **father_of_loc;
         Node* pointer;
-        T value;
         if (!find_in_tree(root, val, *loc, *father_of_loc)) {
-            throw; //TODO
+            throw ItemNotExist();
         }
         size--;
         if (*loc == root) {
@@ -433,7 +463,7 @@ namespace wet1_dast {
         for (k = 0; k < this->size + to_delete.size; k++) {
             if ( this->size-1 == i|| to_delete.size-1 ==j ) break;
             if (array_to_delete[j] == array_to_insert[i]) {
-                throw; //TODO
+                throw ItemInBothTrees();
             }
             if (array_to_insert[i] <= array_to_delete[j]) {
                 all[k] = array_to_insert[i++];
@@ -454,23 +484,15 @@ namespace wet1_dast {
         }
         delete array_to_delete;
         delete array_to_insert;
-        AVLTree<T> new_tree = createEmptyTree<T>(to_delete.size + this->size); //todo
+        AVLTree<T> new_tree;
+        new_tree.createEmptyTree(to_delete.size + this->size);
         new_tree.inorderIn(all, 0, new_tree.root);
         delete to_delete;
         delete this;
         *this = new_tree;
     }
 
-    template<class T>
-    AVLTree<T>&createEmptyTree(int size) {
-        AVLTree<T> tree;
-        //calculate the height based on size.
-        //create the tree, for each conjuction , alloc node, perfferably in recursive way.
-        int height = (int)ceil(log2(size + 1)) - 1;
-        tree.root = Tree_Creator_AUX<T>(&size, height);
-        return tree;
 
-    }
 
     template<class T>
     void AVLTree<T>::inorderIn(T *values, int index, Node *ver) {
@@ -481,3 +503,5 @@ namespace wet1_dast {
         inorderIn(values, index, ver->right_son);
     }
 }
+
+#endif // AVLTREE_H_

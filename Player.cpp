@@ -8,7 +8,7 @@ namespace wet1_dast {
             this->player_id = player_id;
             this->level = level;
         } else {
-            throw std::runtime_error("illegal values");
+            throw InvalidIdentifiers();
         }
     }
 
@@ -42,6 +42,16 @@ namespace wet1_dast {
         os << "Player id: " << p.player_id<<std::endl;
         os << "Player level:" << p.level<<std::endl;
         return os;
+    }
+
+    bool Player::operator<=(int PlayerID)
+    {
+        return player_id <= PlayerID;
+    }
+
+    bool Player::operator==(int PlayerId)
+    {
+        return player_id == PlayerId;
     }
 
 }

@@ -18,9 +18,19 @@ namespace wet1_dast {
         int getLevel() const;
         int getId() const;
         bool operator==(const Player &p1) const;
+        bool operator==(int PlayerId);
         friend bool operator==(const Player &p, int p_id);
         bool operator<=(const Player &p1) const;
+        bool operator<=(int PlayerID);
         friend std::ostream &operator<<(std::ostream &os, const Player &p);
+    class InvalidIdentifiers: public std::exception
+    {
+    public:
+        const char* what() const noexcept override
+        {
+            return "Invalid input as level or id";
+        }
+    };
     };
 
 
