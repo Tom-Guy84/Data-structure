@@ -7,14 +7,12 @@
 #include <iostream>
 #include "Group.h"
 #include "AVLTree.h"
+#include <stdbool.h>
 namespace wet1_dast
 {
 
     class PlayerManager
     {
-        AVLTree<Group> Groups;
-        Group PlayersManager;
-
         class Node
         {
             friend class PlayerManager;
@@ -22,20 +20,49 @@ namespace wet1_dast
             Node *prev;
             Node *next_non_empty;
             Node *prev_non_empty;
-            Group *group;
+            Group* group;
+            Node() = default;
+        public:
+            explicit Node(Group* group): group(group), next(nullptr), prev(nullptr), next_non_empty(nullptr),
+                                                                                     prev_non_empty(nullptr){}
+            ~Node() = default;
+            bool operator==(const Node& other)
+            {
+                return *group == *(other.group);
+            }
+            bool operator<=(const Node& other)
+            {
+                return *group<=*(other.group);
+            }
+            bool operator>=(const Node& other)
+            {
+                return *group>=*(other.group);
+            }
         };
-        PlayerManager() = default;
-
-
+        PlayerManager()
+        {
+            non_empty_groups->next = tail;
+            non_empty_groups->prev = nullptr;
+            non_empty_groups->next_non_empty = tail;
+            non_empty_groups->prev_non_empty = nullptr;
+            tail->next = nullptr;
+            tail->prev = non_empty_groups;
+            tail->next_non_empty = nullptr;
+            tail->prev_non_empty = non_empty_groups;
+        };
         Node *non_empty_groups;
+        Node* tail;
+        AVLTree<Node> Groups;
+        Group PlayersManager;
 
+        void insertInLocation(Node* first, Node* second);
     public:
         typedef enum
         {
             ALLOCATION_ERROR, INVALID_INPUT, FAILURE, SUCCESS
         } StatusType;
 
-        PlayerManager& init();
+        PlayerManager* init();
 
         StatusType AddGroup(int GroupId);
 

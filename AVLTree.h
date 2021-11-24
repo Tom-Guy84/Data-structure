@@ -20,18 +20,16 @@ namespace wet1_dast {
             Node *right_son;
             Node *left_son;
             int height;
-            Node *root;
 
             explicit Node(T* val= nullptr, Node* father = nullptr) : value(val), father(father), right_son(nullptr),
                                                                            left_son(nullptr),
-                                                                           root(nullptr), height(0) {}
+                                                                           height(0) {}
 
 
             ~Node() {
                 father = nullptr;
                 right_son = nullptr;
                 left_son = nullptr;
-                root = nullptr;
                 delete value;
                 delete this;
             }
@@ -57,13 +55,13 @@ namespace wet1_dast {
                     return (ver->value);
                 }
 
-                if ((!ver->left_son && val <= *(ver->value)) || (!ver->right_son && *(ver->value) <= val)) {
+                if ((!ver->left_son && *(ver->value) >= val) || (!ver->right_son && *(ver->value) <= val)) {
                     loc = nullptr;
                     father_of_loc = ver;
                     return nullptr;
                 }
 
-                if (val <= *(ver->value)) {
+                if ( *(ver->value) <= val) {
                     return find_in_tree(ver->left_son, val,loc,father_of_loc);
                 } else {
                     return find_in_tree(ver->right_son, val,loc,father_of_loc);
@@ -393,7 +391,6 @@ namespace wet1_dast {
         if (root == nullptr) {
              Node new_node(&val);
             *root = new_node;
-            root->root=root;
             size++;
             return;
         }

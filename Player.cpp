@@ -33,6 +33,9 @@ namespace wet1_dast {
         return (this->level <= p1.getLevel()) || (this->level == p1.getLevel() && this->getId() >= p1.getId());
     }
 
+    bool Player::operator>=(const Player &p1) const { //this->level>p1.level ||
+        return (this->level >= p1.getLevel()) || (this->level == p1.getLevel() && this->getId() <= p1.getId());
+    }
 
     int Player::getId() const {
         return this->player_id;
@@ -44,7 +47,7 @@ namespace wet1_dast {
         return os;
     }
 
-    bool Player::operator<=(int PlayerID)
+    bool Player::operator<=(int PlayerID) const
     {
         return player_id <= PlayerID;
     }
@@ -52,6 +55,11 @@ namespace wet1_dast {
     bool Player::operator==(int PlayerId)
     {
         return player_id == PlayerId;
+    }
+
+    bool Player::operator>=(int PlayerID) const
+    {
+        return player_id >= PlayerID;
     }
 
 }

@@ -32,10 +32,13 @@ namespace wet1_dast {
 
         bool operator==(int Other_Group_id) const;
 
-        bool operator<=(const Group &group) const;//todo
+        bool operator<=(const Group &group) const;
+        bool operator>=(const Group &group) const;
+
         //group1<= group2 <=> GroupId1<=groupid2;
 
-        bool operator<=(int Other_Group_id) const;//todo
+        bool operator<=(int Other_Group_id) const;
+        bool operator>=(int Other_Group_id) const;
 
         int GetSize() const;//todo
 

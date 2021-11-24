@@ -66,5 +66,15 @@ namespace wet1_dast {
         size = 0;
         Highest_Player = nullptr;
     }
+
+    bool Group::operator>=(const Group &group) const
+    {
+        return (this->Group_Id >= group.Group_Id);
+    }
+
+    bool Group::operator>=(int Other_Group_id) const
+    {
+        return (this->Group_Id >= Other_Group_id);
+    }
 }
 

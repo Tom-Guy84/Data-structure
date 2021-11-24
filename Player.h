@@ -21,7 +21,9 @@ namespace wet1_dast {
         bool operator==(int PlayerId);
         friend bool operator==(const Player &p, int p_id);
         bool operator<=(const Player &p1) const;
-        bool operator<=(int PlayerID);
+        bool operator>=(const Player &p1) const;
+        bool operator<=(int PlayerID) const;
+        bool operator>=(int PlayerID) const;
         friend std::ostream &operator<<(std::ostream &os, const Player &p);
     class InvalidIdentifiers: public std::exception
     {
