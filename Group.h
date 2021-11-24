@@ -14,7 +14,8 @@ namespace wet1_dast {
     private:
         Player *Highest_Player ;
         int Group_Id;
-        AVLTree<Player> players;
+        AVLTree<Player> players_by_id;
+        AVLTree<players> players_by_level;
         int size ;
 
 
@@ -27,26 +28,27 @@ namespace wet1_dast {
         ~Group() = default;
 
         Group(const Group &group) =delete;//todo
-        Group& operator=(const Group &other) ;//todo
+//        Group& operator=(const Group &other) ;//todo
         bool operator==(const Group &group) const;
 
-        bool operator==(int Other_Group_id) const;
+        bool operator==(const int Other_Group_id) const;
 
         bool operator<=(const Group &group) const;
         bool operator>=(const Group &group) const;
 
         //group1<= group2 <=> GroupId1<=groupid2;
 
-        bool operator<=(int Other_Group_id) const;
-        bool operator>=(int Other_Group_id) const;
+
 
         int GetSize() const;//todo
-
+       friend bool CompareGroupById(const Group& g1,const Group& g2);
         void CombineGroups(const Group &g);//maybe not const but & for sure todo
         void AddPlayer(int id, int Level);//may be subjected to changes todo
         void RemovePlayer(int id);
     };
-
-
+bool CompareGroupById(const Group& g1,const Group& g2){ //g1<=g2
+    return g1.Group_Id<g2.Group_Id;
+}
+//
 }
 #endif //DAST_GROUP_H

@@ -1,15 +1,18 @@
 //
 //
 //
-#include <ostream>
+
+
 #ifndef DAST_PLAYER_H
 #define DAST_PLAYER_H
-
+#include <ostream>
+#include "Group.h"
 namespace wet1_dast {
     class Player {
     private:
         int player_id;
         int level;
+        Group* group;
     public:
         Player(int player_id, int level);//
         ~Player() = default;
@@ -19,7 +22,6 @@ namespace wet1_dast {
         int getId() const;
         bool operator==(const Player &p1) const;
         bool operator==(int PlayerId);
-        friend bool operator==(const Player &p, int p_id);
         bool operator<=(const Player &p1) const;
         bool operator>=(const Player &p1) const;
         bool operator<=(int PlayerID) const;

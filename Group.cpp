@@ -18,7 +18,7 @@ namespace wet1_dast {
         return (this->Group_Id == group.Group_Id);
     }
 
-    bool Group::operator==(int Other_Group_id)  const {
+    bool Group::operator==(const int Other_Group_id)  const {
         return (this->Group_Id == Other_Group_id);
     }
 
@@ -34,7 +34,7 @@ namespace wet1_dast {
         return size; // should be return Players(the tree)->size;
     }
 
-    bool Group::operator<=(int Other_Group_id) const {
+    bool Group::operator<=(const int Other_Group_id) const {
         return (this->Group_Id <= Other_Group_id);
     }
 
@@ -72,9 +72,10 @@ namespace wet1_dast {
         return (this->Group_Id >= group.Group_Id);
     }
 
-    bool Group::operator>=(int Other_Group_id) const
+    bool Group::operator>=( int Other_Group_id) const
     {
         return (this->Group_Id >= Other_Group_id);
     }
+
 }
 
