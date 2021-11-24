@@ -7,15 +7,15 @@
 
 
 #include "AVLTree.h"
-
+#include "Player.cpp"
 namespace wet1_dast {
     class Player;
     class Group {
     private:
         Player *Highest_Player ;
         int Group_Id;
-        AVLTree<Player> players_by_id;
-        AVLTree<Player> players_by_level;
+        AVLTree<Player,Player::comparePlayersById> players_by_id;
+        AVLTree<Player,Player::comparePlayersByLevel> players_by_level;
         int size ;
     public:
          explicit Group(int Group_id);
