@@ -6,26 +6,27 @@
 #ifndef DAST_PLAYER_H
 #define DAST_PLAYER_H
 #include <ostream>
-#include "Group.h"
+
+
 namespace wet1_dast {
+    //ask noam about cyclic dependence.
+    class Group;
     class Player {
     private:
         int player_id;
         int level;
         Group* group;
     public:
-        Player(int player_id, int level);//
+        Player(int player_id, int level, Group *group);//
         ~Player() = default;
         Player(const Player &p) = delete;
         void setLevel(int level_to_set);// p->level_to_set=level_to_set.
         int getLevel() const;
         int getId() const;
+        void setGroup(Group* group);
         bool operator==(const Player &p1) const;
-        bool operator==(int PlayerId);
-        bool operator<=(const Player &p1) const;
-        bool operator>=(const Player &p1) const;
-        bool operator<=(int PlayerID) const;
-        bool operator>=(int PlayerID) const;
+        friend bool comparePlayersByLevel(const Player& p1,const Player& p2);
+        friend bool comparePlayersById(const Player& p1,const Player& p2);
         friend std::ostream &operator<<(std::ostream &os, const Player &p);
     class InvalidIdentifiers: public std::exception
     {
