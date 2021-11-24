@@ -16,8 +16,9 @@ namespace wet1_dast
         }
         catch (const std::exception& e)
         {
+            return nullptr;
         }
-        return nullptr;
+
     }
 
     PlayerManager::StatusType PlayerManager::AddGroup(int GroupId)
@@ -29,36 +30,43 @@ namespace wet1_dast
         try
         {
             Group new_group(GroupId);
-            Node new_node(&new_group);
-            Groups.insert(new_node);
-            Node* closest = Groups.findClosest(new_node);
-            if(!closest)
-            {
-                non_empty_groups->next = &new_node;
-            }
-            else
-            {
-                if(*closest <= new_node)
-                {
-                    insertInLocation(closest, &new_node);
-                }
-                else
-                {
-                    insertInLocation(&new_node, closest);
-                }
-            }
+            allGroups.insert(new_group);
+            return SUCCESS;
         }
-        catch {}
+        catch (const AVLTree<Group, compareGroups>::ItemExist& exist)
+        {
+            return FAILURE;
+        }
+        catch (const std::exception& e)
+        {
+            return ALLOCATION_ERROR;
+        }
     }
 
-     void PlayerManager::insertInLocation(Node* before, Node* after)
+    PlayerManager::StatusType PlayerManager::AddPlayer(int PlayerId, int GroupId, int level)
     {
-        Node* temp = before->next;
-        before->next = after;
-        after->next = temp;
-        after->prev = before;
-        temp->prev = after;
-        after->next_non_empty = before->next_non_empty;
-        (before->group->GetSize() == 0) ? after->prev_non_empty = before->prev_non_empty : after->prev_non_empty = before;
+        if(PlayerId <= 0 || GroupId <= 0 || level < 0)
+        {
+            return INVALID_INPUT;
+        }
+        try
+        {
+            Group playersGroup = allGroups.find(GroupId);
+            if(!playersGroup)
+            {
+                return FAILURE;
+            }
+            Player new_player(PlayerId, level, playersGroup);
+            players.insert(new_player);
+        }
+        catch (const AVLTree<Player, comparePlayersById>::ItemExist& e)
+        {
+            return FAILURE;
+        }
+        catch (const AVLTree<Group, CompareGroupById>::ItemNotExist& e)
+        {
+            return FAILURE;
+        }
+        return ALLOCATION_ERROR;
     }
 }
