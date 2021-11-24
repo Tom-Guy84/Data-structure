@@ -4,6 +4,7 @@
 #ifndef AVLTREE_H_
 #define AVLTREE_H_
 #include <cmath>
+#include <cstdio>
 
 namespace wet1_dast {
 
@@ -306,7 +307,6 @@ namespace wet1_dast {
                 remove(*(root->value));
             }
         }
-
         AVLTree &operator=(const AVLTree<T, Condition> &other)=delete;
 
         T* find(const T &val)
@@ -419,19 +419,13 @@ namespace wet1_dast {
             Node* loc;
             Node* father_of_loc;
             find_in_tree(root, value, loc, father_of_loc);
-            if(loc == father_of_loc->right_son)
+            if(loc->right_son)
+            {
+                return loc->right_son->value;
+            }
+            if(father_of_loc)
             {
                 return  father_of_loc->value;
-            }
-            Node* grandfather = father_of_loc->father;
-            while(grandfather)
-            {
-                if(father_of_loc == grandfather->right_son)
-                {
-                    return grandfather->value;
-                }
-                father_of_loc = grandfather;
-                grandfather = grandfather->father;
             }
             return nullptr;
         }

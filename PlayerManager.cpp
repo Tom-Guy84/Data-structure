@@ -51,7 +51,8 @@ namespace wet1_dast
         }
         try
         {
-            Group playersGroup = allGroups.find(GroupId);
+            Group g(GroupId);
+            Group* playersGroup = allGroups.find(g);
             if(!playersGroup)
             {
                 return FAILURE;
