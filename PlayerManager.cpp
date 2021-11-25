@@ -59,6 +59,10 @@ namespace wet1_dast
             }
             Player new_player(PlayerId, level, playersGroup);
             players.insert(new_player);
+            if(playersGroup->GetSize() == 1)
+            {
+                nonEmptyGroups.insert(*playersGroup);
+            }
         }
         catch (const AVLTree<Player, comparePlayersById>::ItemExist& e)
         {
@@ -69,5 +73,38 @@ namespace wet1_dast
             return FAILURE;
         }
         return ALLOCATION_ERROR;
+    }
+
+    PlayerManager::StatusType PlayerManager::RemovePlayer(int PlayerId)
+    {
+        if(PlayerId <= 0)
+        {
+            return INVALID_INPUT;
+        }
+        Player *player = players.findPlayer(PlayerId);
+        if(!player)
+        {
+            return FAILURE;
+        }
+        player->group->removePlayer(player);
+        if(player->group->GetSize() == 0)
+        {
+            //need to figure out what todo if the group is now empty because remove is not good in complexity
+        }
+        players.removePlayer(player);
+        return SUCCESS;
+    }
+
+    PlayerManager::StatusType PlayerManager::ReplaceGroup(int GroupId, int ReplacementId)
+    {
+        if(GroupId == ReplacementId || GroupId <= 0 || ReplacementId <= 0)
+        {
+            return INVALID_INPUT;
+        }
+        try
+        {
+            Group g_to_delete =
+        }
+
     }
 }

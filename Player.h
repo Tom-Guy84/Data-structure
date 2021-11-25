@@ -1,13 +1,12 @@
 //
 //
 //
-
+#include <ostream>
+#include "Group.h"
 
 #ifndef DAST_PLAYER_H
 #define DAST_PLAYER_H
-#include <ostream>
 
-#include "Group.h"
 namespace wet1_dast {
     //ask noam about cyclic dependence.
     class Group;
@@ -16,9 +15,10 @@ namespace wet1_dast {
         int player_id;
         int level;
         Group* group;
+        bool sort_by_id;
     public:
-        Player(int player_id, int level, Group *group);//
-        ~Player() = default;
+        Player(int player_id, int level, Group *group, bool sort_by_id);//
+        ~Player();
         Player(const Player &p) = delete;
 
         void setLevel(int level_to_set);// p->level_to_set=level_to_set.
@@ -26,16 +26,13 @@ namespace wet1_dast {
         int getId() const;
         void setGroup(Group* group);
         bool operator==(const Player &p1) const;
-        friend bool comparePlayersByLevel_aux(const Player& p1,const Player& p2);
-        friend bool comparePlayersById_aux(const Player& p1,const Player& p2);
+        bool operator<=(const Player& other) const;
         friend std::ostream &operator<<(std::ostream &os, const Player &p);
         class comparePlayersByLevel{
         public:
-            bool operator()(const Player& p1,const Player& p2);
         };
         class comparePlayersById{
         public:
-            bool operator()(const Player& p1, const Player& p2);
         };
     class InvalidIdentifiers: public std::exception
     {

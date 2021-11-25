@@ -1,13 +1,12 @@
 //
 // Created by proje on 20/11/2021.
 //
-#ifndef DAST_PLAYERMANAGER_H
-#define DAST_PLAYERMANAGER_H
-
 #include <iostream>
 #include "Group.h"
 #include "AVLTree.h"
-#include <stdbool.h>
+
+#ifndef DAST_PLAYERMANAGER_H
+#define DAST_PLAYERMANAGER_H
 
 namespace wet1_dast
 {
@@ -15,8 +14,8 @@ namespace wet1_dast
     class PlayerManager
     {
         PlayerManager() = default;
-        AVLTree<Group, compareGroups> allGroups;
-        AVLTree<Group, compareGroups> nonEmptyGroups;
+        AVLTree<Group> allGroups;
+        AVLTree<Group> nonEmptyGroups;
         Group players;
     public:
         typedef enum

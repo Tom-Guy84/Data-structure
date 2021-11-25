@@ -24,42 +24,58 @@ namespace wet1_dast {
     //in remove we assume the player IS IN this game.
     void Group::AddPlayer(int id, int level) {
         //remember it should throw here in case of not good parameters, we want to catch it in PlayerManager.
-        Player p(id, level, nullptr);
-        players_by_id.insert(p);
-        players_by_level.insert(p);
-        if(comparePlayersByLevel_aux(*Highest_Player,p))//highestplayer<-
+        Player p_id(id, level, nullptr, true);
+        players_by_id.insert(p_id);
+        Player p_level(id, level, nullptr, false);
+        players_by_level.insert(p_level);
+        if(*Highest_Player <= p_level)//highestplayer<-
         {
-            Highest_Player=&p;
+            Highest_Player = &p_level;
         }
     }
     void Group::RemovePlayer(int id) {
-        Player p(id,0,this);
-        players_by_id.remove(p);
-        players_by_level.remove(p);
-        if(*(Highest_Player)==p)
+        Player p_id(id,0,this, true);
+        players_by_id.remove(p_id);
+        Player p_level(id,0,this, false);
+        if(*(Highest_Player) == p_level)
         {
-            Highest_Player=players_by_level.findClosest(p);
+            Highest_Player = players_by_level.findClosest(p_level);
         }
+        players_by_level.remove(p_level);
     }
 
-     Group::Group(int Group_id): Group_Id(Group_id),  players_by_id(Player::comparePlayersById),
-                players_by_level(Player::comparePlayersByLevel), size(0), Highest_Player(nullptr){
+     Group::Group(int Group_id): Group_Id(Group_id),  players_by_id(),
+                players_by_level(), size(0), Highest_Player(nullptr){
        if(Group_id<=0)
        {
          throw;
        }
     }
-    Group::Group():
+    Group::Group()
     {
         Group_Id = 0;
         size = 0;
-        players_by_level;
-        players_by_id;
         Highest_Player = nullptr;
 
     }
-    bool compareGroups(const Group &g1, const Group &g2) {
-        return g1.Group_Id<g2.Group_Id;
+
+    bool Group::operator<=(const Group &other) const
+    {
+        return Group_Id<other.Group_Id;
+
+    }
+
+    Player *Group::findPlayer(int PlayerId)
+    {
+        Player p(PlayerId, 0, nullptr, true);
+        return players_by_id.find(p);
+    }
+
+    void Group::removePlayer(Player *player)
+    {
+        Player player_by_level(player->getId(), player->getLevel(), this, false);
+        players_by_id.remove(*player);
+        players_by_level.remove(player_by_level);
     }
 }
 

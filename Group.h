@@ -2,20 +2,19 @@
 // Created by proje on 20/11/2021.
 //
 
+#include "AVLTree.h"
+
 #ifndef DAST_GROUP_H
 #define DAST_GROUP_H
 
-
-#include "AVLTree.h"
-#include "Player.cpp"
 namespace wet1_dast {
     class Player;
     class Group {
     private:
         Player *Highest_Player ;
         int Group_Id;
-        AVLTree<Player,Player::comparePlayersById> players_by_id;
-        AVLTree<Player,Player::comparePlayersByLevel> players_by_level;
+        AVLTree<Player> players_by_id;
+        AVLTree<Player> players_by_level;
         int size ;
     public:
          explicit Group(int Group_id);
@@ -26,10 +25,12 @@ namespace wet1_dast {
       //  Group& operator=(const Group &other) ;//todo
          bool operator==(const Group &group) const;
          int GetSize() const;//todo
-         friend bool compareGroups(const Group& g1,const Group& g2);
+         bool operator<=(const Group& other) const;
          void CombineGroups(const Group &g);//maybe not const but & for sure todo
-         void AddPlayer(int id, int Level);//may be subjected to changes todo
+         void AddPlayer(int id, int Level);//may be subjected to chanegs todo
          void RemovePlayer(int id);
+         Player* findPlayer(int PlayerId);
+         void removePlayer(Player* player);
     };
 
 //

@@ -3,50 +3,66 @@
 #include <ostream>
 
 
-namespace wet1_dast {
+namespace wet1_dast
+{
 
-    Player::Player(int player_id, int level, Group *group=nullptr) : group(group) {  //tested
-        if (player_id > 0 && level >= 0) {
+    Player::Player(int player_id, int level, Group *group = nullptr, bool sort_by_id = true) :
+            group(group), sort_by_id(sort_by_id)
+    {
+        if (player_id > 0 && level >= 0)
+        {
             this->player_id = player_id;
             this->level = level;
-        } else {
+        } else
+        {
             throw InvalidIdentifiers();
         }
     }
-    void Player::setLevel(int level_to_set) {
+
+    void Player::setLevel(int level_to_set)
+    {
         level = level_to_set; //tested
     }
-    int Player::getLevel() const{
+
+    int Player::getLevel() const
+    {
         return level; //tested
     }
-    bool Player::operator==(const Player &p1) const{ //tested
+
+    bool Player::operator==(const Player &p1) const
+    { //tested
         return (player_id == p1.player_id);
     }
-    int Player::getId() const {
+
+    int Player::getId() const
+    {
         return player_id;
     }
-    std::ostream &operator<<(std::ostream &os, const Player &p) {
-        os << "Player id: " << p.player_id<<std::endl;
-        os << "Player level:" << p.level<<std::endl;
+
+    std::ostream &operator<<(std::ostream &os, const Player &p)
+    {
+        os << "Player id: " << p.player_id << std::endl;
+        os << "Player level:" << p.level << std::endl;
         return os;
     }
-    bool comparePlayersByLevel_aux(const Player &p1, const Player &p2) {
-        return (p1.level <= p2.level) || (p1.level == p2.level && p1.player_id > p2.player_id);
+
+    void Player::setGroup(Group *group_to_set)
+    {
+        group = group_to_set;
     }
 
-    bool comparePlayersById_aux(const Player& p1,const Player& p2) {
-         return p1.player_id<p2.player_id;
+    Player::~Player()
+    {
+        group = nullptr;
+        delete this;
     }
 
-    bool Player::comparePlayersByLevel::operator()(const Player &p1, const Player &p2) {
-        return comparePlayersByLevel_aux(p1,p2);
-    }
-    void Player::setGroup(Group* group_to_set) {
-     group=group_to_set;
-    }
-
-
-    bool Player::comparePlayersById::operator()(const Player &p1, const Player &p2) {
-        return comparePlayersById_aux(p1,p2);
+    bool Player::operator<=(const Player &other) const
+    {
+        if (sort_by_id)
+        {
+            return player_id < other.player_id;
+        }
+        return (level < other.level || (level == other.level && player_id > other.player_id));
     }
 }
