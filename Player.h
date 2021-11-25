@@ -8,7 +8,7 @@
 #define DAST_PLAYER_H
 
 namespace wet1_dast {
-    //ask noam about cyclic dependence.
+
     class Group;
     class Player {
     private:
@@ -19,8 +19,10 @@ namespace wet1_dast {
     public:
         Player(int player_id, int level, Group *group, bool sort_by_id);//
         ~Player();
-        Player(const Player &p) = delete;
-
+        Player()=default;
+        Player(const Player &p) = default;
+        Player& operator=(const Player& p)=default;
+        Group* getGroup();
         void setLevel(int level_to_set);// p->level_to_set=level_to_set.
         int getLevel() const;
         int getId() const;
@@ -28,12 +30,6 @@ namespace wet1_dast {
         bool operator==(const Player &p1) const;
         bool operator<=(const Player& other) const;
         friend std::ostream &operator<<(std::ostream &os, const Player &p);
-        class comparePlayersByLevel{
-        public:
-        };
-        class comparePlayersById{
-        public:
-        };
     class InvalidIdentifiers: public std::exception
     {
     public:

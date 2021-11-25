@@ -22,11 +22,11 @@ namespace wet1_dast {
         Player* Get_Highest_Player();
         ~Group() = default;
          Group(const Group &group) =delete;//todo
-      //  Group& operator=(const Group &other) ;//todo
+         Group& operator=(const Group &other)=delete ;//todo
          bool operator==(const Group &group) const;
          int GetSize() const;//todo
          bool operator<=(const Group& other) const;
-         void CombineGroups(const Group &g);//maybe not const but & for sure todo
+         void CombineGroups( Group &g);//maybe not const but & for sure todo
          void AddPlayer(int id, int Level);//may be subjected to chanegs todo
          void RemovePlayer(int id);
          Player* findPlayer(int PlayerId);

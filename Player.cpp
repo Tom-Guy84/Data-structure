@@ -65,4 +65,8 @@ namespace wet1_dast
         }
         return (level < other.level || (level == other.level && player_id > other.player_id));
     }
+
+    Group *Player::getGroup() {
+        return this->group;
+    }
 }
