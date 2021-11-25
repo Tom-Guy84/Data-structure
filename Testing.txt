@@ -1,0 +1,20 @@
+//by Project Tr@n$f3r 
+Init 
+//addGroup
+AddGroup 1 //success
+AddGroup 1 //failure
+AddGroup 3 //success
+//addPlayer ( playerId , GroupID , Level)
+AddPlayer 1 1 1 //success
+AddPlayer 1 1 1 //failure (same id, same group, same level)
+AddPlayer 1 1 3 //failure (same id ,different level)
+AddPlayer 1 3 1 //failure (same id, different Group(that exists),same level)
+AddPlayer 1 3 3 // failure (same id, different Group(that exists),other level)
+AddPlayer 1 2 1 //failure( same id, different Group(doesn’t exist),same  level)
+AddPlayer 1 2 3 // failure (same id, different Group(doesn’t exist), other level
+AddPlayer 2 3 1 //success (same id ,different Group (exists),same level)
+AddPlayer 3 1 3 //success (same id , different Group(exists),different level)
+AddPlayer 1 1 1 //failure (just trying again after adding another one)
+Quit //end of AddPlayerTesting&AddGroup.
+//RemovePlayer
+
