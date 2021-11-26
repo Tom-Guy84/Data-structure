@@ -1,7 +1,7 @@
 
 #include "Group.h"
 #include "Player.h"
-#include "AVLTree.h"
+
 namespace wet1_dast {
 
     Player *Group::Get_Highest_Player() {
@@ -14,15 +14,16 @@ namespace wet1_dast {
         return (this->Group_Id == group.Group_Id);
     }
 
-    void Group::CombineGroups( Group &g) {
+    void Group::CombineGroups(Group &g) {
         if (g.Highest_Player != nullptr && Highest_Player != nullptr) {
-           combineTrees(this->players_by_level,g.players_by_level);
-           combineTrees(this->players_by_id,g.players_by_id);
+            combineTrees(this->players_by_level, g.players_by_level);
+            combineTrees(this->players_by_id, g.players_by_id);
         } else {
             if (g.Highest_Player != nullptr)//Highest_player==nullptr
             {
 
             }
+
         }
 
     }
@@ -40,18 +41,21 @@ namespace wet1_dast {
         players_by_id.insert(p_id);
         Player p_level(id, level, this, false);
         players_by_level.insert(p_level);
-        //deduct about Highest_Player.
-        if (Highest_Player == nullptr) //if Highest_player doesn't exist.{
+        Player *p = players_by_level.find(p_level); //making sure the variable isn't local.
+        if (Highest_Player == nullptr) //if Highest_player doesn't exist,meaning no player exists in Group.{
         {
-            Highest_Player = &p_level;
-        }
-        else {
-            Highest_Player=(*Highest_Player<=p_level)? &p_level : Highest_Player;
+            Highest_Player = p;
+        } else { //highest player!=nullptr. we then compare between the two
+            Highest_Player = (*Highest_Player <= *p) ? p : Highest_Player;
         }
     }
 
     void Group::RemovePlayer(int id) {
         //try to remove player.
+        if (Highest_Player == nullptr) //there aren't any players.
+        {
+            throw; //maybe return?; todo
+        }
         Player p_id(id, 0, this, true);
         players_by_id.remove(p_id); //Remove player from players_by_id.
         Player p_level(id, 0, this, false);
@@ -88,6 +92,10 @@ namespace wet1_dast {
         Player player_by_level(player->getId(), player->getLevel(), this, false);
         players_by_id.remove(*player);
         players_by_level.remove(player_by_level);
+        if (*(Highest_Player) == *player) {
+            Highest_Player = players_by_level.findClosest(player_by_level);
+        }
+
     }
 }
 

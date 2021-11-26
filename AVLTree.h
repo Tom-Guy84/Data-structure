@@ -114,7 +114,61 @@ namespace wet1_dast
 
         void createEmptyTree(int size_of_tree);
 
+
     public:
+        friend void combineTrees(AVLTree<T>& to_insert, AVLTree<T> &to_delete)
+        {
+            T* array_to_insert = (to_insert.inorderOut());
+            T* array_to_delete = (to_delete.inorderOut());
+            T * all_players = new T[to_insert.size + to_delete.size];
+//         T** all_players = &all;
+            int i = 0, j = 0, k;
+            for (k = 0; k < to_insert.size + to_delete.size; k++)
+            {
+                if (to_insert.size - 1 == i || to_delete.size - 1 == j) break;
+                if ((array_to_delete[j]) == (array_to_insert[i]))
+                {
+                    throw AVLTree<T>::ItemInBothTrees();
+                }
+                if ((array_to_insert[i]) <= (array_to_delete[j]))
+                {
+                    T temp=array_to_insert[i];
+                    all_players[k] = temp;
+//                array_to_insert[i] = nullptr;
+                    i++;
+                }
+                if ((array_to_delete[j]) <= (array_to_insert[i]))
+                {
+                    T temp= array_to_delete[j];
+                    all_players[k] = temp;
+//                array_to_delete[j] = nullptr;
+                    j++;
+                }
+            }
+            for (; i < to_insert.size - 1; i++)
+            { //array_to_insert.size
+                all_players[k++] = array_to_insert[i];
+//            array_to_insert[i] = nullptr;
+
+            }
+            for (; j < to_delete.size - 1; j++)
+            { //array_to_delete.size
+                all_players[k++] = array_to_delete[j];
+//            array_to_delete[j] = nullptr;
+            }
+            int temp_size=to_insert.size;
+            delete &to_insert;
+            AVLTree<T> new_tree;
+            new_tree.createEmptyTree(to_insert.size); //create tree in size of To_delete.size+this->size.
+            new_tree.inorderIn(array_to_insert, 0, new_tree.root); //inserts inorder all player;
+            to_insert.createEmptyTree(temp_size + to_delete.size);
+            to_insert.inorderIn(all_players,0,to_insert.root);
+            to_delete.inorderIn(array_to_delete, 0, to_delete.root);//inserts to in order.
+            delete array_to_delete;
+            delete array_to_insert;
+            delete &to_delete;
+            delete &new_tree;
+        }
         int getSize() const;
         AVLTree() : size(0)
         {}
@@ -138,7 +192,6 @@ namespace wet1_dast
 
         T *inorderOut() ;
 
-       friend void combineTrees(AVLTree<T>& to_insert, AVLTree<T> &to_delete);
 
         class exceptions : public std::exception
         {
@@ -501,64 +554,64 @@ namespace wet1_dast
         if (!ver)
             return;
         inorderHelper(values, index, ver->left_son);
-        values[index++] = ver->value; //need to implement an assignment operator for class Player
+        values[index++] = *(ver->value); //need to implement an assignment operator for class Player
         inorderHelper(values, index, ver->right_son);
     }
 
-    template<class T>
-    void combineTrees(AVLTree<T>& to_insert, AVLTree<T> &to_delete)
-    {
-         T* array_to_insert = (to_insert->inorderOut());
-         T* array_to_delete = (to_delete.inorderOut());
-         T * all_players = new T[to_insert.size + to_delete.size];
-//         T** all_players = &all;
-        int i = 0, j = 0, k;
-        for (k = 0; k < to_insert.size + to_delete.size; k++)
-        {
-            if (to_insert.size - 1 == i || to_delete.size - 1 == j) break;
-            if ((array_to_delete[j]) == (array_to_insert[i]))
-            {
-                throw AVLTree<T>::ItemInBothTrees();
-            }
-            if ((array_to_insert[i]) <= (array_to_delete[j]))
-            {
-                T temp=array_to_insert[i];
-                all_players[k] = temp;
-//                array_to_insert[i] = nullptr;
-                i++;
-            }
-            if ((array_to_delete[j]) <= (array_to_insert[i]))
-            {
-                T temp= array_to_delete[j];
-                all_players[k] = temp;
-//                array_to_delete[j] = nullptr;
-                j++;
-            }
-        }
-        for (; i < to_insert.size - 1; i++)
-        { //array_to_insert.size
-            all_players[k++] = array_to_insert[i];
-//            array_to_insert[i] = nullptr;
-
-        }
-        for (; j < to_delete.size - 1; j++)
-        { //array_to_delete.size
-            all_players[k++] = array_to_delete[j];
-//            array_to_delete[j] = nullptr;
-        }
-        int size=to_insert.size;
-        delete &to_insert;
-        AVLTree<T> new_tree;
-        new_tree.createEmptyTree(to_insert.size); //create tree in size of To_delete.size+this->size.
-        new_tree.inorderIn(array_to_insert, 0, new_tree.root); //inserts inorder all player;
-        to_insert.createEmptyTree(size+to_delete.size);
-        to_insert.inorderIn(all_players,0,to_insert.root);
-        to_delete.inorderIn(array_to_delete, 0, to_delete.root);//inserts to in order.
-        delete array_to_delete;
-        delete array_to_insert;
-        delete &to_delete;
-        delete &new_tree;
-    }
+//    template<class T>
+//    void combineTrees(AVLTree<T>& to_insert, AVLTree<T> &to_delete)
+//    {
+//         T* array_to_insert = (to_insert->inorderOut());
+//         T* array_to_delete = (to_delete.inorderOut());
+//         T * all_players = new T[to_insert.size + to_delete.size];
+////         T** all_players = &all;
+//        int i = 0, j = 0, k;
+//        for (k = 0; k < to_insert.size + to_delete.size; k++)
+//        {
+//            if (to_insert.size - 1 == i || to_delete.size - 1 == j) break;
+//            if ((array_to_delete[j]) == (array_to_insert[i]))
+//            {
+//                throw AVLTree<T>::ItemInBothTrees();
+//            }
+//            if ((array_to_insert[i]) <= (array_to_delete[j]))
+//            {
+//                T temp=array_to_insert[i];
+//                all_players[k] = temp;
+////                array_to_insert[i] = nullptr;
+//                i++;
+//            }
+//            if ((array_to_delete[j]) <= (array_to_insert[i]))
+//            {
+//                T temp= array_to_delete[j];
+//                all_players[k] = temp;
+////                array_to_delete[j] = nullptr;
+//                j++;
+//            }
+//        }
+//        for (; i < to_insert.size - 1; i++)
+//        { //array_to_insert.size
+//            all_players[k++] = array_to_insert[i];
+////            array_to_insert[i] = nullptr;
+//
+//        }
+//        for (; j < to_delete.size - 1; j++)
+//        { //array_to_delete.size
+//            all_players[k++] = array_to_delete[j];
+////            array_to_delete[j] = nullptr;
+//        }
+//        int size=to_insert.size;
+//        delete &to_insert;
+//        AVLTree<T> new_tree;
+//        new_tree.createEmptyTree(to_insert.size); //create tree in size of To_delete.size+this->size.
+//        new_tree.inorderIn(array_to_insert, 0, new_tree.root); //inserts inorder all player;
+//        to_insert.createEmptyTree(size+to_delete.size);
+//        to_insert.inorderIn(all_players,0,to_insert.root);
+//        to_delete.inorderIn(array_to_delete, 0, to_delete.root);//inserts to in order.
+//        delete array_to_delete;
+//        delete array_to_insert;
+//        delete &to_delete;
+//        delete &new_tree;
+//    }
 
 
     template<class T>
@@ -567,7 +620,7 @@ namespace wet1_dast
         if (!ver)
             return;
         inorderIn(values, index, ver->left_son);
-        ver->value = values[index++]; //need to implement a assignment operator for Player. TODO
+        ver->value = &(values[index++]); //need to implement a assignment operator for Player. TODO
         inorderIn(values, index, ver->right_son);
     }
 
