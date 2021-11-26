@@ -1,4 +1,4 @@
-//by Project Tr@n$f3r 
+//by Ziv
 Init 
 //addGroup
 AddGroup 1 //success
