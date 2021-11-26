@@ -1,4 +1,4 @@
-//by Ziv
+//by Ziv ziv ha orthonormaly And Tom tom ha orthonogonali
 Init 
 //addGroup
 AddGroup 1 //success
