@@ -1,0 +1,40 @@
+//by Ziv
+Init 
+//addGroup
+AddGroup 1 //success
+AddGroup 1 //failure
+AddGroup 3 //success
+//addPlayer ( playerId , GroupID , Level)
+AddPlayer 1 1 1 //success
+AddPlayer 1 1 1 //failure (same id, same group, same level)
+AddPlayer 1 1 3 //failure (same id ,different level)
+AddPlayer 1 3 1 //failure (same id, different Group(that exists),same level)
+AddPlayer 1 3 3 // failure (same id, different Group(that exists),other level)
+AddPlayer 1 2 1 //failure( same id, different Group(doesn’t exist),same  level)
+AddPlayer 1 2 3 // failure (same id, different Group(doesn’t exist), other level
+AddPlayer 2 3 1 //success (same id ,different Group (exists),same level)
+AddPlayer 3 1 3 //success (same id , different Group(exists),different level)
+AddPlayer 1 1 1 //failure (just trying again after adding another one)
+Quit //end of AddPlayerTesting&AddGroup.
+//RemovePlayer(playerId)
+Init
+AddGroup 1 //full group
+AddGroup 2 //empty group
+AddPlayer 1 1 1 // SUCCESS(just adding players)
+RemovePlayer 1 //success
+RemovePlayer 1 //failure(trying to remove twice)
+AddPlayer 1 1 1 // success
+AddPlayer 3 1 2 //success
+RemovePlayer 1 // sucess(trying to remove from non empty group)
+RemovePlayer 3//success
+RemovePlayer 3 // failure(trying to remove again for sports)
+RemovePlayer 2 //failure (trying to remove non existent player)
+RemovePlayer 2 //failure (trying again for the sports)
+AddPlayer 2 2 2 //success (adding him)
+RemovePlayer 2 // success(removing  him)
+RemovePlayer 2// failure(doesn;t exists)
+AddPlayer 1 2 1 //sucesss (adding him again to anoter group)
+RemovePlayer 1 //sucess
+RemovePlayer 1 //failure (for sports)
+Quit //end of RemovePlayer
+
