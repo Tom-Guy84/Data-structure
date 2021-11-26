@@ -32,16 +32,18 @@ namespace wet1_dast
             explicit Node(T *val = nullptr, Node *father = nullptr) : value(val), father(father), right_son(nullptr),
                                                                       left_son(nullptr),
                                                                       height(0)
-            {}
-
-
+            {
+                left_son=nullptr;
+                right_son=nullptr;
+            }
             ~Node()
             {
+
                 father = nullptr;
                 right_son = nullptr;
                 left_son = nullptr;
                 delete value;
-                delete this;
+//                delete this;
             }
 
             bool operator==(Node *other)
@@ -59,28 +61,36 @@ namespace wet1_dast
 
         Node *root; //belongs to AVLTree
         int size;
+       //@param loc and father_of_loc are getting changed in this function according to the situaton.
+       //@ver - the current vertex we are looking at.
+       //@val - the value we are looking for.
 
         T *find_in_tree(Node *ver, const T &val, Node **loc, Node **father_of_loc)
         {
-            if (*(ver->value) == val)
+            if (*(ver->value) == val) //if we're in the location
             {
-                *loc = ver;
-                *father_of_loc = ver->father;
-                return (ver->value);
+                //problem here.
+                //valgrind says loc isn't inited.
+                *loc = ver; // mark this as the location.
+                *father_of_loc = ver->father;//mark father.
+                return (ver->value); // return us the value.
             }
-
+            //if left son doesn't exist , and the value we look for is lesser than the current vertex(meaning he doesn't;t exist in the tree according ot convention)
+            //or alternatively ,right son doesn't exist and the current value we're looking for is larger than the current vertex value(meaning we want to go right according to convention,meaning he doesn't exist).
             if ((!ver->left_son && val <= *(ver->value)) || (!ver->right_son && *(ver->value) <= val))
             {
-                *loc = nullptr;
-                *father_of_loc = ver;
-                return nullptr;
+
+                *loc = nullptr; //the place doesn't exist.
+                 *father_of_loc = ver; //mark him as his father.
+                return nullptr; //return nullptr,we couldn't find him
             }
 
-            if (val <= *(ver->value))
+            if (val <= *(ver->value)) //if the value we are looking for is lesser than the current vertex ,go left.
             {
                 return find_in_tree(ver->left_son, val, loc, father_of_loc);
             } else
             {
+                //else go right,because he's larger than him.
                 return find_in_tree(ver->right_son, val, loc, father_of_loc);
             }
         }
@@ -171,12 +181,15 @@ namespace wet1_dast
         }
         int getSize() const;
         AVLTree() : size(0)
-        {}
+        {
+            root=nullptr;
+        }
 
         AVLTree(const AVLTree<T> &other) = delete; //TODO
-        ~AVLTree()
+        ~AVLTree() //todo
         {
-            while (root)
+
+            while (root!=nullptr)
             {
                 remove(*(root->value));
             }
@@ -328,10 +341,11 @@ namespace wet1_dast
     template<class T>
     void AVLTree<T>::rootCaseRemove()
     {
-        if (!(root->right_son && root->left_son))
+        if (!(root->right_son) && !(root->left_son))
         {
             delete root;
             root = nullptr;
+            return;
         } else if (!(root->right_son) && root->left_son)
         {
             Node *temp = root->left_son;
@@ -411,6 +425,7 @@ namespace wet1_dast
     template<class T>
     void AVLTree<T>::ll_roll(Node *first_ubl)
     {
+        //todo
         Node *temp = first_ubl->left_son;
         first_ubl->left_son = temp->right_son;
         temp->right_son = first_ubl;
@@ -422,6 +437,7 @@ namespace wet1_dast
     template<class T>
     void AVLTree<T>::lr_roll(Node *first_ubl)
     {
+        //todo
         Node *son = first_ubl->left_son;
         Node *grandson = son->right_son;
         first_ubl->left_son = grandson->right_son;
@@ -438,6 +454,7 @@ namespace wet1_dast
     template<class T>
     void AVLTree<T>::rl_roll(Node *first_ubl)
     {
+        //todo
         Node *son = first_ubl->right_son;
         Node *grandson = son->left_son;
         first_ubl->right_son = grandson->left_son;
@@ -454,6 +471,7 @@ namespace wet1_dast
     template<class T>
     void AVLTree<T>::rr_roll(Node *first_ubl)
     {
+        //todo
         Node *temp = first_ubl->right_son;
         first_ubl->right_son = temp->left_son;
         temp->left_son = first_ubl;
@@ -477,50 +495,70 @@ namespace wet1_dast
     template<class T>
     T *AVLTree<T>::find(const T &val)
     {
-        Node **loc, **father_of_loc;
-        return find_in_tree(root, val, loc, father_of_loc);
+        if(root==nullptr) //if root is nullptr whats the point in checking the whole tree.
+        {
+            return nullptr;
+        }
+        Node **loc=new Node*();
+        Node **father_of_loc=new Node*();
+        T* to_return= find_in_tree(root, val, loc, father_of_loc);
+        delete loc;
+        delete father_of_loc;
+        return to_return;
     }
 
     template<class T>
     void AVLTree<T>::insert(T &val)
     {
-        Node **loc, **father_of_loc;
+
         if (root == nullptr)
         {
-            Node new_node(&val);
-            *root = new_node;
+            root = new Node(&val);
             size++;
             return;
         }
+        Node **loc=new Node*();
+        Node **father_of_loc=new Node*();
         if (find_in_tree(root, val, loc, father_of_loc))
         {
+            delete loc;
+            delete father_of_loc;
             throw ItemExist();
         }
-        Node new_node(&val, *father_of_loc);
+//        Node new_node(&val, *father_of_loc);
         if (val <= *((*father_of_loc)->value))
         {
-            (*father_of_loc)->left_son = &new_node;
+            (*father_of_loc)->left_son =new Node(&val,*father_of_loc);
+            correctHeight((*father_of_loc)->left_son);
+            checkForRolls((*father_of_loc)->left_son);
         } else
         {
-            (*father_of_loc)->right_son = &new_node;
+            (*father_of_loc)->right_son = new Node(&val,*father_of_loc);
+            correctHeight((*father_of_loc)->right_son);
+            checkForRolls((*father_of_loc)->right_son);
         }
-        Node *points_to_new = &new_node;
-        correctHeight(points_to_new);
-        checkForRolls(points_to_new);
         size++;
+        delete loc;
+        delete father_of_loc;
+
     }
 
     template<class T>
     void AVLTree<T>::remove(const T &val)
     {
-        Node **loc, **father_of_loc;
+        Node **loc=new Node*();
+                Node **father_of_loc=new Node*();
         if (!find_in_tree(root, val, loc, father_of_loc))
         {
+            delete loc;
+            delete father_of_loc;
             throw ItemNotExist();
         }
         size--;
         if (*loc == root)
         {
+            delete loc;
+            delete father_of_loc;
             rootCaseRemove();
             return;
         }
@@ -530,12 +568,16 @@ namespace wet1_dast
         {
             correctHeight(ver);
             checkForRolls(ver);
+            delete loc;
+            delete father_of_loc;
             return;
         }
         ver = swapWithNext(*loc);
         easyCaseRemove(*loc, easy_case);
         correctHeight(ver);
         checkForRolls(ver);
+        delete loc;
+        delete father_of_loc;
     }
 
     template<class T>
@@ -631,8 +673,9 @@ namespace wet1_dast
         {
             return nullptr;
         }
-        Node **loc;
-        Node **father_of_loc;
+        //needs to be initialized.
+        Node **loc=new Node*();
+        Node **father_of_loc=new Node*();
         find_in_tree(root, value, loc, father_of_loc);
         if ((*loc)->right_son)
         {
