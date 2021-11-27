@@ -21,7 +21,7 @@ namespace wet1_dast
 
     void Player::setLevel(int level_to_set)
     {
-        level = level_to_set; //tested
+        level += level_to_set; //tested
     }
 
     int Player::getLevel() const
@@ -69,4 +69,21 @@ namespace wet1_dast
     Group *Player::getGroup() {
         return this->group;
     }
+
+    Player *Player::createPlayerByLevel() const
+    {
+        auto* playerByLevel  = new Player(player_id, level, group, false);
+        return playerByLevel;
+    }
+
+    Player &Player::operator=(const Player &p)
+    {
+        player_id = p.player_id;
+        level = p.level;
+        group = p.group;
+        sort_by_id = p.sort_by_id;
+        return *this;
+    }
+
+
 }

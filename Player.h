@@ -21,7 +21,7 @@ namespace wet1_dast {
         ~Player();
         Player()=default;
         Player(const Player &p) = default;
-        Player& operator=(const Player& p)=default;
+        Player& operator=(const Player& p);
         Group* getGroup();
         void setLevel(int level_to_set);// p->level_to_set=level_to_set.
         int getLevel() const;
@@ -30,7 +30,8 @@ namespace wet1_dast {
         bool operator==(const Player &p1) const;
         bool operator<=(const Player& other) const;
         friend std::ostream &operator<<(std::ostream &os, const Player &p);
-    class InvalidIdentifiers: public std::exception
+        Player* createPlayerByLevel() const;
+        class InvalidIdentifiers: public std::exception
     {
     public:
         const char* what() const noexcept override

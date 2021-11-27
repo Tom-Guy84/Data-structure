@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Group.h"
 #include "AVLTree.h"
+#include "Player.h"
 
 #ifndef DAST_PLAYERMANAGER_H
 #define DAST_PLAYERMANAGER_H
@@ -14,8 +15,7 @@ namespace wet1_dast
     class PlayerManager
     {
         PlayerManager() = default;
-        AVLTree<Group> allGroups;
-        AVLTree<Group> nonEmptyGroups;
+        AVLTree<Group> Groups;
         Group players;
     public:
         typedef enum
@@ -37,7 +37,7 @@ namespace wet1_dast
 
         StatusType GetHighestLevel(int GroupId, int *PlayerId);
 
-        StatusType GetAllPlayersByLevel(int GroupId, int **PlayerId, int numOfPlayers);
+        StatusType GetAllPlayersByLevel(int GroupId, int **Players, int* numOfPlayers);
 
         StatusType GetGroupsHighestLevel(int numOfGroups, int **Players);
 

@@ -11,27 +11,37 @@ namespace wet1_dast {
     class Player;
     class Group {
     private:
-        Player *Highest_Player ;
+        Player* Highest_Player ;
         int Group_Id;
         AVLTree<Player> players_by_id;
         AVLTree<Player> players_by_level;
         int size ;
+        Group* next; // will contain the next group with players
+        Group* prev; // will contain the previous group with players
+        void correctAfterInsert(); //for the list of non-empty groups
+        void correctAfterRemove(); //for the list of non-empty groups
     public:
          explicit Group(int Group_id);
          Group();
         Player* Get_Highest_Player();
-        ~Group() = default;
+        ~Group();
          Group(const Group &group) =delete;//todo
          Group& operator=(const Group &other)=delete ;//todo
          bool operator==(const Group &group) const;
          int GetSize() const;//todo
          bool operator<=(const Group& other) const;
-         void CombineGroups( Group &g);//maybe not const but & for sure todo
-         void AddPlayer(int id, int Level);//may be subjected to chanegs todo
-         void RemovePlayer(int id);
+         friend void CombineGroups(Group &g1, Group& g2);
+         void AddPlayer(Player& player);
          Player* findPlayer(int PlayerId);
-         void removePlayer(Player* player);
+         Player* removePlayer(Player* player);
+         Group* getNextGroup();
+         Group* getPreviousGroup();
+         void setNext(Group* next_group);
+         void setPrev(Group* prev_group);
+         void increaseLevelToPlayer(Player& player, int levelIncrease); //increase level only in the playerByLevel tree
+         Player* getPlayersByLevel();
     };
+
 
 //
 }
