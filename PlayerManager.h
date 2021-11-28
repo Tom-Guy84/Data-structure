@@ -5,6 +5,7 @@
 #include "Group.h"
 #include "AVLTree.h"
 #include "Player.h"
+#include "library1.h"
 
 #ifndef DAST_PLAYERMANAGER_H
 #define DAST_PLAYERMANAGER_H
@@ -14,14 +15,10 @@ namespace wet1_dast
 
     class PlayerManager
     {
-        PlayerManager() = default;
         AVLTree<Group> Groups;
         Group players;
     public:
-        typedef enum
-        {
-            ALLOCATION_ERROR, INVALID_INPUT, FAILURE, SUCCESS
-        } StatusType;
+        PlayerManager() = default;
 
         PlayerManager* init();
 

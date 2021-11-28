@@ -19,7 +19,7 @@ namespace wet1_dast {
         Group* next; // will contain the next group with players
         Group* prev; // will contain the previous group with players
         void correctAfterInsert(); //for the list of non-empty groups
-        void correctAfterRemove(); //for the list of non-empty groups
+        //for the list of non-empty groups
     public:
          explicit Group(int Group_id);
          Group();
@@ -40,6 +40,8 @@ namespace wet1_dast {
          void setPrev(Group* prev_group);
          void increaseLevelToPlayer(Player& player, int levelIncrease); //increase level only in the playerByLevel tree
          Player* getPlayersByLevel();
+
+        void correctAfterRemove();
     };
 
 

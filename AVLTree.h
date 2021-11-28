@@ -754,6 +754,7 @@ namespace wet1_dast
         {
             return father_of_loc->value;
         }
+        return nullptr;
     }
 
     template<class T>

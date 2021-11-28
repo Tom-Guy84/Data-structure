@@ -1,0 +1,885 @@
+#LyX 2.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 544
+\begin_document
+\begin_header
+\save_transient_properties true
+\origin unavailable
+\textclass heb-article
+\begin_preamble
+\usepackage{changepage}
+\end_preamble
+\use_default_options true
+\maintain_unincluded_children false
+\language hebrew
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman "default" "FrankRuehl"
+\font_sans "default" "FrankRuehl"
+\font_typewriter "default" "FrankRuehl"
+\font_math "auto" "auto"
+\font_default_family default
+\use_non_tex_fonts true
+\font_sc false
+\font_osf false
+\font_sf_scale 100 110
+\font_tt_scale 100 110
+\use_microtype false
+\use_dash_ligatures true
+\graphics default
+\default_output_format default
+\output_sync 0
+\bibtex_command default
+\index_command default
+\paperfontsize default
+\spacing onehalf
+\use_hyperref false
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\use_minted 0
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\is_math_indent 0
+\math_numbering_side default
+\quotes_style english
+\dynamic_quotes 0
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes true
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{adjustwidth*}{-3cm}{-3cm}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+תחילה נציג את מבני הנתונים בהם נשתמש בפתרון התרגיל:
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+שחקן
+\begin_inset Quotes erd
+\end_inset
+
+ - מבנה שישמור את המספר המזהה של השחקן את רמתו, את הקבוצה לה הוא שייך ומזהה
+ האם הוא שייך לעץ הממיין אותו לפי השלב או לפי המספר המזהה.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+קבוצה
+\begin_inset Quotes erd
+\end_inset
+
+- מבנה שישמור שני עצים מסוג 
+\begin_inset Formula $AVL$
+\end_inset
+
+ של שחקניו, אחד לפי המספר המזהה ואחד לפי רמתם, את גודלו )כמות השחקנים בו(,
+ מצביע לשחקן שרמתו הגבוהה ביותר, מצביעים לקבוצות הסמוכות לקבוצה מבחינת מספרו
+ המזהה ואינן ריקות ואת המספר המזהה של הקבוצה עצמה.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Quotes eld
+\end_inset
+
+מנהל השחקנים
+\begin_inset Quotes erd
+\end_inset
+
+ - מבנה שישמור עץ של קבוצות וקבוצה שחשקניה הם כל השחקנים במשחק.
+\end_layout
+
+\begin_layout Enumerate
+כמו כן, נממש מבנה מבנה נתונים של עץ 
+\begin_inset Formula $AVL$
+\end_inset
+
+ גנרי 
+\begin_inset Formula $(template)$
+\end_inset
+
+ בתור מבנה עזר.
+\end_layout
+
+\begin_layout Standard
+\align center
+מצורפות תמונות הממחישות כיצד יראה מבני הנתונים הכולל של מנהל השחקנים.
+ שתי התמונות הראשונות מתארות את מבנה הקבוצה, והשלישית את העץ של הקבוצות.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Graphics
+	filename playersByLevel.png
+	scale 40
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename PlayersById.png
+	scale 45
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\align center
+\begin_inset Graphics
+	filename groups.png
+	scale 60
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+כעת נראה שכל אחת מהפעולות עומדת בדרישות סיבוכיות הזמן הנדרשת:
+\end_layout
+
+\begin_layout Standard
+* כל פעולות הכנסה, הוצאה ומציאת איבר בכל אחד מהעצים היא ב- 
+\begin_inset Formula $O(log(m))$
+\end_inset
+
+ כאשר m היא כמות האיברים בעץ.
+ כמו כן, סיבוכיות הזמן של פונקציות סיור על העץ היא 
+\begin_inset Formula $O(m)$
+\end_inset
+
+.
+ נסתמך על כך בהמשך ההסבר, הפונקציות בעץ ממוממשות בצורה שעומדת בדרישות הסיבוכיות
+ הללו.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $void^{*}init()$
+\end_inset
+
+ הפעולה אינה מקבלת קלט ולכן בכל מקרה סיבוכיות הזמן שלה היא 
+\begin_inset Formula $O(1)$
+\end_inset
+
+.
+ הפעולה יוצרת עץ ריק של קבוצות, וקבוצה ריקה של השחקנים במשחק ומחזירה את
+ מנהל השחקנים במידה ואין בעיה של הקצאת זיכרון.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $GroupID)$
+\end_inset
+
+ 
+\begin_inset Formula $AddGroup(void^{*}DS,int$
+\end_inset
+
+ 
+\begin_inset Formula $StatusType$
+\end_inset
+
+: הפעולה יוצרת קבוצה חדשה, מכניסה אותה לעץ הקבוצות, מעדכנת את המצביעים של
+ לקבוצות הלא ריקות 
+\begin_inset Quotes eld
+\end_inset
+
+הקרובות ביותר
+\begin_inset Quotes erd
+\end_inset
+
+ מבחינת מספר מזהה.
+ סיבוכיות הזמן היא הסיכויות הדרושה למציאת מיקום הקבוצה בעץ הקבוצות והיא
+ 
+\begin_inset Formula $O(log(k))$
+\end_inset
+
+ כפי שנלמד בהרצאה.
+ במקרה של ערך הכנסה לא תקין, במקרה של הקצאת זיכרון או במקרה שבו קיימת כבר
+ קבוצה עם המזהה הנ
+\begin_inset Quotes erd
+\end_inset
+
+ל, תחזיר הפונקציה ערך מתאים בהתאם לדרישות ומבנה הנתונים אינו ישתנה.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $level)$
+\end_inset
+
+ 
+\begin_inset Formula $GroupID,int$
+\end_inset
+
+ 
+\begin_inset Formula $PlayerID,int$
+\end_inset
+
+ 
+\begin_inset Formula $AddPlayer(void^{*}DS,int$
+\end_inset
+
+ 
+\begin_inset Formula $StatusType$
+\end_inset
+
+: הפעולה יוצרת שחקן חדש, מוצאת את הקבוצה שאליה יש לצרפו ומכניסה את השחקן
+ לקבוצה הנ
+\begin_inset Quotes erd
+\end_inset
+
+ל ולקבוצה של כל השחקנים במשחק.
+ בעת ההכנסה, שתי הקבוצות יכניסו את אותו שחקן )אותה כתובת בזיכרון( לעץ השחקנים
+ שמזוהים באמצעות המספר הסידורי וייצרו לעצמן עותק מקומי אותו יכניסו לעץ של
+ השחקנים לפי השלב.
+ בצורה זו, לכל שחקן, שנמצא בקבוצה של כל השחקנים תישמר כקבוצה, הקבוצה בה
+ הוא באמת נמצא.
+ כך נדע לגשת אליה במידת הצורך בצורה שתתואר בהמשך.
+ סיבוכיות הזמן של מציאת מיקום השחקן בקבוצה של כל השחקנים היא 
+\begin_inset Formula $O(log(n))$
+\end_inset
+
+ ומציאת הקבוצה לה יש להוסיפו בעץ כל הקבוצות היא 
+\begin_inset Formula $O(log(k))$
+\end_inset
+
+ ולכן סיבוכיות הזמן הכוללת של הפעולה היא 
+\begin_inset Formula $O(log(n)+log(k))$
+\end_inset
+
+.
+ במידה ונכנס ערך לא תקין, השחקן כבר נמצא במשחק, הקבוצה שאליה הוא אמור להיכנס
+ לא קיימת או של הקצאת זיכרון שלא צלחה, יוחזר ערך מתאים ומבנה הנתונים אינו
+ ישתנה.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $PlayerID)$
+\end_inset
+
+ 
+\begin_inset Formula $RemovePlayer(void^{*}DS,int$
+\end_inset
+
+ 
+\begin_inset Formula $StatusType$
+\end_inset
+
+: הפעולה תמצא את השחקן בקבוצת כל השחקנים לפי המספר המזהה שלו, תיגש לקבוצתו
+ דרך המצביע אותו מחזיק השחקן, תסיר אותו משני העצים בהם הוא מוחזק לפי השלב
+ )בקבוצתו ובקבוצת כל השחקנים(, ואז תמחק את העותק שמופיע בשני העצים לפי המספר
+ המזהה.
+ סה
+\begin_inset Quotes erd
+\end_inset
+
+כ, חוץ ממציאת השחקן בקבוצה של כל השחקנים, כל הפעולות קבועות ולכן סיבוכיות
+ הזמן הכוללת של הפעולה היא 
+\begin_inset Formula $O(log(n))$
+\end_inset
+
+.
+ במקרה של ערך הכנסה לא מתאים, השחקן אינו במשחק, או במקרה של בעיה בהקצאת
+ זיכרון, יוחזר ערך מתאים ומבנה הנתונים אינו ישתנה.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $ReplacemenetID)$
+\end_inset
+
+ 
+\begin_inset Formula $GroupID,int$
+\end_inset
+
+ 
+\begin_inset Formula $ReplaceGroup(void^{*}DS,int$
+\end_inset
+
+ 
+\begin_inset Formula $StatusType$
+\end_inset
+
+: ראשית נסביר איך עובדת פונקציית עזר של העץ על מנת להסביר בקלות פונקציה
+ זו - הפונקציה 
+\begin_inset Formula $combineTrees$
+\end_inset
+
+ מקבלת שני עצים, מסיירת בהם 
+\begin_inset Quotes eld
+\end_inset
+
+לפי סדר
+\begin_inset Quotes erd
+\end_inset
+
+ - 
+\begin_inset Formula $inorder$
+\end_inset
+
+ יוצרת שני מערכים עם הערכים של כל אחד מהעצים, ממזגת ביחד למערך אחד המכיל
+ את כל האיברים בכך שהיא עוברת לפי סדר על שני המערכים ומכניסה בכל פעם את
+ הקטן בין השניים )פעולה זו קורת ב-
+\begin_inset Formula $O(n_{1}+n_{2})$
+\end_inset
+
+ כאשר בעץ i יש 
+\begin_inset Formula $n_{i}$
+\end_inset
+
+ איברים(, הופכת את העץ אליו נכניס את הערכים להיות בעל גודל מתאים בכך שהופכת
+ אותו לעץ כמעט שלם מהגודל והגובה המתאימים )גם פעולה זו קורת ב- 
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+
+\begin_inset Formula $O(n_{1}+n_{2})$
+\end_inset
+
+ ( ולאחר מכן מסיירת על העץ 
+\begin_inset Formula $inorder$
+\end_inset
+
+ ומכיניסה את הערכים מהמערך המשולב למקומות המתאימים בעץ )גם פעולה זו, כפעולת
+ סיור, קורת ב- 
+\begin_inset Formula $O(n_{1}+n_{2})$
+\end_inset
+
+(.
+ 
+\begin_inset Newline newline
+\end_inset
+
+כעת נסביר את פעולת מיזוג הקבוצות: פעולה זו ממזגת את שני העצים של שתי הקבוצות
+ בהתאמה )שחקנים לפי מספר מזהה עם שחקנים לפי מספר מזהה ושחקנים לפי שלב עם
+ שחקנים לפי שלב(, לאחר מכן מעדכנת את השחקן עם השלב הגבוהה ביותר במידת הצורך,
+ עוברת את כל שחקני העץ לפי סדר, מעדכנת את קבוצתם להיות הקבוצה בה כעת כולם
+ נמצאים )מניהול הזיכרון הדבר יגרום לכך שבקבוצה של כל השקנים, השחקנים שעברו
+ קבוצה יתעדכנו כם כן( ופעולה זו, כפעולת סיור על העצים של הקבוצה קורת ב-
+ 
+\begin_inset Formula $O(n_{1}+n_{2})$
+\end_inset
+
+ כאשר 
+\begin_inset Formula $n_{1}+n_{2}$
+\end_inset
+
+ היא כמות השחקנים בשתי הקבוצות יחד, כלומר כמות השחקנים כעת בקבוצה לבסוף
+ הקבוצה 
+\family default
+\series bold
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+מעדכנת את המצביעים שהצביעו על הקבוצה אותה מוחקים להיות לערכים המתאימים )המצביע
+ של קבוצה עם מספר סידורי קטן יותר לדוגמה והצביע עליה, יעודכן להצביע על הקבוצה
+ הבאה ברשימה( ואז ניסיר אותה מעץ כל הקבוצות
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+.
+ במידה ואחד מערכי הקלט לא תקין, אחת הקבוצות לא נמצאת או במקרה של בעיית זיכרון,
+ יוחזרו ערכים מתאימים והמבנה לא ישתנה.
+ סה
+\begin_inset Quotes erd
+\end_inset
+
+כ, סיבוכיות הזמן של הפעולה היא מציאת שתי הקבוצות בעץ הקבוצות - 
+\begin_inset Formula $O(log(k))$
+\end_inset
+
+ ומיזוג הקבוצות - 
+\begin_inset Formula $O(n_{1}+n_{2})$
+\end_inset
+
+ ולכן סיבוכיות הזמן הכוללת היא 
+\begin_inset Formula $O(n_{1}+n_{2}+log(k))$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $LevelIncrease)$
+\end_inset
+
+ 
+\begin_inset Formula $PlayerID,int$
+\end_inset
+
+ 
+\begin_inset Formula $IncreaseLevel(void^{*}DS,int$
+\end_inset
+
+ 
+\begin_inset Formula $StatusType$
+\end_inset
+
+: הפעולה תמצא את השחקן לפי מספרו המזהה בקבוצה של כל השקנים, לאחר מכן תיגש
+ דרכו לקבוצה שלו, שם תמצא אותו בתוך שחקני הקבוצה בשני העצים שלה, לאחר מכן
+ תעדכן את שלבו בהתאם לקלט בשני העצים שבהם השחקנים ממויינים השחקנים לפי השלב,
+ ואז תעדכן רק במקום אחד )השני יתעדכן כי זה אותו העותק, העדכון יבוצע דרך
+ העותק שהגיע בקבוצת כל השחקנים( את שלב השחקן בעץ ממויין לפי מספר מזהה.
+ סה
+\begin_inset Quotes erd
+\end_inset
+
+כ הפעולה היחידה שתלויה בקלט היא מציאת השחקן ופעולה זו מבצעת ב- 
+\begin_inset Formula $O(log(n))$
+\end_inset
+
+.
+ לכן, סיבוכיות הזמן הכוללת של הפעולה היא 
+\begin_inset Formula $O(log(n))$
+\end_inset
+
+.
+ במידה וערך הכנסה לא תקין/לא קיים שחקן עם מספר מזהה כנ
+\begin_inset Quotes erd
+\end_inset
+
+ל במשחק או במקרה של בעיית זיכרון, יוחזר ערך מתאים ומבנה הנתונים לא ישתנה.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $PlayerID)$
+\end_inset
+
+ 
+\begin_inset Formula $GroupId,int^{*}$
+\end_inset
+
+ 
+\begin_inset Formula $GetHighestLevel(void^{*}DS,int$
+\end_inset
+
+ 
+\begin_inset Formula $StatusType$
+\end_inset
+
+: נחלק את התנהלות הפונקציה לשתיים לפי הקלט ב- 
+\begin_inset Formula $GroupId$
+\end_inset
+
+ :
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $GroupId>0$
+\end_inset
+
+: במקרה זה, הפונקציה תמצא את הקבוצה בעץ הקבוצות ותחזיר את המספר המזהה של
+ השחקן ששמור אצלה עם השלב הגבוהה ביותר.
+ זמן ריצת התוכנית תלוי במיקום הקבוצה בעץ הקבוצות שכן שאר הפעולות הן קבועות
+ ולא תלויות בקלט, לכן במקרה זה סיבוכיות הזמן היא 
+\begin_inset Formula $O(log(k))$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $GroupId<0$
+\end_inset
+
+: הפעולה תיגש לשחקן ברמתו הגבוהה ביותר דרך קבוצת כל השחקנים ותחזיר את מספרו
+ המזהה.
+ סיכוביות הזמן היא 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ במקרה זה.
+ במידה והקלט אינו תקין, הקבוצה הרצויה ריקה/אין בכלל שחקנים, או במקרה של
+ בעיית זיכרון, יוחזר ערך מתאים ומבנה הנתונים לא ישתנה.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $numOfPlayers)$
+\end_inset
+
+ 
+\begin_inset Formula $GroupID,int^{*}$
+\end_inset
+
+ 
+\begin_inset Formula $GroupID,int^{**}$
+\end_inset
+
+ 
+\begin_inset Formula $GetAllPlayersByLevel(void^{*}DS,int$
+\end_inset
+
+ 
+\begin_inset Formula $StatusType$
+\end_inset
+
+: נחלק את התנהלות הפונקציה לשתיים לפי הקלט ב- 
+\begin_inset Formula $GroupId$
+\end_inset
+
+ :
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $GroupId>0$
+\end_inset
+
+: במקרה זה, הפונקציה תמצא את הקבוצה בעץ הקבוצות, תמשתמש בפונקציית עזר של
+ העץ, ותקבל את כל השחקנים ממויינים לפי השלב שלהם בסדר עולה, תייצר מערך חדש
+ אליו תכניס את השחקנים בסדר הפוך מזה שבו קקיבלה אותם במערך מהעץ.
+ פעולת העזר בעץ היא סיור ושמירת הערכים והיא קורת ב- 
+\begin_inset Formula $O(n_{group})$
+\end_inset
+
+ כמו גם אתחול המערך החדש אותו היא מחזירה.
+ מציאת הקבוצה בעץ היא ב- 
+\begin_inset Formula $O(log(k))$
+\end_inset
+
+ ולכן סה
+\begin_inset Quotes erd
+\end_inset
+
+כ סיבוכיות הזמן של הפונקציה היא 
+\begin_inset Formula $O(log(k)+n_{group})$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $GroupId<0$
+\end_inset
+
+: הפעולה תיגש לקבוצת כל השחקנים, תשתמש באותה פונקציית עזר של העץ, תקבל מערך
+ של כל השחקנים ממויין לפי השלב מהקטן לגדול, תצייר מערך חדש בסדר יורד ותחזיר
+ אותו.
+ סיכוביות הזמן היא 
+\begin_inset Formula $O(n)$
+\end_inset
+
+ במקרה זה.
+ במשתנה 
+\begin_inset Formula $numOfPlayers$
+\end_inset
+
+ תוחזר כמות השחקנים בקבוצה או בכל השחקנים כתלות ב- 
+\begin_inset Formula $GroupId$
+\end_inset
+
+.
+ במידה והקלט אינו תקין, הקבוצה הרצויה ריקה/אין בכלל שחקנים, או במקרה של
+ בעיית זיכרון, יוחזר ערך מתאים לפי הדרישות ומבנה הנתונים לא ישתנה.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $Players)$
+\end_inset
+
+ 
+\begin_inset Formula $numOfGroups,int^{**}$
+\end_inset
+
+ 
+\begin_inset Formula $GetGroupsHighestLevel(void^{*}DS,int$
+\end_inset
+
+ 
+\begin_inset Formula $StatusType$
+\end_inset
+
+: הפעולה תעבור על כל הקבוצות הלא ריקות דרך המצביעים בין הקבוצות, היא תתחיל
+ מהקבוצה הנמוכה ביותר )אותה תמצא דרך פעולות העץ בסיבוכיות של 
+\begin_inset Formula $O(log(k))$
+\end_inset
+
+( ומשם תעבור למצביע הבא בכל פעם ותיגש לשחקן ברמה הגבוהה ביותר בכל קבוצה
+ ועד שסכימת השחקנים תסתכם לערך של 
+\begin_inset Formula $numOfGroups$
+\end_inset
+
+.
+ במידה ויהיו פחות קבוצות מלאות מערך זה, יוחזר ערך החזרה מתאים, כמו כן, במידה
+ והקלט אינו תקין, או במקרה של בעיית זיכרון, יוחזר ערך מתאים לפי הדרישות
+ ומבנה הנתונים לא ישתנה.
+ הפונקציה רצה רק על הקבוצות הלא ריקות אחרי גישה לקבוצה בעלת המזהה הנמוך
+ ביותר, ומכל אחת מהם עושה מספר קבוע של פעולות ולכן סה
+\begin_inset Quotes erd
+\end_inset
+
+כ סיבוכיות הזמן של הפוקנציה היא 
+\begin_inset Formula $O(log(k)+numOfGroups)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+\begin_inset Formula $Quit(void^{*}DS)$
+\end_inset
+
+ 
+\begin_inset Formula $void$
+\end_inset
+
+: הפעולה תשחרר את הזיכרון של העץ הקבוצות ושל קבוצצת כל השחקים דרך כאשר שחרור
+ הזיכרון נעשה ברובו במחיקת העצים שם שמורים השחקנים בקבוצות והקבוצות בעצים.
+ כל עץ נמחק דרך שימוש בסיור 
+\begin_inset Formula $postorder$
+\end_inset
+
+ ובכך נמחק בסיבוכיות של 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ כאשר m היא כמות האובייקטים בעץ .
+ כל שחקן נשמר
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+3
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+פעמים וכל קבוצה פעם אחת ולכן סיבוכיות הזמן של השחרור הכולל היא 
+\begin_inset Formula $O(3n+k+1)=O(n+k)$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+מבנה הנתונים עומד ברשיות סיבוכיות המקום כי:
+\end_layout
+
+\begin_layout Enumerate
+עבור כל שחקן, יש בדיוק שלוש חוליות השומרות את המבנה שלו )תחת הקבוצה בה הוא
+ נמצא ותחת עץ הקבוצה של כל השחקנים בקבוצה קיים אותו העתק המזהה לפי המספר
+ המזהה + עותק נוסף בכל אחת מקבוצות אלו הממיין את השחקן לפי רמתו(, כל אחת
+ מהן שומרות כמות קבועה של זיכרון ולכן כלל הזיכרון הנשמר עבור השחקנים חסום
+ מלמעלה ע
+\begin_inset Quotes erd
+\end_inset
+
+י קבוע )התלוי בכמה מקום נשמר עבור כל מבנה של שחקן( כפול כמות השחקנים.
+ בסה
+\begin_inset Quotes erd
+\end_inset
+
+כ נקבל שסיבוכיות המקום עבור השחקנים בלבד היא 
+\begin_inset Formula $O(n)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+יש סה
+\begin_inset Quotes erd
+\end_inset
+
+כ 
+\begin_inset Formula $k+1$
+\end_inset
+
+ מבנים של קבוצות הנשמרים )אחד לכל קבוצה + קבוצה של כל השחקנים( כאשר עבור
+ כל אחד מהם נשמרת כמות קבועה של מקום )כאשר את השקחנים עבור כל קבוצה ספרנו
+ בנפרד( ולכן סה
+\begin_inset Quotes erd
+\end_inset
+
+כ סיבוכיות המקום עבור הקבוצות היא 
+\begin_inset Formula $O(k)$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Enumerate
+שאר רכיבי הזיכרון בהם נשתמש הם קבועים ) מצביעים, מספרים המציינים את גודל
+ הקבוצות וכו, הם זניחים ביחס ל-
+\begin_inset Formula $k,n$
+\end_inset
+
+ גדולים( ועל כן לא ישפיעו על סיבוכיות המקום.
+ כמו כן, מבני נתונים זמניים כגון מערכי עזר בהם נשתמש, אינם ישפיעו על סיבכיות
+ המקום הכוללת של התרגיל שכן הם יהיו גם כן במקרה הגרוע ביותר ב-
+\begin_inset Formula $O(n)$
+\end_inset
+
+ והם ימחקו בד
+\begin_inset Quotes erd
+\end_inset
+
+כ בסוף הפעולה אלא אם כן נתבקש להחזירם, בפוקנציות 
+\begin_inset Formula $GetAllPlayersByLevel$
+\end_inset
+
+ ו- 
+\begin_inset Formula $GetGroupsHighestLevel$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+לכן, סה
+\begin_inset Quotes erd
+\end_inset
+
+כ סיכויות המקום של המבנה כולו היא 
+\begin_inset Formula $O(n+k)$
+\end_inset
+
+ כנדרש.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{adjustwidth*}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

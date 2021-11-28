@@ -96,6 +96,9 @@ CMAKE_C_FLAGS_RELWITHDEBINFO:STRING=-O2 -g -DNDEBUG
 //Libraries linked by default with all C applications.
 CMAKE_C_STANDARD_LIBRARIES:STRING=-lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
 
+//No help, variable specified on the command line.
+CMAKE_DEPENDS_USE_COMPILER:UNINITIALIZED=FALSE
+
 //Path to a program.
 CMAKE_DLLTOOL:FILEPATH=C:/TDM-GCC-64/bin/dlltool.exe
 
@@ -118,7 +121,7 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=
 CMAKE_GNUtoMS:BOOL=OFF
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/wet1
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/DaSt
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=C:/TDM-GCC-64/bin/ld.exe
@@ -162,7 +165,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=wet1
+CMAKE_PROJECT_NAME:STATIC=DaSt
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=C:/TDM-GCC-64/bin/ranlib.exe
@@ -245,10 +248,10 @@ CMAKE_STRIP:FILEPATH=C:/TDM-GCC-64/bin/strip.exe
 CMAKE_VERBOSE_MAKEFILE:BOOL=FALSE
 
 //Value Computed by CMake
-wet1_BINARY_DIR:STATIC=C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug
+DaSt_BINARY_DIR:STATIC=C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug
 
 //Value Computed by CMake
-wet1_SOURCE_DIR:STATIC=C:/Users/tomgu/source/semester3/dast/wet1
+DaSt_SOURCE_DIR:STATIC=C:/Users/tomgu/source/semester3/dast/wet1
 
 
 ########################
@@ -264,7 +267,7 @@ CMAKE_CACHEFILE_DIR:INTERNAL=c:/Users/tomgu/source/semester3/dast/wet1/cmake-bui
 //Major version of cmake used to create the current loaded cache
 CMAKE_CACHE_MAJOR_VERSION:INTERNAL=3
 //Minor version of cmake used to create the current loaded cache
-CMAKE_CACHE_MINOR_VERSION:INTERNAL=19
+CMAKE_CACHE_MINOR_VERSION:INTERNAL=20
 //Patch version of cmake used to create the current loaded cache
 CMAKE_CACHE_PATCH_VERSION:INTERNAL=2
 //ADVANCED property for variable: CMAKE_COLOR_MAKEFILE
@@ -388,7 +391,7 @@ CMAKE_RC_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_READELF
 CMAKE_READELF-ADVANCED:INTERNAL=1
 //Path to CMake installation.
-CMAKE_ROOT:INTERNAL=C:/Program Files/JetBrains/CLion 2020.2.4/bin/cmake/win/share/cmake-3.19
+CMAKE_ROOT:INTERNAL=C:/Program Files/JetBrains/CLion 2020.2.4/bin/cmake/win/share/cmake-3.20
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS
 CMAKE_SHARED_LINKER_FLAGS-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_SHARED_LINKER_FLAGS_DEBUG

@@ -21,7 +21,7 @@ namespace wet1_dast
 
     }
 
-    PlayerManager::StatusType PlayerManager::AddGroup(int GroupId)
+    StatusType PlayerManager::AddGroup(int GroupId)
     {
         if(GroupId <= 0)
         {
@@ -29,14 +29,14 @@ namespace wet1_dast
         }
         try
         {
-            Group new_group* = new Group(GroupId);
+            Group* new_group = new Group(GroupId);
             Groups.insert(*new_group); //need to figaure out what to do if
-            Group* closest = Groups.findClosest(new_group);
+            Group* closest = Groups.findClosestFromBelow(*new_group);
             if(!closest)
             {
                 new_group->setPrev(nullptr);
-                Group* closest_from_above = Groups.findClosestFromAbove(new_group);
-                (closest_from_above) ? new_group.setNext(closest_from_above) : new_group.setNext(nullptr);
+                Group* closest_from_above = Groups.findClosestFromAbove(*new_group);
+                (closest_from_above) ? new_group->setNext(closest_from_above) : new_group->setNext(nullptr);
             }
             else
             {
@@ -55,7 +55,7 @@ namespace wet1_dast
         }
     }
 
-    PlayerManager::StatusType PlayerManager::AddPlayer(int PlayerId, int GroupId, int level)
+    StatusType PlayerManager::AddPlayer(int PlayerId, int GroupId, int level)
     {
         if(PlayerId <= 0 || GroupId <= 0 || level < 0)
         {
@@ -69,9 +69,9 @@ namespace wet1_dast
             {
                 return FAILURE;
             }
-            Player* player = Player(PlayerId, level, playersGroup, true);
-            players.AddPlayer(*player);
-            playersGroup.AddPlayer(*player);
+            Player player = Player(PlayerId, level, playersGroup, true);
+            players.AddPlayer(player);
+            playersGroup->AddPlayer(player);
         }
         catch (const AVLTree<Player>::ItemExist& e)
         {
@@ -84,7 +84,7 @@ namespace wet1_dast
         return ALLOCATION_ERROR;
     }
 
-    PlayerManager::StatusType PlayerManager::RemovePlayer(int PlayerId)
+    StatusType PlayerManager::RemovePlayer(int PlayerId)
     {
         if(PlayerId <= 0)
         {
@@ -95,13 +95,13 @@ namespace wet1_dast
         {
             return FAILURE;
         }
-        (player->getGroup)->removePlayer(player); // ignore the player that returns from the function because its get
+        (player->getGroup)()->removePlayer(player); // ignore the player that returns from the function because its get
                                                // deleted in the next line
         delete players.removePlayer(player);
         return SUCCESS;
     }
 
-    PlayerManager::StatusType PlayerManager::ReplaceGroup(int GroupId, int ReplacementId)
+    StatusType PlayerManager::ReplaceGroup(int GroupId, int ReplacementId)
     {
         if(GroupId == ReplacementId || GroupId <= 0 || ReplacementId <= 0)
         {
@@ -115,7 +115,7 @@ namespace wet1_dast
             Group* g_to_replace = Groups.find(group_replace);
             if(!g_to_delete || g_to_replace)
                 return FAILURE;
-            CombineGroups(g_to_replace, g_to_delete);
+            CombineGroups(*g_to_replace, *g_to_delete);
             group_delete.correctAfterRemove();
             delete Groups.remove(group_delete);
         }
@@ -126,18 +126,17 @@ namespace wet1_dast
         return SUCCESS;
     }
 
-    PlayerManager::StatusType PlayerManager::IncreaseLevel(int PlayerId, int LevelIncrease)
+    StatusType PlayerManager::IncreaseLevel(int PlayerId, int LevelIncrease)
     {
         if(PlayerId <= 0 || LevelIncrease <= 0)
             return INVALID_INPUT;
         try
         {
-            Player p(PlayerId, 0);
-            Player* player = players.findPlayer(p);
+            Player* player = players.findPlayer(PlayerId);
             if(!player)
                 return FAILURE;
             player->setLevel(LevelIncrease);
-            player->group->increaseLevelToPlayer(*player, LevelIncrease);
+            player->getGroup()->increaseLevelToPlayer(*player, LevelIncrease);
             players.increaseLevelToPlayer(*player, LevelIncrease);
             return SUCCESS;
         }
@@ -147,7 +146,7 @@ namespace wet1_dast
         }
     }
 
-    PlayerManager::StatusType PlayerManager::GetHighestLevel(int GroupId, int *PlayerId)
+    StatusType PlayerManager::GetHighestLevel(int GroupId, int *PlayerId)
     {
         if(GroupId == 0 || !PlayerId)
             return INVALID_INPUT;
@@ -163,8 +162,8 @@ namespace wet1_dast
             Group* group = Groups.find(g);
             if(!group)
                 return FAILURE;
-            (group.Get_Highest_Player() == nullptr)? *PlayerId = -1 :
-                    *PlayerId = group.Get_Highest_Player()->getId();
+            (group->Get_Highest_Player() == nullptr)? *PlayerId = -1 :
+                    *PlayerId = group->Get_Highest_Player()->getId();
             return SUCCESS;
         }
         catch (std::exception& e)
@@ -173,7 +172,7 @@ namespace wet1_dast
         }
     }
 
-    PlayerManager::StatusType PlayerManager::GetAllPlayersByLevel(int GroupId, int **Players, int *numOfPlayers)
+    StatusType PlayerManager::GetAllPlayersByLevel(int GroupId, int **Players, int *numOfPlayers)
     {
         if (GroupId == 0 || !Players || !numOfPlayers)
             return INVALID_INPUT;
@@ -184,20 +183,20 @@ namespace wet1_dast
                 if(players.GetSize() == 0)
                 {
                     *numOfPlayers = 0;
-                    Players = NULL;
+                    *Players = NULL;
                     return SUCCESS;
                 }
                 Group g(GroupId);
                 Group* group = Groups.find(g);
                 if(!group)
                     return FAILURE;
-                if(group.GetSize() == 0)
+                if(group->GetSize() == 0)
                 {
                     *numOfPlayers = 0;
                     Players = NULL;
                     return SUCCESS;
                 }
-                Player* players_of_the_group = group.getPlayersByLevel();
+                Player* players_of_the_group = group->getPlayersByLevel();
                 int *group_players = (int*)malloc(sizeof(int)*group->GetSize());
                 if(!group_players)
                 {
@@ -215,11 +214,11 @@ namespace wet1_dast
         }
         catch (std::exception* e)
         {
-            return ALLOCATION_ERROR;
         }
+        return ALLOCATION_ERROR;
     }
 
-    PlayerManager::StatusType PlayerManager::GetGroupsHighestLevel(int numOfGroups, int **Players)
+    StatusType PlayerManager::GetGroupsHighestLevel(int numOfGroups, int **Players)
     {
         if(numOfGroups < 1 || !Players)
             return INVALID_INPUT;
@@ -228,8 +227,9 @@ namespace wet1_dast
             int* highest_players = (int*)malloc(sizeof(int)*numOfGroups);
             if(!highest_players)
                 return ALLOCATION_ERROR;
-            Group* group = Groups.GetLowestValue();
-            for(int count = 0; count < numOfGroups && group; count++)
+            Group* group = Groups.GetLowesValue();
+            int count;
+            for(count = 0; count < numOfGroups && group; count++)
             {
                 highest_players[count] = group->Get_Highest_Player()->getId();
                 group = group->getNextGroup();
@@ -245,13 +245,13 @@ namespace wet1_dast
 
         catch (std::exception&e)
         {
-            return ALLOCATION_ERROR;
         }
+        return ALLOCATION_ERROR;
     }
 
     void PlayerManager::Quit()
     {
-        delete Groups;
-        delete players;
+        delete &Groups;
+        delete &players;
     }
 }
