@@ -44,7 +44,8 @@ namespace wet1_dast
                 father = nullptr;
                 right_son = nullptr;
                 left_son = nullptr;
-               delete value;
+                value=nullptr;
+
 
             }
 
@@ -58,7 +59,7 @@ namespace wet1_dast
                 return (*value <= *(other->value));
             }
 
-           bool Tree_Creator_AUX(int *size_of_tree, int height_of_tree);
+           void Tree_Creator_AUX(int *size_of_tree, int height_of_tree);
 
         };
 
@@ -105,11 +106,11 @@ namespace wet1_dast
 
         void correctHeight(Node *ver);
 
-        Node *easyCaseRemove(Node *loc, bool &easy_case, T* value);
+        Node *easyCaseRemove(Node *loc, bool &easy_case);
 
-        T* rootCaseRemove();
+        void rootCaseRemove();
 
-        Node *swapWithNext(Node *loc);
+        void swapWithNext(Node *loc, Node** place);
 
         void checkForRolls(Node *start);
 
@@ -179,7 +180,9 @@ namespace wet1_dast
             to_insert.createEmptyTree(full_size);
             int index = 0;
             to_insert.inorderIn(all_players, index ,to_insert.root);
-            // .. okay?
+            delete[] all_players;
+
+
 
 
         }
@@ -228,7 +231,11 @@ namespace wet1_dast
             }
         };
 
-        T* findClosest(const T &value); // return thr closest from below to the value in the tree
+        T* findClosestFromBelow(const T &value); // return thr closest from below to the value in the tree
+
+        T* findClosestFromAbove(const T &value); // return thr closest from above to the value in the tree
+
+        T* GetLowesValue();
 
         void printTree();
 
@@ -238,21 +245,21 @@ namespace wet1_dast
     static int max(int a, int b);
 
     template<class T>
-    bool AVLTree<T>::Node::Tree_Creator_AUX(int *size_of_tree, int height_of_tree)
+    void AVLTree<T>::Node::Tree_Creator_AUX(int *size_of_tree, int height_of_tree)
     {
         //stoping condition,if we reached the bottom of the tree,stop.
         if (*size_of_tree <= 0 || height_of_tree == -1)
         {
-            return false;
+            return;
         }
-        if(!left_son&&*size_of_tree>0&&height_of_tree>=0)
+        if(!left_son && *size_of_tree>0 && height_of_tree> -1  )
         {
             left_son = new typename AVLTree<T>::Node();
             (*size_of_tree)--;
             left_son->Tree_Creator_AUX(size_of_tree,height_of_tree-1);
         }
         //if we can , build to the right?
-        if(!right_son&&*size_of_tree>0&&height_of_tree>=0)
+        if(!right_son && *size_of_tree>0 && height_of_tree> -1 )
         {
             right_son = new typename AVLTree<T>::Node();
             (*size_of_tree)--;
@@ -266,7 +273,7 @@ namespace wet1_dast
             left_son->father = this;
         if (right_son!=nullptr)
             right_son->father = this;
-        return true;
+        return ;
     }
 
     template<class T>
@@ -274,10 +281,11 @@ namespace wet1_dast
     {
         //calculate the height based on size.
         //create the tree, for each conjunction , alloc node, perfferably in recursive way.
-        int height_of_new_tree = (int) ceil(log2(size_of_tree + 1)) - 1;
+        int height_of_new_tree = (int) ceil(log2(size_of_tree +1)) - 1;
         postOrderDelete(root);
         //now we dont have anything.
         //we need to creat new root.
+        size_of_tree--;
         root= new Node();
         root->Tree_Creator_AUX(&size_of_tree, height_of_new_tree);//memory allocation?what do we do with it? :)
     }
@@ -310,21 +318,22 @@ namespace wet1_dast
 
 
     template<class T>
-    typename AVLTree<T>::Node *AVLTree<T>::easyCaseRemove(AVLTree<T>::Node *loc, bool &easy_case, T* value)
+    typename AVLTree<T>::Node *AVLTree<T>::easyCaseRemove(AVLTree<T>::Node *loc, bool &easy_case)
     {
+        Node *ver ;
         //if he has no sons.
         if (!(loc->right_son || loc->left_son))
         {
-            if (*(loc->value) <= *(loc->father->value))
+            if (loc == loc->father->left_son)
             {
                 loc->father->left_son = nullptr;
             } else
             {
                 loc->father->right_son = nullptr;
             }
-            Node *ver = loc->father;
-            value = loc->value;
+            ver=loc->father;
             delete loc;
+            loc=nullptr;
             easy_case = true;
             return ver;
         }
@@ -339,7 +348,6 @@ namespace wet1_dast
                 loc->father->right_son = loc->left_son;
             }
             Node *ver = loc->father;
-            value = loc->value;
             delete loc;
             easy_case = true;
             return ver;
@@ -355,7 +363,6 @@ namespace wet1_dast
                 loc->father->right_son = loc->right_son;
             }
             Node *ver = loc->father;
-            value = loc->value;
             delete loc;
             easy_case = true;
             return ver;
@@ -366,38 +373,35 @@ namespace wet1_dast
 
 
     template<class T>
-    T* AVLTree<T>::rootCaseRemove()
+    void AVLTree<T>::rootCaseRemove()
     {
-        T* value = root->value;
         if (!(root->right_son) && !(root->left_son))
         {
             delete root;
             root = nullptr;
-            return value;
         }
         else if (!(root->right_son) && root->left_son)
         {
             Node *temp = root->left_son;
             delete root;
             root = temp;
-            return value;
+
         } else if (root->right_son && !(root->left_son))
         {
             Node *temp = root->right_son;
             delete root;
             root = temp;
-            return value;
         }
-        Node *ver = swapWithNext(root);
+        Node *ver;
+        swapWithNext(root, &ver);
         bool easyCase;
-        easyCaseRemove(ver, easyCase, value);
-        correctHeight(ver);
-        checkForRolls(ver);
-        return value;
+        Node* place_to_fix = easyCaseRemove(ver, easyCase);
+        correctHeight(place_to_fix);
+        checkForRolls(place_to_fix);
     }
 
     template<class T>
-    typename AVLTree<T>::Node *AVLTree<T>::swapWithNext(Node *loc)
+    void AVLTree<T>::swapWithNext(Node *loc, Node** place)
     {
         Node* temp;
         if(loc->right_son) {
@@ -416,9 +420,7 @@ namespace wet1_dast
             T *temp_value = temp->value;// Candidate value.
             temp->value = loc->value; //location value.
             loc->value = temp_value; //
-            return temp;
-
-
+            *place = temp;
     }
 
 
@@ -621,26 +623,27 @@ namespace wet1_dast
     {
         Node *loc;
         Node *father_of_loc;
-        if (!find_in_tree(root, val, &loc, &father_of_loc))
+        T* value = find_in_tree(root, val, &loc, &father_of_loc);
+        if (!value)
         {
             throw ItemNotExist();
         }
         size--;
         if (loc == root)
         {
-            return rootCaseRemove();
+           rootCaseRemove();
+           return value;
         }
         bool easy_case = false;
-        T* value;
-        Node *ver = easyCaseRemove(loc, easy_case, value); //problem, loc ->father is NULL and it shouldn't be?
+        Node *ver = easyCaseRemove(loc, easy_case); //problem, loc ->father is NULL and it shouldn't be?
         if (easy_case)
         {
             correctHeight(ver);
             checkForRolls(ver);
             return value;
         }
-        ver = swapWithNext(loc);
-        easyCaseRemove(loc, easy_case, value);
+         swapWithNext(loc, &ver);
+        easyCaseRemove(loc, easy_case);
         correctHeight(ver);
         checkForRolls(ver);
         return value;
@@ -664,7 +667,6 @@ namespace wet1_dast
         if (!ver)
             return;
         inorderHelper(values, index, ver->left_son);
-
         values[(*index)++] = *(ver->value); //need to implement an assignment operator for class Player
         inorderHelper(values, index, ver->right_son);
     }
@@ -676,24 +678,19 @@ namespace wet1_dast
         if (!ver)
             return;
         inorderIn(values, index, ver->left_son);
-        (ver->value) =& (values[index++]); //need to implement a assignment operator for Player. TODO
+        ver->value = new T(values[index++]);
         inorderIn(values, index, ver->right_son);
-
     }
 
     template<class T>
-    T* AVLTree<T>::findClosest(const T &value)
+    T* AVLTree<T>::findClosestFromBelow(const T &value)
     {
-        if (*(root->value) == value)
-        {
-            return nullptr;
-        }
         Node *loc;
         Node *father_of_loc;
         find_in_tree(root, value, &loc, &father_of_loc);
-        if (loc->right_son)
+        if (loc->left_son)
         {
-            return loc->right_son->value;
+            return loc->left_son->value;
         }
         if (father_of_loc)
         {
@@ -714,6 +711,7 @@ namespace wet1_dast
             return;
         postOrderDelete(ver->left_son);
         postOrderDelete(ver->right_son);
+//        delete ver->value;
         delete ver;
     }
 
@@ -745,6 +743,35 @@ namespace wet1_dast
     {
         return root->value;
     }
+
+    template<class T>
+    T *AVLTree<T>::findClosestFromAbove(const T &value)
+    {
+        Node *loc;
+        Node *father_of_loc;
+        find_in_tree(root, value, &loc, &father_of_loc);
+        if (loc->right_son)
+        {
+            return loc->right_son->value;
+        }
+        if (father_of_loc)
+        {
+            return father_of_loc->value;
+        }
+    }
+
+    template<class T>
+    T *AVLTree<T>::GetLowesValue() {
+        if(!root)
+            return nullptr;
+        Node* temp = root->left_son;
+        while(temp)
+        {
+            temp = temp->left_son;
+        }
+        return temp->value;
+    }
+
 }
 
 

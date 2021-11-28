@@ -89,7 +89,7 @@ namespace wet1_dast {
         delete players_by_level.remove(player_by_level);
         if (*(Highest_Player) == *player)
         {
-            Highest_Player = players_by_level.findClosest(player_by_level);
+            Highest_Player = players_by_level.findClosestFromBelow(player_by_level);
         }
         correctAfterRemove();
         return player_to_return;
@@ -160,8 +160,10 @@ namespace wet1_dast {
 
     Group::~Group()
     {
-        delete &players_by_level;
-        delete &players_by_id;
+//        delete &players_by_level;
+     //   delete &players_by_id;
+
+
     }
 
 }
