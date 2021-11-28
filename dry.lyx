@@ -22,8 +22,8 @@
 \use_non_tex_fonts true
 \font_sc false
 \font_osf false
-\font_sf_scale 100 100
-\font_tt_scale 100 100
+\font_sf_scale 100 110
+\font_tt_scale 100 110
 \use_microtype false
 \use_dash_ligatures true
 \graphics default
@@ -32,7 +32,7 @@
 \bibtex_command default
 \index_command default
 \paperfontsize default
-\spacing single
+\spacing onehalf
 \use_hyperref false
 \papersize default
 \use_geometry false
@@ -256,7 +256,7 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \begin_inset Quotes erd
 \end_inset
 
-ל, תחזיר הפונקציה ערך מתאים בהתאם לדרישות ומבנה הנתונים אינו ישתנה..
+ל, תחזיר הפונקציה ערך מתאים בהתאם לדרישות ומבנה הנתונים אינו ישתנה.
 \end_layout
 
 \begin_layout Enumerate
@@ -305,7 +305,7 @@ begin{adjustwidth*}{-3cm}{-3cm}
 
 .
  במידה ונכנס ערך לא תקין, השחקן כבר נמצא במשחק, הקבוצה שאליה הוא אמור להיכנס
- לא קיימת או של הקצאת זיכרון שלר צלחה, יוחזר ערך מתאים ומבנה הנתונים אינו
+ לא קיימת או של הקצאת זיכרון שלא צלחה, יוחזר ערך מתאים ומבנה הנתונים אינו
  ישתנה.
 \end_layout
 
@@ -322,8 +322,9 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \end_inset
 
 : הפעולה תמצא את השחקן בקבוצת כל השחקנים לפי המספר המזהה שלו, תיגש לקבוצתו
- דרך המצביע אותו מחזיק השחקן, תסיר אותו משני העצים בהם הוא מוחזק לפי השלב,
- ואז תמחק את העותק שמופיע בשני העצים לפי המספר המזהה.
+ דרך המצביע אותו מחזיק השחקן, תסיר אותו משני העצים בהם הוא מוחזק לפי השלב
+ )בקבוצתו ובקבוצת כל השחקנים(, ואז תמחק את העותק שמופיע בשני העצים לפי המספר
+ המזהה.
  סה
 \begin_inset Quotes erd
 \end_inset
@@ -382,7 +383,7 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \end_inset
 
  איברים(, הופכת את העץ אליו נכניס את הערכים להיות בעל גודל מתאים בכך שהופכת
- אותו לעץ כמעט שלם מהגודל והעומק המתאימים )גם פעולה זו קורת ב- 
+ אותו לעץ כמעט שלם מהגודל והגובה המתאימים )גם פעולה זו קורת ב- 
 \family roman
 \series medium
 \shape up
@@ -415,11 +416,11 @@ begin{adjustwidth*}{-3cm}{-3cm}
 
 כעת נסביר את פעולת מיזוג הקבוצות: פעולה זו ממזגת את שני העצים של שתי הקבוצות
  בהתאמה )שחקנים לפי מספר מזהה עם שחקנים לפי מספר מזהה ושחקנים לפי שלב עם
- שחקנים לפי שלב(, לאחר מכן מעדכנת את השחקן עם השלב הגבוהה ביותר במידת הצורך
- ולבסוף עוברת את כל שחקני העץ לפי סדר, מעדכנת את קבוצתם להיות הקבוצה בה
- כעת כולם נמצאים )מניהול הזיכרון הדבר יגרום לכך שבקבוצה של כל השקנים, השחקנים
- שעברו קבוצה יתעדכנו כם כן( ופעולה זו, כפעולת סיור על העצים של הקבוצה קורת
- ב- 
+ שחקנים לפי שלב(, לאחר מכן מעדכנת את השחקן עם השלב הגבוהה ביותר במידת הצורך,
+ עוברת את כל שחקני העץ לפי סדר, מעדכנת את קבוצתם להיות הקבוצה בה כעת כולם
+ נמצאים )מניהול הזיכרון הדבר יגרום לכך שבקבוצה של כל השקנים, השחקנים שעברו
+ קבוצה יתעדכנו כם כן( ופעולה זו, כפעולת סיור על העצים של הקבוצה קורת ב-
+ 
 \begin_inset Formula $O(n_{1}+n_{2})$
 \end_inset
 
@@ -427,7 +428,36 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \begin_inset Formula $n_{1}+n_{2}$
 \end_inset
 
- היא כמות השחקנים בשתי הקבוצות יחד, כלומר כמות השחקנים כעת בקבוצה.
+ היא כמות השחקנים בשתי הקבוצות יחד, כלומר כמות השחקנים כעת בקבוצה לבסוף
+ הקבוצה 
+\family default
+\series bold
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+מעדכנת את המצביעים שהצביעו על הקבוצה אותה מוחקים להיות לערכים המתאימים )המצביע
+ של קבוצה עם מספר סידורי קטן יותר לדוגמה והצביע עליה, יעודכן להצביע על הקבוצה
+ הבאה ברשימה( ואז ניסיר אותה מעץ כל הקבוצות
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+.
  במידה ואחד מערכי הקלט לא תקין, אחת הקבוצות לא נמצאת או במקרה של בעיית זיכרון,
  יוחזרו ערכים מתאימים והמבנה לא ישתנה.
  סה
@@ -465,7 +495,30 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \begin_inset Formula $StatusType$
 \end_inset
 
-: הפעולה
+: הפעולה תמצא את השחקן לפי מספרו המזהה בקבוצה של כל השקנים, לאחר מכן תיגש
+ דרכו לקבוצה שלו, שם תמצא אותו בתוך שחקני הקבוצה בשני העצים שלה, לאחר מכן
+ תעדכן את שלבו בהתאם לקלט בשני העצים שבהם השחקנים ממויינים השחקנים לפי השלב,
+ ואז תעדכן רק במקום אחד )השני יתעדכן כי זה אותו העותק, העדכון יבוצע דרך
+ העותק שהגיע בקבוצת כל השחקנים( את שלב השחקן בעץ ממויין לפי מספר מזהה.
+ סה
+\begin_inset Quotes erd
+\end_inset
+
+כ הפעולה היחידה שתלויה בקלט היא מציאת השחקן ופעולה זו מבצעת ב- 
+\begin_inset Formula $O(log(n))$
+\end_inset
+
+.
+ לכן, סיבוכיות הזמן הכוללת של הפעולה היא 
+\begin_inset Formula $O(log(n))$
+\end_inset
+
+.
+ במידה וערך הכנסה לא תקין/לא קיים שחקן עם מספר מזהה כנ
+\begin_inset Quotes erd
+\end_inset
+
+ל במשחק או במקרה של בעיית זיכרון, יוחזר ערך מתאים ומבנה הנתונים לא ישתנה.
 \end_layout
 
 \begin_layout Enumerate
@@ -473,7 +526,7 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \end_inset
 
  
-\begin_inset Formula $GroupID,int^{*}$
+\begin_inset Formula $GroupId,int^{*}$
 \end_inset
 
  
@@ -484,7 +537,42 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \begin_inset Formula $StatusType$
 \end_inset
 
-: הפעולה
+: נחלק את התנהלות הפונקציה לשתיים לפי הקלט ב- 
+\begin_inset Formula $GroupId$
+\end_inset
+
+
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $GroupId>0$
+\end_inset
+
+: במקרה זה, הפונקציה תמצא את הקבוצה בעץ הקבוצות ותחזיר את המספר המזהה של
+ השחקן ששמור אצלה עם השלב הגבוהה ביותר.
+ זמן ריצת התוכנית תלוי במיקום הקבוצה בעץ הקבוצות שכן שאר הפעולות הן קבועות
+ ולא תלויות בקלט, לכן במקרה זה סיבוכיות הזמן היא 
+\begin_inset Formula $O(log(k))$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $GroupId<0$
+\end_inset
+
+: הפעולה תיגש לשחקן ברמתו הגבוהה ביותר דרך קבוצת כל השחקנים ותחזיר את מספרו
+ המזהה.
+ סיכוביות הזמן היא 
+\begin_inset Formula $O(1)$
+\end_inset
+
+ במקרה זה.
+ במידה והקלט אינו תקין, הקבוצה הרצויה ריקה/אין בכלל שחקנים, או במקרה של
+ בעיית זיכרון, יוחזר ערך מתאים ומבנה הנתונים לא ישתנה.
 \end_layout
 
 \begin_layout Enumerate
@@ -507,7 +595,65 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \begin_inset Formula $StatusType$
 \end_inset
 
-: הפעולה
+: נחלק את התנהלות הפונקציה לשתיים לפי הקלט ב- 
+\begin_inset Formula $GroupId$
+\end_inset
+
+ :
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $GroupId>0$
+\end_inset
+
+: במקרה זה, הפונקציה תמצא את הקבוצה בעץ הקבוצות, תמשתמש בפונקציית עזר של
+ העץ, ותקבל את כל השחקנים ממויינים לפי השלב שלהם בסדר עולה, תייצר מערך חדש
+ אליו תכניס את השחקנים בסדר הפוך מזה שבו קיבלה אותם במערך מהעץ.
+ פעולת העזר בעץ היא סיור ושמירת הערכים והיא קורת ב- 
+\begin_inset Formula $O(n_{group})$
+\end_inset
+
+ כמו גם אתחול המערך החדש אותו היא מחזירה.
+ מציאת הקבוצה בעץ היא ב- 
+\begin_inset Formula $O(log(k))$
+\end_inset
+
+ ולכן סה
+\begin_inset Quotes erd
+\end_inset
+
+כ סיבוכיות הזמן של הפונקציה היא 
+\begin_inset Formula $O(log(k)+n_{group})$
+\end_inset
+
+.
+\begin_inset Newline newline
+\end_inset
+
+
+\begin_inset Formula $GroupId<0$
+\end_inset
+
+: הפעולה תיגש לקבוצת כל השחקנים, תשתמש באותה פונקציית עזר של העץ, תקבל מערך
+ של כל השחקנים ממויין לפי השלב מהקטן לגדול, תצייר מערך חדש בסדר יורד ותחזיר
+ אותו.
+ סיכוביות הזמן היא 
+\begin_inset Formula $O(n)$
+\end_inset
+
+ במקרה זה.
+ במשתנה 
+\begin_inset Formula $numOfPlayers$
+\end_inset
+
+ תוחזר כמות השחקנים בקבוצה או בכל השחקנים כתלות ב- 
+\begin_inset Formula $GroupId$
+\end_inset
+
+.
+ במידה והקלט אינו תקין, הקבוצה הרצויה ריקה/אין בכלל שחקנים, או במקרה של
+ בעיית זיכרון, יוחזר ערך מתאים לפי הדרישות ומבנה הנתונים לא ישתנה.
 \end_layout
 
 \begin_layout Enumerate
@@ -526,7 +672,30 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \begin_inset Formula $StatusType$
 \end_inset
 
-: הפעולה
+: הפעולה תעבור על כל הקבוצות הלא ריקות דרך המצביעים בין הקבוצות, היא תתחיל
+ מהקבוצה הנמוכה ביותר )אותה תמצא דרך פעולות העץ בסיבוכיות של 
+\begin_inset Formula $O(log(k))$
+\end_inset
+
+( ומשם תעבור למצביע הבא בכל פעם ותיגש לשחקן ברמה הגבוהה ביותר בכל קבוצה
+ ועד שסכימת השחקנים תסתכם לערך של 
+\begin_inset Formula $numOfGroups$
+\end_inset
+
+.
+ במידה ויהיו פחות קבוצות מלאות מערך זה, יוחזר ערך החזרה מתאים, כמו כן, במידה
+ והקלט אינו תקין, או במקרה של בעיית זיכרון, יוחזר ערך מתאים לפי הדרישות
+ ומבנה הנתונים לא ישתנה.
+ הפונקציה רצה רק על הקבוצות הלא ריקות אחרי גישה לקבוצה בעלת המזהה הנמוך
+ ביותר, ומכל אחת מהם עושה מספר קבוע של פעולות ולכן סה
+\begin_inset Quotes erd
+\end_inset
+
+כ סיבוכיות הזמן של הפוקנציה היא 
+\begin_inset Formula $O(log(k)+numOfGroups)$
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -537,7 +706,77 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \begin_inset Formula $void$
 \end_inset
 
-: הפעולה
+: הפעולה תשחרר את הזיכרון של העץ הקבוצות ושל קבוצצת כל השחקים דרך כאשר שחרור
+ הזיכרון נעשה ברובו במחיקת העצים שם שמורים השחקנים בקבוצות והקבוצות בעץ.
+ כל עץ נמחק דרך שימוש בסיור 
+\begin_inset Formula $postorder$
+\end_inset
+
+ ובכך נמחק בסיבוכיות של 
+\begin_inset Formula $O(m)$
+\end_inset
+
+ כאשר m היא כמות האובייקטים בעץ .
+ כל שחקן נשמר
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\numeric on
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+3
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\numeric off
+\bar no
+\strikeout off
+\xout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ 
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\xout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+פעמים וכל קבוצה פעם אחת ולכן סיבוכיות הזמן של השחרור הכולל היא 
+\begin_inset Formula $O(3n+k+1)=O(n+k)$
+\end_inset
+
+.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -547,7 +786,7 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \begin_layout Enumerate
 עבור כל שחקן, יש בדיוק שלוש חוליות השומרות את המבנה שלו )תחת הקבוצה בה הוא
  נמצא ותחת עץ הקבוצה של כל השחקנים בקבוצה קיים אותו העתק המזהה לפי המספר
- המזהה + עותק נוספת בכל אחת מקבוצות אלו הממיין את השחקן לפי רמתו(, כל אחת
+ המזהה + עותק נוסף בכל אחת מקבוצות אלו הממיין את השחקן לפי רמתו(, כל אחת
  מהן שומרות כמות קבועה של זיכרון ולכן כלל הזיכרון הנשמר עבור השחקנים חסום
  מלמעלה ע
 \begin_inset Quotes erd
@@ -575,7 +814,7 @@ begin{adjustwidth*}{-3cm}{-3cm}
 \end_inset
 
  מבנים של קבוצות הנשמרים )אחד לכל קבוצה + קבוצה של כל השחקנים( כאשר עבור
- כל אחד מהם נשמרת כמות קבועה של מקום )כאשר את השקחנים עבור כל קבוצה ספרנו
+ כל אחד מהם נשמרת כמות קבועה של מקום )כאשר את השחקנים עבור כל קבוצה ספרנו
  בנפרד( ולכן סה
 \begin_inset Quotes erd
 \end_inset

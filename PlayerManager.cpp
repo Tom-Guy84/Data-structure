@@ -30,10 +30,19 @@ namespace wet1_dast
         try
         {
             Group new_group* = new Group(GroupId);
-            Groups.insert(*new_group);
+            Groups.insert(*new_group); //need to figaure out what to do if
             Group* closest = Groups.findClosest(new_group);
-            new_group->setNext(closest->getNextGroup());
-            (closest->GetSize() == 0) ? new_group->setPrev(closest->getPreviousGroup()) : new_group->setPrev(closest);
+            if(!closest)
+            {
+                new_group->setPrev(nullptr);
+                Group* closest_from_above = Groups.findClosestFromAbove(new_group);
+                (closest_from_above) ? new_group.setNext(closest_from_above) : new_group.setNext(nullptr);
+            }
+            else
+            {
+                (closest->GetSize() == 0) ? new_group->setPrev(closest->getPreviousGroup()) : new_group->setPrev(closest);
+                new_group->setNext(closest->getNextGroup());
+            }
             return SUCCESS;
         }
         catch (const AVLTree<Group>::ItemExist& exist)
@@ -107,6 +116,7 @@ namespace wet1_dast
             if(!g_to_delete || g_to_replace)
                 return FAILURE;
             CombineGroups(g_to_replace, g_to_delete);
+            group_delete.correctAfterRemove();
             delete Groups.remove(group_delete);
         }
         catch (std::exception& e)
@@ -218,11 +228,16 @@ namespace wet1_dast
             int* highest_players = (int*)malloc(sizeof(int)*numOfGroups);
             if(!highest_players)
                 return ALLOCATION_ERROR;
-            Group* group = Groups.GetRootValue();
+            Group* group = Groups.GetLowestValue();
             for(int count = 0; count < numOfGroups && group; count++)
             {
                 highest_players[count] = group->Get_Highest_Player()->getId();
                 group = group->getNextGroup();
+            }
+            if(!group && count < numOfGroups)
+            {
+                free(highest_players);
+                return FAILURE;
             }
             *Players = highest_players;
             return SUCCESS;
