@@ -63,4 +63,8 @@ ReplaceGroup 2 1 //now Group 2 ceases to exist.
 RemovePlayer 4 //success
 RemovePlayer 1 //success
 // now only group 1 exists ,with no players 
+ReplaceGroup 4 5 //failure (both doesnt exist)
+ReplaceGroup 5 4 //failure (both doesnt exist)
+ReplaceGroup 5 1 //failure ( 5 doesnt exist)
+ReplaceGroup 1 5 //failure (5 doesnt exist)
 Quit
