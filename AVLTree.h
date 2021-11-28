@@ -45,8 +45,6 @@ namespace wet1_dast
                 right_son = nullptr;
                 left_son = nullptr;
                 value=nullptr;
-
-
             }
 
             bool operator==(Node *other)
@@ -126,7 +124,7 @@ namespace wet1_dast
 
         void inorderHelper(T values[], int* index, Node *ver);
 
-        void inorderIn(T* values, int &index, Node *ver);
+        void inorderIn(T values[] , int &index, Node *ver);
 
         void createEmptyTree(int size_of_tree);
 
@@ -181,10 +179,6 @@ namespace wet1_dast
             int index = 0;
             to_insert.inorderIn(all_players, index ,to_insert.root);
             delete[] all_players;
-
-
-
-
         }
         int getSize() const;
         AVLTree() : size(0)
@@ -247,7 +241,7 @@ namespace wet1_dast
     template<class T>
     void AVLTree<T>::Node::Tree_Creator_AUX(int *size_of_tree, int height_of_tree)
     {
-        //stoping condition,if we reached the bottom of the tree,stop.
+        //stopping condition,if we reached the bottom of the tree,stop.
         if (*size_of_tree <= 0 || height_of_tree == -1)
         {
             return;
@@ -273,7 +267,6 @@ namespace wet1_dast
             left_son->father = this;
         if (right_son!=nullptr)
             right_son->father = this;
-        return ;
     }
 
     template<class T>
@@ -379,18 +372,21 @@ namespace wet1_dast
         {
             delete root;
             root = nullptr;
+            return;
         }
         else if (!(root->right_son) && root->left_son)
         {
             Node *temp = root->left_son;
             delete root;
             root = temp;
+            return;
 
         } else if (root->right_son && !(root->left_son))
         {
             Node *temp = root->right_son;
             delete root;
             root = temp;
+            return;
         }
         Node *ver;
         swapWithNext(root, &ver);
@@ -642,7 +638,7 @@ namespace wet1_dast
             checkForRolls(ver);
             return value;
         }
-         swapWithNext(loc, &ver);
+        swapWithNext(loc, &ver);
         easyCaseRemove(loc, easy_case);
         correctHeight(ver);
         checkForRolls(ver);
@@ -673,7 +669,7 @@ namespace wet1_dast
 
 
     template<class T>
-    void AVLTree<T>::inorderIn(T* values, int &index, Node *ver)
+    void AVLTree<T>::inorderIn(T values[] , int &index, Node *ver)
     {
         if (!ver)
             return;
@@ -711,7 +707,7 @@ namespace wet1_dast
             return;
         postOrderDelete(ver->left_son);
         postOrderDelete(ver->right_son);
-//        delete ver->value;
+        delete ver->value;
         delete ver;
     }
 

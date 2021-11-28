@@ -1,6 +1,4 @@
-//
-// Created by  on 19/11/2021.
-//
+
 #include <iostream>
 #include "Player.h"
 #include <cassert>
@@ -11,20 +9,20 @@ using std::cout;
 using std::endl;
 int main()
 {
-  AVLTree<int> tree123;
-  int* one=new int(1);
-  int* two=new int(2);
-  int* three=new int(3);
-  AVLTree<int> tree456;
-  int* four=new int(4);
-  int* five=new int(5);
-  int* six=new int(6);
+    AVLTree<int> tree123;
+    int* one=new int(1);
+    int* two=new int(2);
+    int* three=new int(3);
+    AVLTree<int> tree456;
+    int* four=new int(4);
+    int* five=new int(5);
+    int* six=new int(6);
     tree123.insert(*three);
     tree123.insert(*two);
-  tree123.insert(*one);
-  tree456.insert(*four);
-  tree456.insert(*five);
-  tree456.insert(*six);
+    tree123.insert(*one);
+    tree456.insert(*four);
+    tree456.insert(*five);
+    tree456.insert(*six);
     try {
         tree123.remove(*five);
     }
@@ -42,7 +40,7 @@ int main()
     cout<<" after tree456.remove(*four);"<<endl;
     tree456.printTree();
     try {
-        tree456.remove(*four);
+        delete (tree456.remove(*four));
     }
     catch(AVLTree<int>::ItemNotExist& c)
     {
@@ -51,18 +49,10 @@ int main()
     tree456.insert(*four);
     tree456.printTree();
     cout<<"ok"<<endl;
-    tree456.remove(*five);
+    delete tree456.remove(*five);
     cout<<"ok 2"<<endl;
-     cout<<"combi combi"<<endl;
+    cout<<"combi combi"<<endl;
     combineTrees(tree456,tree123);
     tree456.printTree();
     cout<<"combi combi"<<endl;
-    delete one;
-    delete two;
-    delete three;
-    delete four;
-    delete five;
-    delete six;
-
-
 }
