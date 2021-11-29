@@ -68,3 +68,38 @@ ReplaceGroup 5 4 //failure (both doesnt exist)
 ReplaceGroup 5 1 //failure ( 5 doesnt exist)
 ReplaceGroup 1 5 //failure (5 doesnt exist)
 Quit
+//IncreaseLevel(int PlayerID,int levelIncrease)
+Init
+AddGroup 1
+IncreaseLevel 0 1 //invalid_input
+//player doesn't exist
+IncreaseLevel 1 0 //invalid_input
+IncreaseLevel 1 1//failure(player doesn't exist.)
+AddPlayer 1 1 1 //success
+//from now on player 1 exists
+IncreaseLevel 1 1 // success
+IncreaseLevel 1 -1 // failure(trying to level 
+RemovePlayer 1//success
+//from now on RemovePlayer Doesn't exist anymore
+IncreaseLevel 1 1 // failure
+IncreaseLevel 1 -1 // Invalid_input
+//playing with non-root Groups
+AddGroup 2 //success
+AddPlayer 2 2 2//success
+//from now on player 2 exists
+IncreaseLevel 2 2 // success
+IncreaseLevel 2 -2 // failure(trying to level 
+RemovePlayer 2//success
+//from now on Player 2 Doesn't exist anymore
+IncreaseLevel 2 2 // failure
+IncreaseLevel 2 -2  // Invalid_input
+//end of testing with lone groups
+//replaceGroups Testing with it.
+AddPlayer 2 2 2 //success
+ReplaceGroups 2 1 //deleting Group 2 
+IncreaseLevel 2 2 //success
+IncreaseLevel 1 1 //success
+AddPlayer 3 1 4 //success
+ReplaceGroups 1 1//Invalid_input 
+IncreaseLevel 2 2 //success
+Quit
