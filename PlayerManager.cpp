@@ -192,37 +192,37 @@ namespace wet1_dast
         {
             if(GroupId < 0)
             {
-                if(players.GetSize() == 0)
+                if (players.GetSize() == 0)
                 {
                     *numOfPlayers = 0;
                     *Players = NULL;
                     return SUCCESS;
                 }
-                Group g(GroupId);
-                Group* group = Groups.find(g);
-                if(!group)
-                    return FAILURE;
-                if(group->GetSize() == 0)
-                {
-                    *numOfPlayers = 0;
-                    Players = NULL;
-                    return SUCCESS;
-                }
-                Player* players_of_the_group = group->getPlayersByLevel();
-                int *group_players = (int*)malloc(sizeof(int)*group->GetSize());
-                if(!group_players)
-                {
-                    delete players_of_the_group;
-                    return FAILURE;
-                }
-                for(int i = 0; i < group->GetSize(); i++)
-                {
-                    group_players[i] = players_of_the_group[group->GetSize() -i -1].getId();
-                }
-                *Players = group_players;
-                delete players_of_the_group;
+            }
+            Group g(GroupId);
+            Group* group = Groups.find(g);
+            if(!group)
+                return FAILURE;
+            if(group->GetSize() == 0)
+            {
+                *numOfPlayers = 0;
+                Players = NULL;
                 return SUCCESS;
             }
+            Player* players_of_the_group = group->getPlayersByLevel();
+            int *group_players = (int*)malloc(sizeof(int)*group->GetSize());
+            if(!group_players)
+            {
+                delete players_of_the_group;
+                return FAILURE;
+            }
+            for(int i = 0; i < group->GetSize(); i++)
+            {
+                group_players[i] = players_of_the_group[i].getId();
+            }
+            *Players = group_players;
+            delete players_of_the_group;
+            return SUCCESS;
         }
         catch (std::exception* e)
         {

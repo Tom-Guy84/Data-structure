@@ -680,7 +680,8 @@ namespace wet1_dast
         }
         if (father_of_loc)
         {
-            return father_of_loc->value;
+            if(father_of_loc->value <= loc->value)
+                return father_of_loc->value;
         }
         return nullptr;
     }
@@ -734,9 +735,12 @@ namespace wet1_dast
         {
             return loc->right_son->value;
         }
-        if (father_of_loc)
+        while (father_of_loc)
         {
-            return father_of_loc->value;
+            if(father_of_loc->value >= loc->value)
+                return father_of_loc->value;
+            loc = loc->father;
+            father_of_loc = father_of_loc->father;
         }
         return nullptr;
     }
