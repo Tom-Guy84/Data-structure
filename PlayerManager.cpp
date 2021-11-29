@@ -29,6 +29,9 @@ namespace wet1_dast
         }
         try
         {
+            Group g(GroupId);
+            if(Groups.find(g))
+                return FAILURE;
             Group* new_group = new Group(GroupId); //
             Groups.insert(*new_group); //insert the group
             Group* closest = Groups.findClosestFromBelow(*new_group);//find the closest
@@ -77,7 +80,8 @@ namespace wet1_dast
         {
             Group g(GroupId);
             Group* playersGroup = Groups.find(g);
-            if(!playersGroup)
+            Player* player_exist = players.findPlayer(PlayerId);
+            if(!playersGroup || player_exist)
             {
                 return FAILURE;
             }

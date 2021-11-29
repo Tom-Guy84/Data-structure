@@ -73,5 +73,6 @@ using namespace wet1_dast;
             return;
         }
         Quit((PlayerManager * ) * DS);
+        *DS = NULL;
     }
 

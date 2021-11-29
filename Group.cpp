@@ -90,11 +90,11 @@ namespace wet1_dast {
     Player* Group::removePlayer(Player *player) {
         Player player_by_level(player->getId(), player->getLevel(), this, false);
         Player* player_to_return = players_by_id.remove(*player);
-        delete players_by_level.remove(player_by_level);
         if (*(Highest_Player) == *player)
         {
             Highest_Player = players_by_level.findClosestFromBelow(player_by_level);
         }
+        delete players_by_level.remove(player_by_level);
         size--;
         correctAfterRemove();
         return player_to_return;
