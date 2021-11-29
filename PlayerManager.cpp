@@ -127,7 +127,7 @@ namespace wet1_dast
             Group* g_to_replace = Groups.find(group_replace);
             if(!g_to_delete ||!g_to_replace)
                 return FAILURE;
-            CombineGroups(*g_to_replace, *g_to_delete);
+            CombineGroups( *g_to_delete, *g_to_replace);
             group_delete.correctAfterRemove();
             delete Groups.remove(group_delete);
         }

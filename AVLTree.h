@@ -132,7 +132,7 @@ namespace wet1_dast
 
 
     public:
-        friend void combineTrees(AVLTree<T>& to_insert, AVLTree<T> &to_delete)
+        friend void combineTrees(AVLTree<T> &to_delete, AVLTree<T>& to_insert)
         {
             T *array_to_insert=to_insert.inorderOut();
             T* array_to_delete = to_delete.inorderOut();
@@ -201,7 +201,7 @@ namespace wet1_dast
 
         T* inorderOut() ;
 
-        void inorderInsert(T* values);
+        void inorderInsert(T* values, int size);
 
         class exceptions : public std::exception
         {
@@ -277,7 +277,7 @@ namespace wet1_dast
         //we need to creat new root.
         size_of_tree--;
         root= new Node();
-        root->Tree_Creator_AUX(&size_of_tree, height_of_new_tree);//memory allocation?what do we do with it? :)
+        root->Tree_Creator_AUX(&size_of_tree, height_of_new_tree - 1);//memory allocation?what do we do with it? :)
     }
 
     template<class T>
@@ -719,9 +719,10 @@ namespace wet1_dast
     }
 
     template<class T>
-    void AVLTree<T>::inorderInsert(T* values)
+    void AVLTree<T>::inorderInsert(T* values, int size)
     {
         int index = 0;
+        createEmptyTree(size);
         inorderIn(values, index, root);
     }
 

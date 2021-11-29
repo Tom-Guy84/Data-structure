@@ -27,18 +27,18 @@ namespace wet1_dast {
             to_insert.Highest_Player = to_delete.Highest_Player;
         }
         to_insert.Highest_Player->setGroup(&to_insert);
-        Player *players_level = to_insert.players_by_level.inorderOut();
-        Player *players_id = to_insert.players_by_id.inorderOut();
-        for(int i=0; i < to_insert.size+to_delete.size; i++)
-        {
-            players_level[i].setGroup(&to_insert);
-            players_id[i].setGroup(&to_insert);
-        }
-        to_insert.players_by_id.inorderInsert(players_id);
-        to_insert.players_by_level.inorderInsert(players_level);
         to_insert.size+=to_delete.size;
-        delete[] players_level;
-        delete[] players_id;
+//        Player *players_level = to_insert.players_by_level.inorderOut();
+//        Player *players_id = to_insert.players_by_id.inorderOut();
+//        for(int i=0; i < to_insert.size+to_delete.size; i++)
+//        {
+//            players_level[i].setGroup(&to_insert);
+//            players_id[i].setGroup(&to_insert);
+//        }
+//        to_insert.players_by_id.inorderInsert(players_id ,to_insert.size+to_delete.size);
+//        to_insert.players_by_level.inorderInsert(players_level,to_insert.size+to_delete.size);
+//        delete[] players_level;
+//        delete[] players_id;
     }
 
 
