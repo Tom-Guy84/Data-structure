@@ -31,6 +31,7 @@ namespace wet1_dast
 
     bool Player::operator==(const Player &p1) const
     { //tested
+
         return (player_id == p1.player_id);
     }
 

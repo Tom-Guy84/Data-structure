@@ -109,7 +109,7 @@ namespace wet1_dast {
     {
         if(prev)
         {
-            if(!(*(prev->next) == *this))
+            if(!(*(prev->next) == *this)) //TODO ,we need to make sure prev->next is this.
                 prev->next = this;
         }
         if(next)

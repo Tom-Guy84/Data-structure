@@ -29,14 +29,26 @@ namespace wet1_dast
         }
         try
         {
-            Group* new_group = new Group(GroupId);
-            Groups.insert(*new_group); //need to figaure out what to do if
-            Group* closest = Groups.findClosestFromBelow(*new_group);
-            if(!closest)
+            Group* new_group = new Group(GroupId); //
+            Groups.insert(*new_group); //insert the group
+            Group* closest = Groups.findClosestFromBelow(*new_group);//find the closest
+            if(!closest) //add- he needs to have players. if he exists and he doesnt havae players ,his previous is my previous
+                //if
             {
                 new_group->setPrev(nullptr);
-                Group* closest_from_above = Groups.findClosestFromAbove(*new_group);
-                (closest_from_above) ? new_group->setNext(closest_from_above) : new_group->setNext(nullptr);
+                Group* closest_from_above = Groups.findClosestFromAbove(*new_group); //if he has players he's the next , if not,he's next is the next.
+                if(closest_from_above) {
+                    if(closest_from_above->GetSize()==0) {
+                        new_group->setNext(closest_from_above->getNextGroup());
+                    }
+                    else
+                    {
+                        new_group->setNext(closest_from_above);
+                    }
+                }
+                else {
+                    new_group->setNext(nullptr);
+                }
             }
             else
             {
@@ -69,9 +81,9 @@ namespace wet1_dast
             {
                 return FAILURE;
             }
-            Player player = Player(PlayerId, level, playersGroup, true);
-            players.AddPlayer(player);
-            playersGroup->AddPlayer(player);
+            Player* player =new Player(PlayerId, level, playersGroup, true);
+            players.AddPlayer(*player);
+            playersGroup->AddPlayer(*player);
         }
         catch (const AVLTree<Player>::ItemExist& e)
         {
@@ -113,7 +125,7 @@ namespace wet1_dast
             Group* g_to_delete = Groups.find(group_delete);
             Group group_replace(ReplacementId);
             Group* g_to_replace = Groups.find(group_replace);
-            if(!g_to_delete || g_to_replace)
+            if(!g_to_delete ||!g_to_replace)
                 return FAILURE;
             CombineGroups(*g_to_replace, *g_to_delete);
             group_delete.correctAfterRemove();
