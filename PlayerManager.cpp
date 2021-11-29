@@ -127,9 +127,10 @@ namespace wet1_dast
             Group* g_to_replace = Groups.find(group_replace);
             if(!g_to_delete ||!g_to_replace)
                 return FAILURE;
-            CombineGroups( *g_to_delete, *g_to_replace);
+            CombineGroups(g_to_delete, g_to_replace);
             group_delete.correctAfterRemove();
             delete Groups.remove(group_delete);
+            g_to_replace->findPlayer(1);
         }
         catch (std::exception& e)
         {
@@ -209,7 +210,7 @@ namespace wet1_dast
                 Players = NULL;
                 return SUCCESS;
             }
-            Player* players_of_the_group = group->getPlayersByLevel();
+            Player** players_of_the_group = group->getPlayersByLevel();
             int *group_players = (int*)malloc(sizeof(int)*group->GetSize());
             if(!group_players)
             {
@@ -218,7 +219,7 @@ namespace wet1_dast
             }
             for(int i = 0; i < group->GetSize(); i++)
             {
-                group_players[i] = players_of_the_group[i].getId();
+                group_players[i] = players_of_the_group[i]->getId();
             }
             *Players = group_players;
             delete players_of_the_group;

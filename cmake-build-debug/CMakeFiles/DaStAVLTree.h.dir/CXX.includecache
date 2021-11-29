@@ -58,11 +58,17 @@ C:/Users/tomgu/source/semester3/dast/wet1/Player.h
 library1.h
 C:/Users/tomgu/source/semester3/dast/wet1/library1.h
 
-C:/Users/tomgu/source/semester3/dast/wet1/library1.cpp
-PlayerManager.h
-C:/Users/tomgu/source/semester3/dast/wet1/PlayerManager.h
-library1.h
 C:/Users/tomgu/source/semester3/dast/wet1/library1.h
 
-C:/Users/tomgu/source/semester3/dast/wet1/library1.h
+C:/Users/tomgu/source/semester3/dast/wet1/main.cpp
+iostream
+-
+Player.h
+C:/Users/tomgu/source/semester3/dast/wet1/Player.h
+cassert
+-
+AVLTree.h
+C:/Users/tomgu/source/semester3/dast/wet1/AVLTree.h
+PlayerManager.h
+C:/Users/tomgu/source/semester3/dast/wet1/PlayerManager.h
 

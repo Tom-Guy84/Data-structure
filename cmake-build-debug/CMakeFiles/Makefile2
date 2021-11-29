@@ -62,7 +62,7 @@ CMAKE_BINARY_DIR = C:\Users\tomgu\source\semester3\dast\wet1\cmake-build-debug
 # Directory level rules for the build root directory
 
 # The main recursive "all" target.
-all: CMakeFiles/DaSt.dir/all
+all: CMakeFiles/DaStAVLTree.h.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -70,34 +70,34 @@ preinstall:
 .PHONY : preinstall
 
 # The main recursive "clean" target.
-clean: CMakeFiles/DaSt.dir/clean
+clean: CMakeFiles/DaStAVLTree.h.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/DaSt.dir
+# Target rules for target CMakeFiles/DaStAVLTree.h.dir
 
 # All Build rule for target.
-CMakeFiles/DaSt.dir/all:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/depend
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\tomgu\source\semester3\dast\wet1\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5,6 "Built target DaSt"
-.PHONY : CMakeFiles/DaSt.dir/all
+CMakeFiles/DaStAVLTree.h.dir/all:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=C:\Users\tomgu\source\semester3\dast\wet1\cmake-build-debug\CMakeFiles --progress-num=1,2,3,4,5 "Built target DaStAVLTree.h"
+.PHONY : CMakeFiles/DaStAVLTree.h.dir/all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/DaSt.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\tomgu\source\semester3\dast\wet1\cmake-build-debug\CMakeFiles 6
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/DaSt.dir/all
+CMakeFiles/DaStAVLTree.h.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\tomgu\source\semester3\dast\wet1\cmake-build-debug\CMakeFiles 5
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 CMakeFiles/DaStAVLTree.h.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\tomgu\source\semester3\dast\wet1\cmake-build-debug\CMakeFiles 0
-.PHONY : CMakeFiles/DaSt.dir/rule
+.PHONY : CMakeFiles/DaStAVLTree.h.dir/rule
 
 # Convenience name for target.
-DaSt: CMakeFiles/DaSt.dir/rule
-.PHONY : DaSt
+DaStAVLTree.h: CMakeFiles/DaStAVLTree.h.dir/rule
+.PHONY : DaStAVLTree.h
 
 # clean rule for target.
-CMakeFiles/DaSt.dir/clean:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/clean
-.PHONY : CMakeFiles/DaSt.dir/clean
+CMakeFiles/DaStAVLTree.h.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/clean
+.PHONY : CMakeFiles/DaStAVLTree.h.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

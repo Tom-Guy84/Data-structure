@@ -116,24 +116,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named DaSt
+# Target rules for targets named DaStAVLTree.h
 
 # Build rule for target.
-DaSt: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 DaSt
-.PHONY : DaSt
+DaStAVLTree.h: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 DaStAVLTree.h
+.PHONY : DaStAVLTree.h
 
 # fast build rule for target.
-DaSt/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/build
-.PHONY : DaSt/fast
+DaStAVLTree.h/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/build
+.PHONY : DaStAVLTree.h/fast
 
 Group.obj: Group.cpp.obj
 .PHONY : Group.obj
 
 # target to build an object file
 Group.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/Group.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/Group.cpp.obj
 .PHONY : Group.cpp.obj
 
 Group.i: Group.cpp.i
@@ -141,7 +141,7 @@ Group.i: Group.cpp.i
 
 # target to preprocess a source file
 Group.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/Group.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/Group.cpp.i
 .PHONY : Group.cpp.i
 
 Group.s: Group.cpp.s
@@ -149,7 +149,7 @@ Group.s: Group.cpp.s
 
 # target to generate assembly for a file
 Group.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/Group.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/Group.cpp.s
 .PHONY : Group.cpp.s
 
 Player.obj: Player.cpp.obj
@@ -157,7 +157,7 @@ Player.obj: Player.cpp.obj
 
 # target to build an object file
 Player.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/Player.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/Player.cpp.obj
 .PHONY : Player.cpp.obj
 
 Player.i: Player.cpp.i
@@ -165,7 +165,7 @@ Player.i: Player.cpp.i
 
 # target to preprocess a source file
 Player.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/Player.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/Player.cpp.i
 .PHONY : Player.cpp.i
 
 Player.s: Player.cpp.s
@@ -173,7 +173,7 @@ Player.s: Player.cpp.s
 
 # target to generate assembly for a file
 Player.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/Player.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/Player.cpp.s
 .PHONY : Player.cpp.s
 
 PlayerManager.obj: PlayerManager.cpp.obj
@@ -181,7 +181,7 @@ PlayerManager.obj: PlayerManager.cpp.obj
 
 # target to build an object file
 PlayerManager.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/PlayerManager.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/PlayerManager.cpp.obj
 .PHONY : PlayerManager.cpp.obj
 
 PlayerManager.i: PlayerManager.cpp.i
@@ -189,7 +189,7 @@ PlayerManager.i: PlayerManager.cpp.i
 
 # target to preprocess a source file
 PlayerManager.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/PlayerManager.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/PlayerManager.cpp.i
 .PHONY : PlayerManager.cpp.i
 
 PlayerManager.s: PlayerManager.cpp.s
@@ -197,56 +197,32 @@ PlayerManager.s: PlayerManager.cpp.s
 
 # target to generate assembly for a file
 PlayerManager.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/PlayerManager.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/PlayerManager.cpp.s
 .PHONY : PlayerManager.cpp.s
 
-library1.obj: library1.cpp.obj
-.PHONY : library1.obj
+main.obj: main.cpp.obj
+.PHONY : main.obj
 
 # target to build an object file
-library1.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/library1.cpp.obj
-.PHONY : library1.cpp.obj
+main.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/main.cpp.obj
+.PHONY : main.cpp.obj
 
-library1.i: library1.cpp.i
-.PHONY : library1.i
-
-# target to preprocess a source file
-library1.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/library1.cpp.i
-.PHONY : library1.cpp.i
-
-library1.s: library1.cpp.s
-.PHONY : library1.s
-
-# target to generate assembly for a file
-library1.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/library1.cpp.s
-.PHONY : library1.cpp.s
-
-main1.obj: main1.cpp.obj
-.PHONY : main1.obj
-
-# target to build an object file
-main1.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/main1.cpp.obj
-.PHONY : main1.cpp.obj
-
-main1.i: main1.cpp.i
-.PHONY : main1.i
+main.i: main.cpp.i
+.PHONY : main.i
 
 # target to preprocess a source file
-main1.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/main1.cpp.i
-.PHONY : main1.cpp.i
+main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-main1.s: main1.cpp.s
-.PHONY : main1.s
+main.s: main.cpp.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-main1.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaSt.dir\build.make CMakeFiles/DaSt.dir/main1.cpp.s
-.PHONY : main1.cpp.s
+main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\DaStAVLTree.h.dir\build.make CMakeFiles/DaStAVLTree.h.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 # Help Target
 help:
@@ -256,7 +232,7 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... DaSt
+	@echo ... DaStAVLTree.h
 	@echo ... Group.obj
 	@echo ... Group.i
 	@echo ... Group.s
@@ -266,12 +242,9 @@ help:
 	@echo ... PlayerManager.obj
 	@echo ... PlayerManager.i
 	@echo ... PlayerManager.s
-	@echo ... library1.obj
-	@echo ... library1.i
-	@echo ... library1.s
-	@echo ... main1.obj
-	@echo ... main1.i
-	@echo ... main1.s
+	@echo ... main.obj
+	@echo ... main.i
+	@echo ... main.s
 .PHONY : help
 
 

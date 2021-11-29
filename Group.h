@@ -30,7 +30,7 @@ namespace wet1_dast {
          bool operator==(const Group &group) const;
          int GetSize() const;//todo
          bool operator<=(const Group& other) const;
-         friend void CombineGroups(Group& to_delete,Group &to_insert);
+         friend void CombineGroups(Group* to_delete,Group *to_insert);
          void AddPlayer(Player& player);
          Player* findPlayer(int PlayerId);
          Player* removePlayer(Player* player);
@@ -39,7 +39,7 @@ namespace wet1_dast {
          void setNext(Group* next_group);
          void setPrev(Group* prev_group);
          void increaseLevelToPlayer(Player& player, int levelIncrease); //increase level only in the playerByLevel tree
-         Player* getPlayersByLevel();
+         Player ** getPlayersByLevel();
 
         void correctAfterRemove();
     };

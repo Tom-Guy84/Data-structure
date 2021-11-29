@@ -120,13 +120,13 @@ namespace wet1_dast
 
         void rr_roll(Node *first_ubl);
 
-        void inorderHelper(T values[], int* index, Node *ver);
+        void inorderHelper(T* values[], int* index, Node *ver);
 
-        void inorderIn(T values[] , int &index, Node *ver);
+        void inorderIn(T* values[] , int &index, Node *ver);
 
         void createEmptyTree(int size_of_tree);
 
-       static void postOrderDelete(Node* ver);
+       static void postOrderDelete(Node* ver, bool delete_values);
 
         void printHelper(Node* ver);
 
@@ -134,26 +134,26 @@ namespace wet1_dast
     public:
         friend void combineTrees(AVLTree<T> &to_delete, AVLTree<T>& to_insert)
         {
-            T *array_to_insert=to_insert.inorderOut();
-            T* array_to_delete = to_delete.inorderOut();
-            T* all_players = new T[to_insert.size + to_delete.size];
+            T** array_to_insert=to_insert.inorderOut();
+            T** array_to_delete = to_delete.inorderOut();
+            T** all_players = new T*[to_insert.size + to_delete.size];
             int i = 0, j = 0, k;
             for (k = 0; k < to_insert.size + to_delete.size; k++)
             {
                 if (i==to_insert.size || j==to_delete.size) break;
-                if (array_to_delete[j] == array_to_insert[i])
+                if (*(array_to_delete[j]) == *(array_to_insert[i]))
                 {
                     delete[] array_to_delete;
                     delete[] array_to_insert;
                     delete[] all_players;
                     throw AVLTree<T>::ItemInBothTrees();
                 }
-                if (array_to_insert[i] <= array_to_delete[j])
+                if (*(array_to_insert[i]) <= *(array_to_delete[j]))
                 {
                     all_players[k] = array_to_insert[i++];
                     continue;
                 }
-                if (array_to_delete[j] <= array_to_insert[i])
+                if (*(array_to_delete[j]) <= *(array_to_insert[i]))
                 {
                     all_players[k] = array_to_delete[j++];
                     continue;
@@ -171,13 +171,20 @@ namespace wet1_dast
                 }
             }
             int full_size = to_delete.size + to_insert.size;
-            delete[] array_to_delete;
-            delete[] array_to_insert;
+            delete array_to_delete;
+            delete array_to_insert;
             to_insert.createEmptyTree(full_size);
             int index = 0;
             to_insert.inorderIn(all_players, index ,to_insert.root);
             to_insert.size = full_size;
             delete[] all_players;
+            T** empty_values = new T*[to_delete.size];
+            for(int j=0; j<to_delete.size; j++)
+            {
+                empty_values[j] = nullptr;
+            }
+            index = 0;
+            to_delete.inorderIn(empty_values, index, to_delete.root);
         }
         int getSize() const;
         AVLTree() : size(0)
@@ -188,7 +195,7 @@ namespace wet1_dast
         AVLTree(const AVLTree<T> &other) = delete;
         ~AVLTree()
         {
-            postOrderDelete(root);
+            postOrderDelete(root, true);
         }
 
         AVLTree &operator=(const AVLTree<T> &other) = delete;
@@ -199,9 +206,9 @@ namespace wet1_dast
 
         T* remove(const T &val);
 
-        T* inorderOut() ;
+        T** inorderOut() ;
 
-        void inorderInsert(T* values, int size);
+        void inorderInsert(T** values, int size);
 
         class exceptions : public std::exception
         {
@@ -272,12 +279,12 @@ namespace wet1_dast
         //calculate the height based on size.
         //create the tree, for each conjunction , alloc node, perfferably in recursive way.
         int height_of_new_tree = (int) ceil(log2(size_of_tree +1)) - 1;
-        postOrderDelete(root);
+        postOrderDelete(root, false);
         //now we dont have anything.
         //we need to creat new root.
         size_of_tree--;
         root= new Node();
-        root->Tree_Creator_AUX(&size_of_tree, height_of_new_tree - 1);//memory allocation?what do we do with it? :)
+        root->Tree_Creator_AUX(&size_of_tree, height_of_new_tree -1);//memory allocation?what do we do with it? :)
     }
 
     template<class T>
@@ -631,11 +638,11 @@ namespace wet1_dast
     }
 
     template<class T>
-    T* AVLTree<T>::inorderOut()
+    T** AVLTree<T>::inorderOut()
     {
         if (!root)
             return nullptr;
-        T* values=new T[size];
+        T** values=new T*[size];
         int* index=new int(0);
         inorderHelper(values, index, root);
         delete index;
@@ -643,23 +650,23 @@ namespace wet1_dast
     }
 
     template<class T>
-    void AVLTree<T>::inorderHelper(T values[] , int* index, Node *ver)
+    void AVLTree<T>::inorderHelper(T* values[] , int* index, Node *ver)
     {
         if (!ver)
             return;
         inorderHelper(values, index, ver->left_son);
-        values[(*index)++] = *(ver->value); //need to implement an assignment operator for class Player
+        values[(*index)++] = (ver->value); //need to implement an assignment operator for class Player
         inorderHelper(values, index, ver->right_son);
     }
 
 
     template<class T>
-    void AVLTree<T>::inorderIn(T values[] , int &index, Node *ver)
+    void AVLTree<T>::inorderIn(T* values[] , int &index, Node *ver)
     {
         if (!ver)
             return;
         inorderIn(values, index, ver->left_son);
-        ver->value = new T(values[index++]);
+        ver->value = values[index++];
         inorderIn(values, index, ver->right_son);
     }
 
@@ -692,13 +699,14 @@ namespace wet1_dast
     }
 
     template<class T>
-    void AVLTree<T>::postOrderDelete(Node* ver)
+    void AVLTree<T>::postOrderDelete(Node* ver, bool delete_values)
     {
         if(!ver)
             return;
-        postOrderDelete(ver->left_son);
-        postOrderDelete(ver->right_son);
-        delete ver->value;
+        postOrderDelete(ver->left_son, delete_values);
+        postOrderDelete(ver->right_son, delete_values);
+        if(delete_values)
+            delete ver->value;
         delete ver;
     }
 
@@ -719,10 +727,9 @@ namespace wet1_dast
     }
 
     template<class T>
-    void AVLTree<T>::inorderInsert(T* values, int size)
+    void AVLTree<T>::inorderInsert(T** values, int size)
     {
         int index = 0;
-        createEmptyTree(size);
         inorderIn(values, index, root);
     }
 

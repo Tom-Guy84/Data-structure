@@ -3,4 +3,4 @@ project(DaSt)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(DaSt library1.h library1.cpp AVLTree.h Player.cpp Player.h main1.cpp Group.h PlayerManager.h Group.cpp PlayerManager.cpp)
+add_executable(DaStAVLTree.h Player.cpp Player.h Group.h main.cpp  PlayerManager.h Group.cpp PlayerManager.cpp)

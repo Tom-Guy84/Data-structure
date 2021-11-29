@@ -26,7 +26,7 @@ namespace wet1_dast {
         void setLevel(int level_to_set);// p->level_to_set=level_to_set.
         int getLevel() const;
         int getId() const;
-        void setGroup(Group* group);
+        void setGroup(Group *group);
         bool operator==(const Player &p1) const;
         bool operator<=(const Player& other) const;
         friend std::ostream &operator<<(std::ostream &os, const Player &p);
