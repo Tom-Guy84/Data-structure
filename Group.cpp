@@ -14,28 +14,31 @@ namespace wet1_dast {
         return (this->Group_Id == group.Group_Id);
     }
 
-    void CombineGroups(Group &g1, Group& g2)
+    void CombineGroups( Group& to_delete,Group &to_insert) //to_delete is deleted
     {
-        if (g2.size == 0)
+        if (to_delete.size == 0)
             return;
-        combineTrees(g1.players_by_level, g2.players_by_level);
-        combineTrees(g1.players_by_id, g2.players_by_id);
-        if (!g1.Highest_Player)//Highest_player==nullptr
+        combineTrees(to_delete.players_by_level, to_insert.players_by_level);//combine two trees
+        combineTrees(to_delete.players_by_id, to_insert.players_by_id);//combine two tress
+        if (!to_insert.Highest_Player)//Highest_player==nullptr
         {
-            g1.Highest_Player = g2.Highest_Player;
-        } else if (*(g1.Highest_Player) <= (*(g2.Highest_Player)))
-            g1.Highest_Player = g2.Highest_Player;
-        Player *players_level = g1.players_by_id.inorderOut();
-        Player *players_id = g1.players_by_id.inorderOut();
-        for(int i=0; i<g1.size; i++)
-        {
-            players_level[i].setGroup(&g1);
-            players_id->setGroup(&g1);
+            to_insert.Highest_Player = to_delete.Highest_Player;
+        } else if (*(to_insert.Highest_Player) <= (*(to_delete.Highest_Player))) {
+            to_insert.Highest_Player = to_delete.Highest_Player;
         }
-        g1.players_by_id.inorderInsert(players_id);
-        g1.players_by_level.inorderInsert(players_level);
-        delete players_level;
-        delete players_id;
+        to_insert.Highest_Player->setGroup(&to_insert);
+        Player *players_level = to_insert.players_by_level.inorderOut();
+        Player *players_id = to_insert.players_by_id.inorderOut();
+        for(int i=0; i < to_insert.size+to_delete.size; i++)
+        {
+            players_level[i].setGroup(&to_insert);
+            players_id[i].setGroup(&to_insert);
+        }
+        to_insert.players_by_id.inorderInsert(players_id);
+        to_insert.players_by_level.inorderInsert(players_level);
+        to_insert.size+=to_delete.size;
+        delete[] players_level;
+        delete[] players_id;
     }
 
 
@@ -49,13 +52,13 @@ namespace wet1_dast {
         players_by_id.insert(player);
         Player* p_level = player.createPlayerByLevel();
         players_by_level.insert(*p_level);
-        Player* p = players_by_level.find(*p_level); //making sure the variable isn't local.
         if (Highest_Player == nullptr) //if Highest_player doesn't exist,meaning no player exists in Group.{
         {
-            Highest_Player = p;
+            Highest_Player = p_level;
         } else { //highest player!=nullptr. we then compare between the two
-            Highest_Player = (*Highest_Player <= *p) ? p : Highest_Player;
+            (*Highest_Player <= *p_level) ?Highest_Player = p_level :Highest_Player = Highest_Player;
         }
+        size++;
         correctAfterInsert(); //if the group is empty or not before.
     }
 

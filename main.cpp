@@ -12,12 +12,10 @@ int main()
    PlayerManager* manager=new PlayerManager();
     assert(manager->AddGroup(1)==SUCCESS);
    assert(manager->AddPlayer(1,1,1)==SUCCESS);
-   assert(manager->AddPlayer(3,1,2)==SUCCESS);
    assert(manager->AddGroup(2)==SUCCESS);
-   assert(manager->AddPlayer(2,2,2)==SUCCESS);
-   assert(manager->RemovePlayer(1) == SUCCESS);
-   assert(manager->RemovePlayer(3) == SUCCESS);
-   assert(manager->RemovePlayer(0) ==INVALID_INPUT);
-   assert(manager->RemovePlayer(2) == SUCCESS);
-   assert(manager->RemovePlayer(1) == FAILURE);
+   assert(manager->AddPlayer(4,2,1)==SUCCESS);
+   assert(manager->AddPlayer(5,2,2)==SUCCESS);
+   assert(manager->ReplaceGroup(2,1)==SUCCESS);
+   assert(manager->RemovePlayer(4) == SUCCESS);
+
 }

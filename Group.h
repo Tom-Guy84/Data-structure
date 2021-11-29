@@ -30,7 +30,7 @@ namespace wet1_dast {
          bool operator==(const Group &group) const;
          int GetSize() const;//todo
          bool operator<=(const Group& other) const;
-         friend void CombineGroups(Group &g1, Group& g2);
+         friend void CombineGroups(Group& to_delete,Group &to_insert);
          void AddPlayer(Player& player);
          Player* findPlayer(int PlayerId);
          Player* removePlayer(Player* player);
