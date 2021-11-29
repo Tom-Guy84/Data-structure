@@ -176,6 +176,7 @@ namespace wet1_dast
             to_insert.createEmptyTree(full_size);
             int index = 0;
             to_insert.inorderIn(all_players, index ,to_insert.root);
+            to_insert.size = full_size;
             delete[] all_players;
         }
         int getSize() const;
@@ -230,8 +231,6 @@ namespace wet1_dast
         T* GetLowesValue();
 
         void printTree();
-
-        T* GetRootValue();
 
     };
     static int max(int a, int b);
@@ -672,7 +671,12 @@ namespace wet1_dast
         find_in_tree(root, value, &loc, &father_of_loc);
         if (loc->left_son)
         {
-            return loc->left_son->value;
+            Node* temp = loc->left_son;
+            while(temp->right_son)
+            {
+                temp = temp->right_son;
+            }
+            return temp->value;
         }
         if (father_of_loc)
         {
@@ -721,12 +725,6 @@ namespace wet1_dast
     }
 
     template<class T>
-    T *AVLTree<T>::GetRootValue()
-    {
-        return root->value;
-    }
-
-    template<class T>
     T *AVLTree<T>::findClosestFromAbove(const T &value)
     {
         Node *loc;
@@ -744,17 +742,19 @@ namespace wet1_dast
     }
 
     template<class T>
-    T *AVLTree<T>::GetLowesValue() {
-        if(!root)
+    T *AVLTree<T>::GetLowesValue()
+    {
+        if (!root)
             return nullptr;
-        Node* temp = root->left_son;
-        while(temp)
+        Node *temp = root->left_son;
+        if (!temp)
+            return root->value;
+        while (temp->left_son)
         {
             temp = temp->left_son;
         }
         return temp->value;
     }
-
 }
 
 
