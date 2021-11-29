@@ -120,8 +120,6 @@ namespace wet1_dast
 
         void rr_roll(Node *first_ubl);
 
-        void fixFatherAfterRoll(Node *old_son, Node *new_son);
-
         void inorderHelper(T values[], int* index, Node *ver);
 
         void inorderIn(T values[] , int &index, Node *ver);
@@ -333,7 +331,7 @@ namespace wet1_dast
 
         if (loc->left_son && !loc->right_son)
         {
-            if (loc->value <= loc->father->value)
+            if (loc == loc->father->left_son)
             {
                 loc->father->left_son = loc->left_son;
             } else
@@ -486,13 +484,11 @@ namespace wet1_dast
         temp->father=temp_father;
         first_ubl->height = max(getHeight(first_ubl->left_son), getHeight(first_ubl->right_son)) + 1;
         temp->height = max(getHeight(temp->left_son), getHeight(temp->right_son)) + 1;
-      // fixFatherAfterRoll(first_ubl, temp);
     }
 
     template<class T>
     void AVLTree<T>::lr_roll(Node *first_ubl)
     {
-        //todo
         Node *son = first_ubl->left_son;
         Node *grandson = son->right_son;
         first_ubl->left_son = grandson->right_son;
@@ -502,14 +498,18 @@ namespace wet1_dast
         first_ubl->height = max(getHeight(first_ubl->left_son), getHeight(first_ubl->right_son)) + 1;
         son->height = max(getHeight(son->left_son), getHeight(son->right_son)) + 1;
         grandson->height = max(getHeight(grandson->left_son), getHeight(grandson->right_son)) + 1;
-        fixFatherAfterRoll(first_ubl, grandson);
+        Node* temp_father = first_ubl->father;
+        first_ubl->father = grandson;
+        son->father = grandson;
+        grandson->father = temp_father;
+        if(root == first_ubl)
+            root = grandson;
     }
 
 
     template<class T>
     void AVLTree<T>::rl_roll(Node *first_ubl)
     {
-        //todo
         Node *son = first_ubl->right_son;
         Node *grandson = son->left_son;
         first_ubl->right_son = grandson->left_son;
@@ -519,14 +519,18 @@ namespace wet1_dast
         first_ubl->height = max(getHeight(first_ubl->left_son), getHeight(first_ubl->right_son)) + 1;
         son->height = max(getHeight(son->left_son), getHeight(son->right_son)) + 1;
         grandson->height = max(getHeight(grandson->left_son), getHeight(grandson->right_son)) + 1;
-        fixFatherAfterRoll(first_ubl, grandson);
+        Node* temp_father = first_ubl->father;
+        first_ubl->father = grandson;
+        son->father = grandson;
+        grandson->father = temp_father;
+        if(root == first_ubl)
+            root = grandson;
     }
 
 
     template<class T>
     void AVLTree<T>::rr_roll(Node *first_ubl)
     {
-        //todo
         Node *temp = first_ubl->right_son; //save the right son
         first_ubl->right_son = temp->left_son;//
         if(first_ubl==root)
@@ -543,27 +547,9 @@ namespace wet1_dast
         Node* temp_father=first_ubl->father;
         first_ubl->father=temp;
         temp->father=temp_father;
-        first_ubl->height = max(getHeight(first_ubl->left_son), getHeight(first_ubl->right_son));
-        temp->height = max(getHeight(temp->left_son), getHeight(temp->right_son));
-       // fixFatherAfterRoll(first_ubl, temp);//first ubl=old_son ,was first_ubl,temp
-        //we need to do the followiing thing -> Node* temp_for_father= first_ubl->father.
-        // first_ubl->father = temp
-        // temp->father =temp_for_father.
-    }
+        first_ubl->height = max(getHeight(first_ubl->left_son), getHeight(first_ubl->right_son))+1;
+        temp->height = max(getHeight(temp->left_son), getHeight(temp->right_son))+1;
 
-    template<class T>
-    void AVLTree<T>::fixFatherAfterRoll(Node *old_son, Node *new_son)// old_son=first_ubl,new_son=temp
-    {
-        if (old_son == root)
-        {
-            root = new_son;
-            root->father=nullptr;
-            return;
-        }
-        Node *father = old_son->father;
-        old_son == father->left_son ? father->left_son = new_son : father->right_son = new_son;
-       // old_son->father=new_son;
-        //first ubl==father->left_son?
     }
 
     template<class T>

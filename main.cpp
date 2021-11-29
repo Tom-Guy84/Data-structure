@@ -1,4 +1,4 @@
-//
+
 // Created by  on 19/11/2021.
 //
 #include <iostream>
@@ -33,27 +33,19 @@ int main() {
     tm1m212.insert(*two);
     tm1m212.printTree();
     tm6132.insert(*minus_six);
-    tm6132.insert(*one_RL);
     tm6132.insert(*three);
+    tm6132.insert(*one_RL);
     tm6132.insert(*two_RL);
     tm6132.printTree();
     //lets mess around abit
-    tm6132.remove(*one_RL);
-    tm1m212.remove(*two);
+    delete tm6132.remove(*one_RL);
+    delete tm1m212.remove(*two);
     try {
-        tm6132.remove(*one_LR);
+        delete tm6132.remove(*one_LR);
     }
     catch (AVLTree<int>::ItemNotExist &a) {
         std::cout << "good" << endl;
     }
-    delete minus_one;
-    delete minus_two;
-    delete one_LR;
-    delete two;
-    delete minus_six;
-    delete one_RL;
-    delete three;
-    delete two_RL;
     combineTrees(tm6132,tm1m212);
     tm6132.printTree();
     func2();
