@@ -39,6 +39,7 @@ namespace wet1_dast {
         to_insert->players_by_level.inorderInsert(players_level,to_insert->size+to_delete->size);
         delete[] players_level;
         delete[] players_id;
+        to_delete->size = 0;
     }
 
 
@@ -136,6 +137,8 @@ namespace wet1_dast {
                 next->prev = prev;
             }
         }
+        prev = nullptr;
+        next = nullptr;
     }
 
     void Group::setPrev(Group *prev_group)
@@ -159,14 +162,6 @@ namespace wet1_dast {
     Player** Group::getPlayersByLevel()
     {
         return players_by_level.inorderOut();
-    }
-
-    Group::~Group()
-    {
-//        delete &players_by_level;
-     //   delete &players_by_id;
-
-
     }
 
 }

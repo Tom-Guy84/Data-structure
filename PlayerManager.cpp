@@ -128,9 +128,8 @@ namespace wet1_dast
             if(!g_to_delete ||!g_to_replace)
                 return FAILURE;
             CombineGroups(g_to_delete, g_to_replace);
-            group_delete.correctAfterRemove();
+            g_to_delete->correctAfterRemove();
             delete Groups.remove(group_delete);
-            g_to_replace->findPlayer(1);
         }
         catch (std::exception& e)
         {
