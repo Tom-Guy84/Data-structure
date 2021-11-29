@@ -38,7 +38,7 @@ namespace wet1_dast
 
         StatusType GetGroupsHighestLevel(int numOfGroups, int **Players);
 
-        void Quit(void **DS);
+       friend void Quit(PlayerManager *DS);
 
 
     };

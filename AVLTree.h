@@ -171,8 +171,8 @@ namespace wet1_dast
                 }
             }
             int full_size = to_delete.size + to_insert.size;
-            delete array_to_delete;
-            delete array_to_insert;
+            delete[] array_to_delete;
+            delete[] array_to_insert;
             to_insert.createEmptyTree(full_size);
             int index = 0;
             to_insert.inorderIn(all_players, index ,to_insert.root);
@@ -185,6 +185,7 @@ namespace wet1_dast
             }
             index = 0;
             to_delete.inorderIn(empty_values, index, to_delete.root);
+            delete[] empty_values;
         }
         int getSize() const;
         AVLTree() : size(0)

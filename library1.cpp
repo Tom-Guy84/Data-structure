@@ -3,95 +3,75 @@
 #include "PlayerManager.h"
 #include "library1.h"
 using namespace wet1_dast;
-void *Init()
-{
-    PlayerManager *DS = new PlayerManager();
-    if (!DS)
-    {
-        return NULL;
+    void *Init() {
+        PlayerManager *DS = new PlayerManager();
+        if (!DS) {
+            return NULL;
+        }
+        return (void *) DS;
     }
-    return (void*)DS;
-}
 
 
-StatusType AddGroup(void *DS, int GroupID)
-{
-    if (!DS)
-    {
-        return INVALID_INPUT;
+    StatusType AddGroup(void *DS, int GroupID) {
+        if (!DS) {
+            return INVALID_INPUT;
+        }
+        return ((PlayerManager *) DS)->AddGroup(GroupID);
     }
-    return ((PlayerManager*)DS)->AddGroup(GroupID);
-}
 
-StatusType AddPlayer(void *DS, int PlayerID, int GroupID, int Level)
-{
-    if (!DS)
-    {
-        return INVALID_INPUT;
+    StatusType AddPlayer(void *DS, int PlayerID, int GroupID, int Level) {
+        if (!DS) {
+            return INVALID_INPUT;
+        }
+        return ((PlayerManager *) DS)->AddPlayer(PlayerID, GroupID, Level);
     }
-    return ((PlayerManager*)DS)->AddPlayer(PlayerID, GroupID, Level);
-}
 
-StatusType RemovePlayer(void *DS, int PlayerID)
-{
-    if (!DS)
-    {
-        return INVALID_INPUT;
+    StatusType RemovePlayer(void *DS, int PlayerID) {
+        if (!DS) {
+            return INVALID_INPUT;
+        }
+        return ((PlayerManager *) DS)->RemovePlayer(PlayerID);
     }
-    return ((PlayerManager*)DS)->RemovePlayer(PlayerID);
-}
 
-StatusType ReplaceGroup(void *DS, int GroupID, int ReplacementID)
-{
-    if (!DS)
-    {
-        return INVALID_INPUT;
+    StatusType ReplaceGroup(void *DS, int GroupID, int ReplacementID) {
+        if (!DS) {
+            return INVALID_INPUT;
+        }
+        return ((PlayerManager *) DS)->ReplaceGroup(GroupID, ReplacementID);
     }
-    return ((PlayerManager*)DS)->ReplaceGroup(GroupID, ReplacementID);
-}
 
-StatusType IncreaseLevel(void *DS, int PlayerID, int LevelIncrease)
-{
-    if (!DS)
-    {
-        return INVALID_INPUT;
+    StatusType IncreaseLevel(void *DS, int PlayerID, int LevelIncrease) {
+        if (!DS) {
+            return INVALID_INPUT;
+        }
+        return ((PlayerManager *) DS)->IncreaseLevel(PlayerID, LevelIncrease);
     }
-    return ((PlayerManager*)DS)->IncreaseLevel(PlayerID, LevelIncrease);
-}
 
-StatusType GetHighestLevel(void *DS, int GroupID, int *PlayerID)
-{
-    if (!DS)
-    {
-        return INVALID_INPUT;
+    StatusType GetHighestLevel(void *DS, int GroupID, int *PlayerID) {
+        if (!DS) {
+            return INVALID_INPUT;
+        }
+        return ((PlayerManager *) DS)->GetHighestLevel(GroupID, PlayerID);
     }
-    return ((PlayerManager*)DS)->GetHighestLevel(GroupID, PlayerID);
-}
 
-StatusType GetAllPlayersByLevel(void *DS, int GroupID, int **Players, int *numOfPlayers)
-{
-    if (!DS)
-    {
-        return INVALID_INPUT;
+    StatusType GetAllPlayersByLevel(void *DS, int GroupID, int **Players, int *numOfPlayers) {
+        if (!DS) {
+            return INVALID_INPUT;
+        }
+        return ((PlayerManager *) DS)->GetAllPlayersByLevel(GroupID, Players, numOfPlayers);
     }
-    return ((PlayerManager*)DS)->GetAllPlayersByLevel(GroupID, Players, numOfPlayers);
-}
 
-StatusType GetGroupsHighestLevel(void *DS, int numOfGroups, int **Players)
-{
-    if (!DS)
-    {
-        return INVALID_INPUT;
+    StatusType GetGroupsHighestLevel(void *DS, int numOfGroups, int **Players) {
+        if (!DS) {
+            return INVALID_INPUT;
+        }
+        return ((PlayerManager *) DS)->GetGroupsHighestLevel(numOfGroups, Players);
     }
-    return ((PlayerManager*)DS)->GetGroupsHighestLevel(numOfGroups, Players);
-}
 
-void Quit(void **DS)
-{
-    if (!DS)
-    {
-        return;
+    void Quit(void **DS) {
+        if (!DS) {
+            return;
+        }
+        Quit((PlayerManager * ) * DS);
     }
-    ((PlayerManager*)DS)->Quit(DS);
-}
 

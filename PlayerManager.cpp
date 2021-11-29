@@ -261,8 +261,11 @@ namespace wet1_dast
         return ALLOCATION_ERROR;
     }
 
-    void PlayerManager::Quit(void** DS)
-    {
-        delete *DS;
+    void Quit(PlayerManager *DS) {
+        DS->players.makeEmpty();
+        delete DS;
     }
+
+
+
 }

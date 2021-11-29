@@ -172,5 +172,14 @@ namespace wet1_dast {
         next = nullptr;
     }
 
+    void Group::makeEmpty()
+    {
+        Player** empty_values = new Player*[size];
+        for(int i=0; i<size ; i++)
+            empty_values[i] = nullptr;
+        players_by_id.inorderInsert(empty_values, size);
+        delete[] empty_values;
+    }
+
 }
 
