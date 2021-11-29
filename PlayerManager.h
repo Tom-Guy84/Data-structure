@@ -18,9 +18,8 @@ namespace wet1_dast
         AVLTree<Group> Groups;
         Group players;
     public:
-
         PlayerManager() = default;
-       ~PlayerManager()=default;
+
         PlayerManager* init();
 
         StatusType AddGroup(int GroupId);
@@ -39,7 +38,7 @@ namespace wet1_dast
 
         StatusType GetGroupsHighestLevel(int numOfGroups, int **Players);
 
-        void Quit();
+        void Quit(void **DS);
 
 
     };

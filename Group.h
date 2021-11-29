@@ -24,7 +24,7 @@ namespace wet1_dast {
          explicit Group(int Group_id);
          Group();
         Player* Get_Highest_Player();
-        ~Group() ;
+        ~Group();
          Group(const Group &group) =delete;//todo
          Group& operator=(const Group &other)=delete ;//todo
          bool operator==(const Group &group) const;

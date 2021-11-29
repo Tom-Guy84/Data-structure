@@ -3,6 +3,7 @@
 //
 
 #include "PlayerManager.h"
+
 namespace wet1_dast
 {
 
@@ -260,9 +261,8 @@ namespace wet1_dast
         return ALLOCATION_ERROR;
     }
 
-    void PlayerManager::Quit()
+    void PlayerManager::Quit(void** DS)
     {
-
-       delete this;
+        delete *DS;
     }
 }

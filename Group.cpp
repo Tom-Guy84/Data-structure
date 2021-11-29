@@ -95,6 +95,7 @@ namespace wet1_dast {
         {
             Highest_Player = players_by_level.findClosestFromBelow(player_by_level);
         }
+        size--;
         correctAfterRemove();
         return player_to_return;
     }
@@ -164,13 +165,11 @@ namespace wet1_dast {
         return players_by_level.inorderOut();
     }
 
-    Group::~Group() {
-        Highest_Player=nullptr;
-        prev=nullptr;
-        next=nullptr;
-//        delete& players_by_id;
-//        delete& players_by_level;
-
+    Group::~Group()
+    {
+        Highest_Player = nullptr;
+        prev = nullptr;
+        next = nullptr;
     }
 
 }

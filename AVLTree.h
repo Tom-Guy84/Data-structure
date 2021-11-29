@@ -44,9 +44,7 @@ namespace wet1_dast
                 father = nullptr;
                 right_son = nullptr;
                 left_son = nullptr;
-                delete this->value;
                 value=nullptr;
-
             }
 
             bool operator==(Node *other)
@@ -385,7 +383,7 @@ namespace wet1_dast
             Node *temp = root->left_son;
             delete root;
             root = temp;
-            temp->father=nullptr;
+            temp->father = nullptr;
             return;
 
         } else if (root->right_son && !(root->left_son))
@@ -393,7 +391,7 @@ namespace wet1_dast
             Node *temp = root->right_son;
             delete root;
             root = temp;
-            temp->father=nullptr;
+            temp->father = nullptr;
             return;
         }
         Node *ver;
@@ -677,6 +675,8 @@ namespace wet1_dast
     template<class T>
     T* AVLTree<T>::findClosestFromBelow(const T &value)
     {
+        if(!root)
+            return nullptr;
         Node *loc;
         Node *father_of_loc;
         find_in_tree(root, value, &loc, &father_of_loc);
@@ -709,15 +709,13 @@ namespace wet1_dast
             return;
         postOrderDelete(ver->left_son, delete_values);
         postOrderDelete(ver->right_son, delete_values);
-        if(delete_values) {
+        if(delete_values)
             delete ver->value;
-            ver->value=nullptr;
-        }
-        ver->father=nullptr;
-        ver->left_son=nullptr;
-        ver->right_son=nullptr;
+        ver->father = nullptr;
+        ver->value = nullptr;
+        ver->right_son = nullptr;
+        ver->left_son = nullptr;
         delete ver;
-        ver=nullptr;
     }
 
     template<class T>
@@ -746,6 +744,8 @@ namespace wet1_dast
     template<class T>
     T *AVLTree<T>::findClosestFromAbove(const T &value)
     {
+        if(!root)
+            return nullptr;
         Node *loc;
         Node *father_of_loc;
         find_in_tree(root, value, &loc, &father_of_loc);

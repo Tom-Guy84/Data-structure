@@ -92,7 +92,6 @@ void Quit(void **DS)
     {
         return;
     }
-    ((PlayerManager*)*DS)->Quit();
-    *DS=NULL;
+    ((PlayerManager*)DS)->Quit(DS);
 }
 
