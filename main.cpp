@@ -15,4 +15,9 @@ int main()
    assert(manager->AddPlayer(3,1,2)==SUCCESS);
    assert(manager->AddGroup(2)==SUCCESS);
    assert(manager->AddPlayer(2,2,2)==SUCCESS);
+   assert(manager->RemovePlayer(1) == SUCCESS);
+   assert(manager->RemovePlayer(3) == SUCCESS);
+   assert(manager->RemovePlayer(0) ==INVALID_INPUT);
+   assert(manager->RemovePlayer(2) == SUCCESS);
+   assert(manager->RemovePlayer(1) == FAILURE);
 }
