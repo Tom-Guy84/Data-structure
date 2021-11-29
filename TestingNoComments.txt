@@ -63,3 +63,31 @@ ReplaceGroup 5 4
 ReplaceGroup 5 1
 ReplaceGroup 1 5
 Quit
+
+Init
+AddGroup 1
+IncreaseLevel 0 1 
+IncreaseLevel 1 0 
+IncreaseLevel 1 1
+AddPlayer 1 1 1 
+IncreaseLevel 1 1 
+IncreaseLevel 1 -1  
+RemovePlayer 1
+IncreaseLevel 1 1 
+IncreaseLevel 1 -1 
+AddGroup 2 
+AddPlayer 2 2 2
+IncreaseLevel 2 2 
+IncreaseLevel 2 -2 
+RemovePlayer 2
+IncreaseLevel 2 2 
+IncreaseLevel 2 -2  
+AddPlayer 2 2 2 
+ReplaceGroups 2 1 
+IncreaseLevel 2 2 
+IncreaseLevel 1 1 
+AddPlayer 3 1 4 
+ReplaceGroups 1 1
+IncreaseLevel 2 2 
+
+Quit
