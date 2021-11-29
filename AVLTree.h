@@ -44,7 +44,9 @@ namespace wet1_dast
                 father = nullptr;
                 right_son = nullptr;
                 left_son = nullptr;
+                delete this->value;
                 value=nullptr;
+
             }
 
             bool operator==(Node *other)
@@ -383,6 +385,7 @@ namespace wet1_dast
             Node *temp = root->left_son;
             delete root;
             root = temp;
+            temp->father=nullptr;
             return;
 
         } else if (root->right_son && !(root->left_son))
@@ -390,6 +393,7 @@ namespace wet1_dast
             Node *temp = root->right_son;
             delete root;
             root = temp;
+            temp->father=nullptr;
             return;
         }
         Node *ver;
@@ -705,9 +709,15 @@ namespace wet1_dast
             return;
         postOrderDelete(ver->left_son, delete_values);
         postOrderDelete(ver->right_son, delete_values);
-        if(delete_values)
+        if(delete_values) {
             delete ver->value;
+            ver->value=nullptr;
+        }
+        ver->father=nullptr;
+        ver->left_son=nullptr;
+        ver->right_son=nullptr;
         delete ver;
+        ver=nullptr;
     }
 
     template<class T>

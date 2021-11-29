@@ -164,5 +164,14 @@ namespace wet1_dast {
         return players_by_level.inorderOut();
     }
 
+    Group::~Group() {
+        Highest_Player=nullptr;
+        prev=nullptr;
+        next=nullptr;
+//        delete& players_by_id;
+//        delete& players_by_level;
+
+    }
+
 }
 

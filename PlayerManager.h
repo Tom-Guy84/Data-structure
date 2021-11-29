@@ -18,8 +18,9 @@ namespace wet1_dast
         AVLTree<Group> Groups;
         Group players;
     public:
-        PlayerManager() = default;
 
+        PlayerManager() = default;
+       ~PlayerManager()=default;
         PlayerManager* init();
 
         StatusType AddGroup(int GroupId);

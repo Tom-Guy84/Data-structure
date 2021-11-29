@@ -3,7 +3,6 @@
 //
 
 #include "PlayerManager.h"
-
 namespace wet1_dast
 {
 
@@ -263,7 +262,7 @@ namespace wet1_dast
 
     void PlayerManager::Quit()
     {
-        delete &Groups;
-        delete &players;
+
+       delete this;
     }
 }

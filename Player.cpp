@@ -54,6 +54,7 @@ namespace wet1_dast
 
     Player::~Player()
     {
+
         group = nullptr;
     }
 
