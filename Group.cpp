@@ -56,7 +56,7 @@ namespace wet1_dast {
         } else { //highest player!=nullptr. we then compare between the two
             Highest_Player = (*Highest_Player <= *p) ? p : Highest_Player;
         }
-        correctAfterInsert(); //if the group is empty or not before.
+        AfterInsert(); //if the group is empty or not before.
     }
 
     Group::Group(int Group_id) : Group_Id(Group_id), players_by_id(),
@@ -109,12 +109,12 @@ namespace wet1_dast {
     {
         if(prev)
         {
-            if(!(*(prev->next) == *this)) //TODO ,we need to make sure prev->next is this.
+           
                 prev->next = this;
         }
         if(next)
         {
-            if(!(*(next->prev) == *this))
+            
                 next->prev = this;
         }
     }
