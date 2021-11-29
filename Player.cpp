@@ -54,7 +54,6 @@ namespace wet1_dast
     Player::~Player()
     {
         group = nullptr;
-        delete this;
     }
 
     bool Player::operator<=(const Player &other) const

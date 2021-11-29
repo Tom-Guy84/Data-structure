@@ -81,7 +81,7 @@ namespace wet1_dast
         {
             return FAILURE;
         }
-        return ALLOCATION_ERROR;
+        return SUCCESS;
     }
 
     StatusType PlayerManager::RemovePlayer(int PlayerId)
