@@ -18,7 +18,6 @@ namespace wet1_dast {
         int size ;
         Group* next; // will contain the next group with players
         Group* prev; // will contain the previous group with players
-        bool correctAfterInsert(); //for the list of non-empty groups
         //for the list of non-empty groups
     public:
          explicit Group(int Group_id);
@@ -33,7 +32,7 @@ namespace wet1_dast {
          friend void CombineGroups(Group* to_delete,Group *to_insert);
          bool AddPlayer(Player& player);
          Player* findPlayer(int PlayerId);
-         Player* removePlayer(Player* player);
+         void removePlayer(Player* player);
          Group* getNextGroup();
          Group* getPreviousGroup();
          void setNext(Group* next_group);
@@ -42,6 +41,7 @@ namespace wet1_dast {
          Player ** getPlayersByLevel();
         void makeEmpty();
         void correctAfterRemove();
+        bool correctAfterInsert(); //for the list of non-empty groups
     };
 
 

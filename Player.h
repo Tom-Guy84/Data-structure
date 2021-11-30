@@ -16,8 +16,9 @@ namespace wet1_dast {
         int level;
         Group* group;
         bool sort_by_id;
+        Player* copy_in_other_group;
     public:
-        Player(int player_id, int level, Group *group, bool sort_by_id);//
+        Player(int player_id, int level, Group *group, bool sort_by_id , Player* copy);//
         ~Player();
         Player()=default;
         Player(const Player &p) = default;
@@ -31,6 +32,8 @@ namespace wet1_dast {
         bool operator<=(const Player& other) const;
         friend std::ostream &operator<<(std::ostream &os, const Player &p);
         Player* createPlayerByLevel() const;
+        void SetPlayerPointer(Player* copy);
+        Player* getCopy();
         class InvalidIdentifiers: public std::exception
     {
     public:

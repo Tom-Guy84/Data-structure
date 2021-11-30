@@ -6,8 +6,8 @@
 namespace wet1_dast
 {
 
-    Player::Player(int player_id, int level, Group *group = nullptr, bool sort_by_id = true) :
-            group(group), sort_by_id(sort_by_id)
+    Player::Player(int player_id, int level, Group *group = nullptr, bool sort_by_id = true, Player* copy = nullptr) :
+            group(group), sort_by_id(sort_by_id), copy_in_other_group(copy)
     {
         if (player_id > 0 && level >= 0)
         {
@@ -56,6 +56,7 @@ namespace wet1_dast
     {
 
         group = nullptr;
+        copy_in_other_group = nullptr;
     }
 
     bool Player::operator<=(const Player &other) const
@@ -73,7 +74,7 @@ namespace wet1_dast
 
     Player *Player::createPlayerByLevel() const
     {
-        auto* playerByLevel  = new Player(player_id, level, group, false);
+        auto* playerByLevel  = new Player(player_id, level, group, false, nullptr);
         return playerByLevel;
     }
 
@@ -83,7 +84,18 @@ namespace wet1_dast
         level = p.level;
         group = p.group;
         sort_by_id = p.sort_by_id;
+        copy_in_other_group = p.copy_in_other_group;
         return *this;
+    }
+
+    void Player::SetPlayerPointer(Player *copy)
+    {
+        copy_in_other_group = copy;
+    }
+
+    Player *Player::getCopy()
+    {
+        return copy_in_other_group;
     }
 
 

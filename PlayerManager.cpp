@@ -85,9 +85,11 @@ namespace wet1_dast
             {
                 return FAILURE;
             }
-            Player* player =new Player(PlayerId, level, playersGroup, true);
-            players.AddPlayer(*player);
-            if(playersGroup->AddPlayer(*player))
+            Player* player_in_players =new Player(PlayerId, level, playersGroup, true, nullptr);
+            Player* player_in_group = new Player(PlayerId, level, playersGroup, true, player_in_players);
+            player_in_players->SetPlayerPointer(player_in_group);
+            players.AddPlayer(*player_in_players);
+            if(playersGroup->AddPlayer(*player_in_group))
             {
                 if(Groups.GetLowesValue())
                 {
@@ -117,12 +119,10 @@ namespace wet1_dast
         {
             return FAILURE;
         }
-
-        Player* player_to_delete =  players.removePlayer(player);
-        (player->getGroup)()->removePlayer(player);
-        players.findPlayer(PlayerId); //to check remove
-        (player->getGroup)()->findPlayer(PlayerId);
-        delete player_to_delete;
+        Group* players_group = player->getGroup();
+        players.removePlayer(player);
+        Player *player_in_group = players_group->findPlayer(PlayerId);
+        players_group->removePlayer(player_in_group);
         return SUCCESS;
     }
 
@@ -142,7 +142,7 @@ namespace wet1_dast
                 return FAILURE;
             CombineGroups(g_to_delete, g_to_replace);
             g_to_delete->correctAfterRemove();
-            delete Groups.remove(group_delete);
+            Groups.remove(group_delete);
         }
         catch (std::exception& e)
         {
@@ -162,7 +162,6 @@ namespace wet1_dast
                 return FAILURE;
             player->getGroup()->increaseLevelToPlayer(*player, LevelIncrease);
             players.increaseLevelToPlayer(*player, LevelIncrease);
-            player->setLevel(LevelIncrease);
             return SUCCESS;
         }
         catch (std::exception& e)
@@ -278,7 +277,6 @@ namespace wet1_dast
     }
 
     void Quit(PlayerManager *DS) {
-        DS->players.makeEmpty();
         delete DS;
     }
 

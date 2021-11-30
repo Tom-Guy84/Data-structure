@@ -44,6 +44,7 @@ namespace wet1_dast
                 father = nullptr;
                 right_son = nullptr;
                 left_son = nullptr;
+                delete value;
                 value=nullptr;
             }
 
@@ -63,7 +64,7 @@ namespace wet1_dast
 
         Node *root; //belongs to AVLTree
         int size;
-       //@param loc and father_of_loc are getting changed in this function according to the situaton.
+       //@param loc and father_of_loc are getting changed in this function according to the situation.
        //@ver - the current vertex we are looking at.
        //@val - the value we are looking for.
 
@@ -205,7 +206,7 @@ namespace wet1_dast
 
         void insert(T &val);
 
-        T* remove(const T &val);
+        void remove(const T &val);
 
         T** inorderOut() ;
 
@@ -614,7 +615,6 @@ namespace wet1_dast
             throw ItemExist();
         }
 
-
         if (val <= *(father_of_loc->value))
         {
             father_of_loc->left_son =new Node(&val,father_of_loc);
@@ -626,14 +626,12 @@ namespace wet1_dast
             father_of_loc->right_son = new Node(&val,father_of_loc);
             correctHeight(father_of_loc->right_son);
             checkForRolls(father_of_loc->right_son);
-
-
         }
         size++;
     }
 
     template<class T>
-    T* AVLTree<T>::remove(const T &val)
+    void AVLTree<T>::remove(const T &val)
     {
         Node *loc;
         Node *father_of_loc;
@@ -647,7 +645,7 @@ namespace wet1_dast
         if (loc == root)
         {
            rootCaseRemove();
-           return value;
+           return;
         }
         bool easy_case = false;
         ver = easyCaseRemove(loc, easy_case);
@@ -655,13 +653,12 @@ namespace wet1_dast
         {
             correctHeight(ver);
             checkForRolls(ver);
-            return value;
+            return;
         }
         swapWithNext(loc, &ver);
         ver = easyCaseRemove(loc, easy_case);
         correctHeight(ver);
         checkForRolls(ver);
-        return value;
     }
 
     template<class T>
