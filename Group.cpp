@@ -36,8 +36,8 @@ namespace wet1_dast {
             delete highest_delete;
         }
         to_insert->Highest_Player->setGroup(to_insert);
-        Player **players_level = to_insert->players_by_level.inorderOut();
-        Player **players_id = to_insert->players_by_id.inorderOut();
+        Player **players_level = to_insert->players_by_level.inorderOut(to_insert->players_by_level.getSize());
+        Player **players_id = to_insert->players_by_id.inorderOut(to_insert->players_by_id.getSize());
         for(int i=0; i < to_insert->size; i++)
         {
             players_id[i]->setGroup(to_insert);
@@ -136,17 +136,22 @@ namespace wet1_dast {
 
     Player** Group::getPlayersByLevel()
     {
-        return players_by_level.inorderOut();
+        return players_by_level.inorderOut(players_by_level.getSize());
     }
 
     Group::~Group()
     {
+        copy_non_empty=nullptr;
         Highest_Player = nullptr;
 
     }
 
     void Group::setCopy(Group *copy) {
         copy_non_empty = copy;
+    }
+
+    Group *Group::getCopy() {
+        return copy_non_empty;
     }
 
 }

@@ -216,15 +216,26 @@ namespace wet1_dast
     {
         if(numOfGroups < 1 || !Players)
             return INVALID_INPUT;
-        try
+        int non_empty_size=Non_Empty_Groups.getSize();
+        if(non_empty_size==0||numOfGroups>non_empty_size)
         {
-
+            return FAILURE;
         }
-
-        catch (std::exception&e)
-        {
-        }
-        return ALLOCATION_ERROR;
+           int* players_temp= (int*)malloc(numOfGroups*sizeof(int));
+           if(!players_temp)
+           {
+               return ALLOCATION_ERROR;
+           }
+           Group** Groups_to_insert;
+           Groups_to_insert=Non_Empty_Groups.inorderOut(numOfGroups);
+           for(int i=0;i<numOfGroups;i++)
+           {
+               int Highest_Player_Id=Groups_to_insert[i]->getCopy()->Get_Highest_Player()->getId();
+               players_temp[i]=Highest_Player_Id;
+           }
+           delete[] Groups_to_insert;
+           *Players=players_temp;
+        return SUCCESS;
     }
 
     void Quit(PlayerManager *DS) {

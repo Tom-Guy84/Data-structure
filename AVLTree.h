@@ -135,8 +135,8 @@ namespace wet1_dast
     public:
         friend void combineTrees(AVLTree<T> &to_delete, AVLTree<T>& to_insert)
         {
-            T** array_to_insert=to_insert.inorderOut();
-            T** array_to_delete = to_delete.inorderOut();
+            T** array_to_insert=to_insert.inorderOut(to_insert.getSize());
+            T** array_to_delete = to_delete.inorderOut(to_delete.getSize());
             T** all_players = new T*[to_insert.size + to_delete.size];
             int i = 0, j = 0, k;
             for (k = 0; k < to_insert.size + to_delete.size; k++)
@@ -208,7 +208,7 @@ namespace wet1_dast
 
         void remove(const T &val);
 
-        T** inorderOut() ;
+        T** inorderOut(int size) ;
 
         void inorderInsert(T** values, int size);
 
@@ -662,7 +662,7 @@ namespace wet1_dast
     }
 
     template<class T>
-    T** AVLTree<T>::inorderOut()
+    T** AVLTree<T>::inorderOut(int size)
     {
         if (!root)
             return nullptr;
