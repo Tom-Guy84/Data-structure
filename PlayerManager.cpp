@@ -87,7 +87,13 @@ namespace wet1_dast
             }
             Player* player =new Player(PlayerId, level, playersGroup, true);
             players.AddPlayer(*player);
-            playersGroup->AddPlayer(*player);
+            if(playersGroup->AddPlayer(*player))
+            {
+                if(Groups.GetLowesValue())
+                {
+                    Groups.GetLowesValue()->setNext(playersGroup);
+                }
+            }
         }
         catch (const AVLTree<Player>::ItemExist& e)
         {
@@ -235,6 +241,21 @@ namespace wet1_dast
             if(!highest_players)
                 return ALLOCATION_ERROR;
             Group* group = Groups.GetLowesValue();
+            if(group->GetSize()==0)
+            {
+                if(group->getPreviousGroup())
+                {
+                    group=group->getPreviousGroup();
+                }
+                else {
+                    if (group->getNextGroup()) {
+                        group = group->getNextGroup();
+                    } else {
+                        return FAILURE;
+                    }
+                }
+
+            }
             int count;
             for(count = 0; count < numOfGroups && group; count++)
             {

@@ -56,7 +56,7 @@ namespace wet1_dast {
     }
 
 
-    void Group::AddPlayer(Player& player) {
+    bool Group::AddPlayer(Player& player) {
         //remember it should throw here in case of not good parameters, we want to catch it in PlayerManager.
         players_by_id.insert(player);
         Player* p_level = player.createPlayerByLevel();
@@ -71,7 +71,7 @@ namespace wet1_dast {
             delete highest;
         }
         size++;
-        correctAfterInsert(); //if the group is empty or not before.
+        return correctAfterInsert(); //if the group is empty or not before.
     }
 
     Group::Group(int Group_id) : Group_Id(Group_id), players_by_id(),
@@ -122,18 +122,20 @@ namespace wet1_dast {
         return prev;
     }
 
-    void Group::correctAfterInsert()
+    bool Group::correctAfterInsert()
     {
-        if(prev)
-        {
-           
-                prev->next = this;
-        }
         if(next)
         {
-            
-                next->prev = this;
+
+            next->prev = this;
         }
+        if(prev)
+        {
+                prev->next = this;
+                return false;
+        }
+        return true;
+
     }
 
 
