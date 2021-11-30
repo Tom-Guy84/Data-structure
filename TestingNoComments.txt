@@ -89,7 +89,7 @@ ReplaceGroups 1 1
 IncreaseLevel 2 2
 Quit
 
-//GetHighestLevel
+
 Init
 AddGroup 1
 AddPlayer 3 1 1
@@ -144,6 +144,7 @@ GetHighestLevel -2
 RemovePlayer 1
 GetHighestLevel 5
 Quit
+
 Init
 GetGroupsHighestLevel 0 
 GetGroupsHighestLevel -2 
