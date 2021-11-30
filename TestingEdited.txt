@@ -160,3 +160,158 @@ GetHighestLevel -2//return -1
 RemovePlayer 1 //FAILURE
 GetHighestLevel 5//FAILUER
 Quit
+
+//GetGroupsHighestLevel (int NumOfGroups) //numofgroups<1
+Init
+GetGroupsHighestLevel 0 //invalid
+GetGroupsHighestLevel -2 //invalid
+//test2
+AddGroup 1 //sucess
+GetGroupsHighestLevel 1 //success -should return empty array
+//test 3
+AddPlayer 1 1 1// success
+GetGroupsHighestLevel 1 //success -should return array with size 1
+//test 4
+AddPlayer 2 1 2 //success
+GetGroupsHighestLevel 1 // SUCCESS -should return array with size 1
+GetGroupsHighestLevel 2 // Failure( there is only 1 non-empty group)
+//test 5
+AddGroup 2
+GetGroupsHighestLevel 1 //success
+GetGroupsHighestLevel 2 //failure -when 2 groups exist but only 1 is non-empty
+AddPlayer 3 2 3 // success
+GetGroupsHighestLevel 2 //success -now both are non empty.
+RemovePlayer 3
+GetGroupsHighestLevel 2 //failure -there is only one non empty group
+AddPlayer 3 2 3 //success -adding him again.
+//test 5.5 - remove and add again
+ReplaceGroup 2 1 //success
+GetGroupsHighestLevel 2//failure- there is only 1 group now.
+RemovePlayer 3  //success
+RemovePlayer 2  //success
+RemovePlayer 1 //success
+GetGroupsHighestLevel 2//failure - all groups are empty
+//now stress testing :^)
+AddGroup 3 //success
+AddGroup 4 //success
+AddGroup 5 //success
+AddGroup 6 //success
+AddGroup 7 //success
+AddGroup 8 //success
+AddGroup 9 //success
+AddGroup 10 //success
+AddPlayer 1 1 1 //success
+AddPlayer 2 2 2 //success
+AddPlayer 3 3 3 //success
+AddPlayer 4 4 4 //success
+AddPlayer 5 5 5 //success
+AddPlayer 6 6 6 //success
+AddPlayer 7 7 7 //success
+AddPlayer 8 8 8 //success
+AddPlayer 9 9 9 //success
+AddPlayer 10 10 10 //success
+GetGroupsHighestLevel 10 //SUCCESS
+GetGroupsHighestLevel 11 //failure( i think)
+Remove 10 ////success
+GetGroupsHighestLevel 9 //success
+GetGroupsHighestLevel 10 //failure 
+Remove 9 ////success
+GetGroupsHighestLevel 8 //success
+GetGroupsHighestLevel 9 //failure 
+Remove 8 ////success
+GetGroupsHighestLevel 7 //success
+GetGroupsHighestLevel 8 //failure 
+Remove 7 ////success
+GetGroupsHighestLevel 6 //success
+GetGroupsHighestLevel 7 //failure 
+Remove 6 ////success
+GetGroupsHighestLevel 5 //success
+GetGroupsHighestLevel 6 //failure
+Remove 5 ////success
+GetGroupsHighestLevel 4 //success
+GetGroupsHighestLevel 5 //failure 
+Remove 4 ////success
+GetGroupsHighestLevel 3 //success
+GetGroupsHighestLevel 4 //failure 
+Remove 3 ////success
+GetGroupsHighestLevel 2 //success
+GetGroupsHighestLevel 3 //failure 
+Remove 2 ////success
+GetGroupsHighestLevel 1 //success
+GetGroupsHighestLevel 2 //failure 
+Remove 1 ////success
+GetGroupsHighestLevel 0 //Invalid_input
+GetGroupsHighestLevel 1 //failure
+//more stress testing :^)
+AddPlayer 1 1 1 //success
+AddPlayer 2 2 2 //success
+AddPlayer 3 3 3 //success
+AddPlayer 4 4 4 //success
+AddPlayer 5 5 5 //success
+AddPlayer 6 6 6 //success
+AddPlayer 7 7 7 //success
+AddPlayer 8 8 8 //success
+AddPlayer 9 9 9 //success
+AddPlayer 10 10 10 //success
+GetGroupsHighestLevel 10 //SUCCESS
+GetGroupsHighestLevel 11 //failure( i think)
+ReplaceGroup 10 9
+GetGroupsHighestLevel 9 //success
+GetGroupsHighestLevel 10 //failure
+ReplaceGroup 9 8 //success
+GetGroupsHighestLevel 8 //success
+GetGroupsHighestLevel 9 //failure 
+ReplaceGroup 8 7//success
+GetGroupsHighestLevel 7 //success
+GetGroupsHighestLevel 8 //failure 
+ReplaceGroup 7 6 //success
+GetGroupsHighestLevel 6 //success
+GetGroupsHighestLevel 7 //failure 
+ReplaceGroup 6 5 //success
+GetGroupsHighestLevel 5 //success
+GetGroupsHighestLevel 6 //failure
+ReplaceGroup 5 4 //success
+GetGroupsHighestLevel 4 //success
+GetGroupsHighestLevel 5 //failure 
+ReplaceGroup 4 3 //success
+GetGroupsHighestLevel 3 //success
+GetGroupsHighestLevel 4 //failure 
+ReplaceGroup 3 2 //success
+GetGroupsHighestLevel 2 //success
+GetGroupsHighestLevel 3 //failure 
+ReplaceGroup 2 1 //success
+GetGroupsHighestLevel 1 //success
+GetGroupsHighestLevel 2 //failure 
+//now that Group 1 has 10 players, lets try that again :^)
+Remove 10 ////success
+GetGroupsHighestLevel 10 //failure 
+GetGroupsHighestLevel 1 //success
+Remove 9 ////success
+GetGroupsHighestLevel 9 //failure 
+GetGroupsHighestLevel 1 //success
+Remove 8 ////success
+GetGroupsHighestLevel 8 //failure 
+GetGroupsHighestLevel 1 //success
+Remove 7 ////success
+GetGroupsHighestLevel 7 //failure 
+GetGroupsHighestLevel 1 //success
+Remove 6 ////success
+GetGroupsHighestLevel 6 //failure
+GetGroupsHighestLevel 1 //success
+Remove 5 ////success
+GetGroupsHighestLevel 5 //failure 
+GetGroupsHighestLevel 1 //success
+Remove 4 ////success
+GetGroupsHighestLevel 4 //failure 
+GetGroupsHighestLevel 1 //success
+Remove 3 ////success
+GetGroupsHighestLevel 3 //failure
+GetGroupsHighestLevel 1 //success
+Remove 2 ////success
+GetGroupsHighestLevel 1 //success
+GetGroupsHighestLevel 2 //failure 
+Remove 1 ////success
+GetGroupsHighestLevel 0 //Invalid_input
+GetGroupsHighestLevel 1 //failure
+Quit
+//endoftesting GetGroupsHighestLevel
