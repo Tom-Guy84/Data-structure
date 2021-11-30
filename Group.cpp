@@ -24,8 +24,16 @@ namespace wet1_dast {
         if (!to_insert->Highest_Player)//Highest_player==nullptr
         {
             to_insert->Highest_Player = to_delete->Highest_Player;
-        } else if (*(to_insert->Highest_Player) <= (*(to_delete->Highest_Player))) {
-            to_insert->Highest_Player = to_delete->Highest_Player;
+        } else
+        {
+            Player* highest_insert = to_insert->Highest_Player->createPlayerByLevel();
+            Player* highest_delete = to_delete->Highest_Player->createPlayerByLevel();
+            if (*highest_insert <= *highest_delete)
+            {
+                to_insert->Highest_Player = to_delete->Highest_Player;
+            }
+            delete highest_insert;
+            delete highest_delete;
         }
         to_insert->Highest_Player->setGroup(to_insert);
         Player **players_level = to_insert->players_by_level.inorderOut();
@@ -55,9 +63,12 @@ namespace wet1_dast {
         players_by_level.insert(*p_level);
         if (Highest_Player == nullptr) //if Highest_player doesn't exist,meaning no player exists in Group.{
         {
-            Highest_Player = p_level;
-        } else { //highest player!=nullptr. we then compare between the two
-            (*Highest_Player <= *p_level) ?Highest_Player = p_level :Highest_Player = Highest_Player;
+            Highest_Player = &player;
+        } else
+        { //highest player!=nullptr. we then compare between the two
+            Player* highest = Highest_Player->createPlayerByLevel();
+            (*highest <= *p_level) ?Highest_Player = &player :Highest_Player = Highest_Player;
+            delete highest;
         }
         size++;
         correctAfterInsert(); //if the group is empty or not before.
@@ -92,7 +103,8 @@ namespace wet1_dast {
         Player* player_to_return = players_by_id.remove(*player);
         if (*(Highest_Player) == *player)
         {
-            Highest_Player = players_by_level.findClosestFromBelow(player_by_level);
+            Player* highest = players_by_level.findClosestFromBelow(player_by_level);
+            Highest_Player = players_by_id.find(*highest);
         }
         delete players_by_level.remove(player_by_level);
         size--;
@@ -154,10 +166,13 @@ namespace wet1_dast {
 
     void Group::increaseLevelToPlayer(Player &player, int levelIncrease)
     {
-        Player* player_up = players_by_level.find(player);
+        Player* player_up = players_by_level.remove(player);
         player_up->setLevel(levelIncrease);
-        if(*Highest_Player <= *player_up)
-            Highest_Player = player_up;
+        players_by_level.insert(*player_up);
+        Player* highest = Highest_Player->createPlayerByLevel();
+        if(*highest <= *player_up)
+            Highest_Player = &player;
+        delete highest;
     }
 
     Player** Group::getPlayersByLevel()
@@ -174,7 +189,7 @@ namespace wet1_dast {
 
     void Group::makeEmpty()
     {
-        Player** empty_values = new Player*[size];
+        auto** empty_values = new Player*[size];
         for(int i=0; i<size ; i++)
             empty_values[i] = nullptr;
         players_by_id.inorderInsert(empty_values, size);

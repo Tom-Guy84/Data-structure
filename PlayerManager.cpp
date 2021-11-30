@@ -32,7 +32,7 @@ namespace wet1_dast
             Group g(GroupId);
             if(Groups.find(g))
                 return FAILURE;
-            Group* new_group = new Group(GroupId); //
+            Group* new_group = new Group(GroupId);
             Groups.insert(*new_group); //insert the group
             Group* closest = Groups.findClosestFromBelow(*new_group);//find the closest
             if(!closest) //add- he needs to have players. if he exists and he doesnt havae players ,his previous is my previous
@@ -151,9 +151,9 @@ namespace wet1_dast
             Player* player = players.findPlayer(PlayerId);
             if(!player)
                 return FAILURE;
-            player->setLevel(LevelIncrease);
             player->getGroup()->increaseLevelToPlayer(*player, LevelIncrease);
             players.increaseLevelToPlayer(*player, LevelIncrease);
+            player->setLevel(LevelIncrease);
             return SUCCESS;
         }
         catch (std::exception& e)

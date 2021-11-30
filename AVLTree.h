@@ -692,7 +692,7 @@ namespace wet1_dast
         }
         if (father_of_loc)
         {
-            if(father_of_loc->value <= loc->value)
+            if(*(father_of_loc->value) <= *(loc->value))
                 return father_of_loc->value;
         }
         return nullptr;
