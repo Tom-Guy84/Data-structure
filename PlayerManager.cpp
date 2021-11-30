@@ -111,9 +111,12 @@ namespace wet1_dast
         {
             return FAILURE;
         }
-        (player->getGroup)()->removePlayer(player); // ignore the player that returns from the function because its get
-                                               // deleted in the next line
-        delete players.removePlayer(player);
+
+        Player* player_to_delete =  players.removePlayer(player);
+        (player->getGroup)()->removePlayer(player);
+        players.findPlayer(PlayerId); //to check remove
+        (player->getGroup)()->findPlayer(PlayerId);
+        delete player_to_delete;
         return SUCCESS;
     }
 
@@ -269,7 +272,7 @@ namespace wet1_dast
         }
         for(int i = 0; i < group->GetSize(); i++)
         {
-            group_players[i] = players_of_the_group[i]->getId();
+            group_players[i] = players_of_the_group[group->GetSize() -i -1]->getId();
         }
         *Players = group_players;
         delete players_of_the_group;

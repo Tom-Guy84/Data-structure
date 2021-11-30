@@ -319,7 +319,7 @@ namespace wet1_dast
     typename AVLTree<T>::Node *AVLTree<T>::easyCaseRemove(AVLTree<T>::Node *loc, bool &easy_case)
     {
         Node *ver ;
-        //if he has no sons.
+        easy_case = false;
         if (!(loc->right_son || loc->left_son))
         {
             if (loc == loc->father->left_son)
@@ -329,11 +329,7 @@ namespace wet1_dast
             {
                 loc->father->right_son = nullptr;
             }
-            ver=loc->father;
-            delete loc;
-            loc=nullptr;
             easy_case = true;
-            return ver;
         }
 
         if (loc->left_son && !loc->right_son)
@@ -345,10 +341,7 @@ namespace wet1_dast
             {
                 loc->father->right_son = loc->left_son;
             }
-            Node *ver = loc->father;
-            delete loc;
             easy_case = true;
-            return ver;
         }
 
         if (!loc->left_son && loc->right_son)
@@ -360,12 +353,14 @@ namespace wet1_dast
             {
                 loc->father->right_son = loc->right_son;
             }
-            Node *ver = loc->father;
-            delete loc;
             easy_case = true;
+        }
+        if(easy_case)
+        {
+            ver=loc->father;
+            delete loc;
             return ver;
         }
-        easy_case = false;
         return nullptr;
     }
 
@@ -415,7 +410,7 @@ namespace wet1_dast
         }
         else
         {
-            temp = loc->left_son; //go right
+            temp = loc->left_son; //go left, if loc->left_son is nullptr then something went wrong
             while (temp->right_son) {
                 temp = temp->right_son; //go strongly left
             }
@@ -475,9 +470,7 @@ namespace wet1_dast
     template<class T>
     void AVLTree<T>::ll_roll(Node *first_ubl)
     {
-        //todo
         Node *temp = first_ubl->left_son;
-        first_ubl->left_son = temp->right_son;
         if(first_ubl==root)
         {
             root=temp;
@@ -490,6 +483,7 @@ namespace wet1_dast
             else
                 first_ubl->father->left_son = temp;
         }
+        first_ubl->left_son = temp->right_son;
         if(temp->right_son)
         {
             temp->right_son->father=first_ubl;
@@ -522,10 +516,10 @@ namespace wet1_dast
             root = grandson;
         else
         {
-            if(first_ubl->father->right_son == first_ubl)
-                first_ubl->father->right_son = grandson;
+            if(temp_father->right_son == first_ubl)
+                temp_father->right_son = grandson;
             else
-                first_ubl->father->left_son = grandson;
+                temp_father->left_son = grandson;
         }
     }
 
@@ -551,10 +545,10 @@ namespace wet1_dast
             root = grandson;
         else
         {
-            if(first_ubl->father->right_son == first_ubl)
-                first_ubl->father->right_son = grandson;
+            if(temp_father->right_son == first_ubl)
+                temp_father->right_son = grandson;
             else
-                first_ubl->father->left_son = grandson;
+                temp_father->left_son = grandson;
         }
     }
 
@@ -643,6 +637,7 @@ namespace wet1_dast
     {
         Node *loc;
         Node *father_of_loc;
+        Node *ver;
         T* value = find_in_tree(root, val, &loc, &father_of_loc);
         if (!value)
         {
@@ -655,7 +650,7 @@ namespace wet1_dast
            return value;
         }
         bool easy_case = false;
-        Node *ver = easyCaseRemove(loc, easy_case); //problem, loc ->father is NULL and it shouldn't be?
+        ver = easyCaseRemove(loc, easy_case);
         if (easy_case)
         {
             correctHeight(ver);
@@ -663,7 +658,7 @@ namespace wet1_dast
             return value;
         }
         swapWithNext(loc, &ver);
-        easyCaseRemove(loc, easy_case);
+        ver = easyCaseRemove(loc, easy_case);
         correctHeight(ver);
         checkForRolls(ver);
         return value;
@@ -675,9 +670,8 @@ namespace wet1_dast
         if (!root)
             return nullptr;
         T** values=new T*[size];
-        int* index=new int(0);
-        inorderHelper(values, index, root);
-        delete index;
+        int index=0;
+        inorderHelper(values, &index, root);
         return values;
     }
 
