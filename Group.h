@@ -16,9 +16,7 @@ namespace wet1_dast {
         AVLTree<Player> players_by_id;
         AVLTree<Player> players_by_level;
         int size ;
-        Group* next; // will contain the next group with players
-        Group* prev; // will contain the previous group with players
-        //for the list of non-empty groups
+        Group* copy_non_empty;
     public:
          explicit Group(int Group_id);
          Group();
@@ -30,18 +28,12 @@ namespace wet1_dast {
          int GetSize() const;//todo
          bool operator<=(const Group& other) const;
          friend void CombineGroups(Group* to_delete,Group *to_insert);
-         bool AddPlayer(Player& player);
+         void AddPlayer(Player& player);
          Player* findPlayer(int PlayerId);
          void removePlayer(Player* player);
-         Group* getNextGroup();
-         Group* getPreviousGroup();
-         void setNext(Group* next_group);
-         void setPrev(Group* prev_group);
          void increaseLevelToPlayer(Player& player, int levelIncrease); //increase level only in the playerByLevel tree
          Player ** getPlayersByLevel();
-        void makeEmpty();
-        void correctAfterRemove();
-        bool correctAfterInsert(); //for the list of non-empty groups
+         void setCopy(Group* copy);
     };
 
 

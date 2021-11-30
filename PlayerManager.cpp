@@ -30,34 +30,10 @@ namespace wet1_dast
         try
         {
             Group g(GroupId);
-            if(Groups.find(g))
+            if(All_Groups.find(g))
                 return FAILURE;
             Group* new_group = new Group(GroupId);
-            Groups.insert(*new_group); //insert the group
-            Group* closest = Groups.findClosestFromBelow(*new_group);//find the closest
-            if(!closest) //add- he needs to have players. if he exists and he doesnt havae players ,his previous is my previous
-                //if
-            {
-                new_group->setPrev(nullptr);
-                Group* closest_from_above = Groups.findClosestFromAbove(*new_group); //if he has players he's the next , if not,he's next is the next.
-                if(closest_from_above) {
-                    if(closest_from_above->GetSize()==0) {
-                        new_group->setNext(closest_from_above->getNextGroup());
-                    }
-                    else
-                    {
-                        new_group->setNext(closest_from_above);
-                    }
-                }
-                else {
-                    new_group->setNext(nullptr);
-                }
-            }
-            else
-            {
-                (closest->GetSize() == 0) ? new_group->setPrev(closest->getPreviousGroup()) : new_group->setPrev(closest);
-                new_group->setNext(closest->getNextGroup());
-            }
+            All_Groups.insert(*new_group); //insert the group
             return SUCCESS;
         }
         catch (const AVLTree<Group>::ItemExist& exist)
@@ -76,26 +52,25 @@ namespace wet1_dast
         {
             return INVALID_INPUT;
         }
-        try
-        {
+        try {
             Group g(GroupId);
-            Group* playersGroup = Groups.find(g);
-            Player* player_exist = players.findPlayer(PlayerId);
-            if(!playersGroup || player_exist)
-            {
+            Group *playersGroup = All_Groups.find(g);
+            Player *player_exist = players.findPlayer(PlayerId);
+            if (!playersGroup || player_exist) {
                 return FAILURE;
             }
-            Player* player_in_players =new Player(PlayerId, level, playersGroup, true, nullptr);
-            Player* player_in_group = new Player(PlayerId, level, playersGroup, true, player_in_players);
+            if(playersGroup->GetSize() == 0)
+            {
+                Group* copy_of_group = new Group(GroupId);
+                copy_of_group->setCopy(playersGroup);
+                playersGroup->setCopy(copy_of_group);
+                Non_Empty_Groups.insert(*copy_of_group);
+            }
+            Player *player_in_players = new Player(PlayerId, level, playersGroup, true, nullptr);
+            Player *player_in_group = new Player(PlayerId, level, playersGroup, true, player_in_players);
             player_in_players->SetPlayerPointer(player_in_group);
             players.AddPlayer(*player_in_players);
-            if(playersGroup->AddPlayer(*player_in_group))
-            {
-                if(Groups.GetLowesValue())
-                {
-                    Groups.GetLowesValue()->setNext(playersGroup);
-                }
-            }
+            playersGroup->AddPlayer(*player_in_group);
         }
         catch (const AVLTree<Player>::ItemExist& e)
         {
@@ -123,6 +98,10 @@ namespace wet1_dast
         players.removePlayer(player);
         Player *player_in_group = players_group->findPlayer(PlayerId);
         players_group->removePlayer(player_in_group);
+        if(players_group->GetSize() == 0)
+        {
+            Non_Empty_Groups.remove(*(players_group));
+        }
         return SUCCESS;
     }
 
@@ -135,14 +114,17 @@ namespace wet1_dast
         try
         {
             Group group_delete(GroupId);
-            Group* g_to_delete = Groups.find(group_delete);
+            Group* g_to_delete = All_Groups.find(group_delete);
             Group group_replace(ReplacementId);
-            Group* g_to_replace = Groups.find(group_replace);
+            Group* g_to_replace = All_Groups.find(group_replace);
             if(!g_to_delete ||!g_to_replace)
                 return FAILURE;
             CombineGroups(g_to_delete, g_to_replace);
-            g_to_delete->correctAfterRemove();
-            Groups.remove(group_delete);
+            if(group_delete.GetSize() > 0)
+            {
+                Non_Empty_Groups.remove(group_delete);
+            }
+            All_Groups.remove(group_delete);
         }
         catch (std::exception& e)
         {
@@ -183,7 +165,7 @@ namespace wet1_dast
                 return SUCCESS;
             }
             Group g(GroupId);
-            Group* group = Groups.find(g);
+            Group* group = All_Groups.find(g);
             if(!group)
                 return FAILURE;
             (group->Get_Highest_Player() == nullptr)? *PlayerId = -1 :
@@ -213,7 +195,7 @@ namespace wet1_dast
                 return GetPlayersByLevel(&players, Players, numOfPlayers);
             }
             Group g(GroupId);
-            Group* group = Groups.find(g);
+            Group* group = All_Groups.find(g);
             if(!group)
                 return FAILURE;
             if(group->GetSize() == 0)
@@ -236,38 +218,7 @@ namespace wet1_dast
             return INVALID_INPUT;
         try
         {
-            int* highest_players = (int*)malloc(sizeof(int)*numOfGroups);
-            if(!highest_players)
-                return ALLOCATION_ERROR;
-            Group* group = Groups.GetLowesValue();
-            if(group->GetSize()==0)
-            {
-                if(group->getPreviousGroup())
-                {
-                    group=group->getPreviousGroup();
-                }
-                else {
-                    if (group->getNextGroup()) {
-                        group = group->getNextGroup();
-                    } else {
-                        return FAILURE;
-                    }
-                }
 
-            }
-            int count;
-            for(count = 0; count < numOfGroups && group; count++)
-            {
-                highest_players[count] = group->Get_Highest_Player()->getId();
-                group = group->getNextGroup();
-            }
-            if(!group && count < numOfGroups)
-            {
-                free(highest_players);
-                return FAILURE;
-            }
-            *Players = highest_players;
-            return SUCCESS;
         }
 
         catch (std::exception&e)

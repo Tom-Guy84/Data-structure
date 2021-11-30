@@ -56,7 +56,7 @@ namespace wet1_dast {
     }
 
 
-    bool Group::AddPlayer(Player& player) {
+    void Group::AddPlayer(Player& player) {
         //remember it should throw here in case of not good parameters, we want to catch it in PlayerManager.
         players_by_id.insert(player);
         Player* p_level = player.createPlayerByLevel();
@@ -71,11 +71,10 @@ namespace wet1_dast {
             delete highest;
         }
         size++;
-        return correctAfterInsert(); //if the group is empty or not before.
     }
 
     Group::Group(int Group_id) : Group_Id(Group_id), players_by_id(),
-                                 players_by_level(), size(0), Highest_Player(nullptr) ,next(nullptr), prev(nullptr) {
+                                 players_by_level(), size(0), Highest_Player(nullptr), copy_non_empty(nullptr)  {
         if (Group_id <= 0) {
             throw;
         }
@@ -85,8 +84,7 @@ namespace wet1_dast {
         Group_Id = 0;
         size = 0;
         Highest_Player = nullptr;
-        next = nullptr;
-        prev = nullptr;
+        copy_non_empty = nullptr;
     }
 
     bool Group::operator<=(const Group &other) const {
@@ -117,64 +115,8 @@ namespace wet1_dast {
         }
 
         size--;
-        correctAfterRemove();
         delete player_by_level;
         delete highest;
-    }
-
-    Group *Group::getNextGroup()
-    {
-        return next;
-    }
-
-    Group *Group::getPreviousGroup()
-    {
-        return prev;
-    }
-
-    bool Group::correctAfterInsert()
-    {
-        if(next)
-        {
-
-            next->prev = this;
-        }
-        if(prev)
-        {
-           
-                prev->next = this;
-            return false;
-        }
-        return true;
-
-    }
-
-
-    void Group::correctAfterRemove()
-    {
-        if(!size) // if the group is now empty so need to make adjustment in the list of non-empty groups
-        {
-            if(prev)
-            {
-                prev->next = next;
-            }
-            if(next)
-            {
-                next->prev = prev;
-            }
-        }
-        prev = nullptr;
-        next = nullptr;
-    }
-
-    void Group::setPrev(Group *prev_group)
-    {
-        prev = prev_group;
-    }
-
-    void Group::setNext(Group *next_group)
-    {
-        next = next_group;
     }
 
     void Group::increaseLevelToPlayer(Player &player, int levelIncrease)
@@ -200,17 +142,11 @@ namespace wet1_dast {
     Group::~Group()
     {
         Highest_Player = nullptr;
-        prev = nullptr;
-        next = nullptr;
+
     }
 
-    void Group::makeEmpty()
-    {
-        auto** empty_values = new Player*[size];
-        for(int i=0; i<size ; i++)
-            empty_values[i] = nullptr;
-        players_by_id.inorderInsert(empty_values, size);
-        delete[] empty_values;
+    void Group::setCopy(Group *copy) {
+        copy_non_empty = copy;
     }
 
 }

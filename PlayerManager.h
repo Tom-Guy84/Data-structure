@@ -15,8 +15,9 @@ namespace wet1_dast
 
     class PlayerManager
     {
-        AVLTree<Group> Groups;
+        AVLTree<Group> All_Groups;
         Group players;
+        AVLTree<Group> Non_Empty_Groups;
         StatusType GetPlayersByLevel(Group* group, int** Players, int* numOfPlayers);
     public:
         PlayerManager() = default;
