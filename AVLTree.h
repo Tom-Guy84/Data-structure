@@ -483,6 +483,13 @@ namespace wet1_dast
             root=temp;
             temp->father=nullptr;
         }
+        else //correct to son of the first_ubl father to be the right son
+        {
+            if(first_ubl->father->right_son == first_ubl)
+                first_ubl->father->right_son = temp;
+            else
+                first_ubl->father->left_son = temp;
+        }
         if(temp->right_son)
         {
             temp->right_son->father=first_ubl;
@@ -513,6 +520,13 @@ namespace wet1_dast
         grandson->father = temp_father;
         if(root == first_ubl)
             root = grandson;
+        else
+        {
+            if(first_ubl->father->right_son == first_ubl)
+                first_ubl->father->right_son = grandson;
+            else
+                first_ubl->father->left_son = grandson;
+        }
     }
 
 
@@ -532,8 +546,16 @@ namespace wet1_dast
         first_ubl->father = grandson;
         son->father = grandson;
         grandson->father = temp_father;
+
         if(root == first_ubl)
             root = grandson;
+        else
+        {
+            if(first_ubl->father->right_son == first_ubl)
+                first_ubl->father->right_son = grandson;
+            else
+                first_ubl->father->left_son = grandson;
+        }
     }
 
 
@@ -541,17 +563,24 @@ namespace wet1_dast
     void AVLTree<T>::rr_roll(Node *first_ubl)
     {
         Node *temp = first_ubl->right_son; //save the right son
-        first_ubl->right_son = temp->left_son;//
         if(first_ubl==root)
         {
             root=temp;
             temp->father=nullptr;
         }
+        else //correct to son of the first_ubl father to be the right son
+        {
+            if(first_ubl->father->right_son == first_ubl)
+                first_ubl->father->right_son = temp;
+            else
+                first_ubl->father->left_son = temp;
+        }
+        first_ubl->right_son = temp->left_son;//
+
         if(temp->left_son)
         {
             temp->left_son->father=first_ubl;
         }
-
         temp->left_son = first_ubl;
         Node* temp_father=first_ubl->father;
         first_ubl->father=temp;

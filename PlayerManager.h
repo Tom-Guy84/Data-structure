@@ -17,6 +17,7 @@ namespace wet1_dast
     {
         AVLTree<Group> Groups;
         Group players;
+        StatusType GetPlayersByLevel(Group* group, int** Players, int* numOfPlayers);
     public:
         PlayerManager() = default;
 
