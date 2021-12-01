@@ -1,4 +1,4 @@
-//by Ziv
+//by Ziv Damir and Tom Guy
 Init 
 //addGroup
 AddGroup 1 //success
