@@ -122,16 +122,21 @@ namespace wet1_dast {
 
     void Group::increaseLevelToPlayer(Player &player, int levelIncrease)
     {
-        Player* player_up = players_by_level.find(player);
-        player_up->setLevel(levelIncrease);
-        Player* new_copy_of_player = new Player(player_up->getId(), player_up->getLevel()
-                                                , player_up->getGroup(), false,  player_up->getCopy());
-        Player* highest = Highest_Player->createPlayerByLevel();
-        players_by_level.remove(player);
-        players_by_level.insert(*new_copy_of_player);
+        Player* player_to_up=player.createPlayerByLevel();//to find the player.
+        if(player.getId()==1494)
+        {
+            std::cout<<"zivziv"<<std::endl;
+        }
+        players_by_level.remove(*player_to_up);//find him
+
         players_by_id.find(player)->setLevel(levelIncrease);
-        if(*highest <= *new_copy_of_player)
+        Player* player_to_insert_level = players_by_id.find(player)->createPlayerByLevel();
+
+        players_by_level.insert(*player_to_insert_level);
+        Player* highest = Highest_Player->createPlayerByLevel();
+        if(*highest <= *player_to_insert_level)
             Highest_Player = players_by_id.find(player);
+        delete player_to_up;
         delete highest;
     }
 

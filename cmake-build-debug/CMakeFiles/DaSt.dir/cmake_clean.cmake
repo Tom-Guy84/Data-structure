@@ -1,13 +1,11 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/DaSt.dir/Group.cpp.obj"
-  "CMakeFiles/DaSt.dir/Player.cpp.obj"
-  "CMakeFiles/DaSt.dir/PlayerManager.cpp.obj"
-  "CMakeFiles/DaSt.dir/library1.cpp.obj"
-  "CMakeFiles/DaSt.dir/main1.cpp.obj"
-  "DaSt.exe"
-  "DaSt.exe.manifest"
+  "CMakeFiles/DaSt.dir/Group.cpp.o"
+  "CMakeFiles/DaSt.dir/Player.cpp.o"
+  "CMakeFiles/DaSt.dir/PlayerManager.cpp.o"
+  "CMakeFiles/DaSt.dir/library1.cpp.o"
+  "CMakeFiles/DaSt.dir/main1.cpp.o"
+  "DaSt"
   "DaSt.pdb"
-  "libDaSt.dll.a"
 )
 
 # Per-language clean rules from dependency scanning.

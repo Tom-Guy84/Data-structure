@@ -8,102 +8,111 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug"/>
+				<Option working_dir="/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="edit_cache">
-				<Option working_dir="C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="DaStAVLTree.h">
-				<Option output="C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/DaStAVLTree.h.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++/backward"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/../../../../include"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include-fixed"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/../../../../x86_64-w64-mingw32/include"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 DaStAVLTree.h"/>
-					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
-			<Target title="DaStAVLTree.h/fast">
-				<Option output="C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/DaStAVLTree.h.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug"/>
-				<Option object_output="./"/>
-				<Option type="1"/>
-				<Option compiler="gcc"/>
-				<Compiler>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++/backward"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/../../../../include"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/include-fixed"/>
-					<Add directory="C:/TDM-GCC-64/bin/../lib/gcc/x86_64-w64-mingw32/9.2.0/../../../../x86_64-w64-mingw32/include"/>
-				</Compiler>
-				<MakeCommands>
-					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 DaStAVLTree.h/fast"/>
-					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug"/>
+				<Option working_dir="/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="C:/TDM-GCC-64/bin/mingw32-make.exe -f &quot;C:/Users/tomgu/source/semester3/dast/wet1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DaSt">
+				<Option output="/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/DaSt" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 DaSt"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DaSt/fast">
+				<Option output="/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/DaSt" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/9"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/9"/>
+					<Add directory="/usr/include/c++/9/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/9/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 DaSt/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/mnt/c/Users/proje/CLionProjects/DaSt/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/tomgu/source/semester3/dast/wet1/Group.cpp">
-			<Option target="DaStAVLTree.h"/>
+		<Unit filename="/mnt/c/Users/proje/CLionProjects/DaSt/AVLTree.h">
+			<Option target="DaSt"/>
 		</Unit>
-		<Unit filename="C:/Users/tomgu/source/semester3/dast/wet1/Group.h">
-			<Option target="DaStAVLTree.h"/>
+		<Unit filename="/mnt/c/Users/proje/CLionProjects/DaSt/Group.cpp">
+			<Option target="DaSt"/>
 		</Unit>
-		<Unit filename="C:/Users/tomgu/source/semester3/dast/wet1/Player.cpp">
-			<Option target="DaStAVLTree.h"/>
+		<Unit filename="/mnt/c/Users/proje/CLionProjects/DaSt/Group.h">
+			<Option target="DaSt"/>
 		</Unit>
-		<Unit filename="C:/Users/tomgu/source/semester3/dast/wet1/Player.h">
-			<Option target="DaStAVLTree.h"/>
+		<Unit filename="/mnt/c/Users/proje/CLionProjects/DaSt/Player.cpp">
+			<Option target="DaSt"/>
 		</Unit>
-		<Unit filename="C:/Users/tomgu/source/semester3/dast/wet1/PlayerManager.cpp">
-			<Option target="DaStAVLTree.h"/>
+		<Unit filename="/mnt/c/Users/proje/CLionProjects/DaSt/Player.h">
+			<Option target="DaSt"/>
 		</Unit>
-		<Unit filename="C:/Users/tomgu/source/semester3/dast/wet1/PlayerManager.h">
-			<Option target="DaStAVLTree.h"/>
+		<Unit filename="/mnt/c/Users/proje/CLionProjects/DaSt/PlayerManager.cpp">
+			<Option target="DaSt"/>
 		</Unit>
-		<Unit filename="C:/Users/tomgu/source/semester3/dast/wet1/main.cpp">
-			<Option target="DaStAVLTree.h"/>
+		<Unit filename="/mnt/c/Users/proje/CLionProjects/DaSt/PlayerManager.h">
+			<Option target="DaSt"/>
 		</Unit>
-		<Unit filename="C:/Users/tomgu/source/semester3/dast/wet1/CMakeLists.txt">
+		<Unit filename="/mnt/c/Users/proje/CLionProjects/DaSt/library1.cpp">
+			<Option target="DaSt"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/proje/CLionProjects/DaSt/library1.h">
+			<Option target="DaSt"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/proje/CLionProjects/DaSt/main1.cpp">
+			<Option target="DaSt"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/proje/CLionProjects/DaSt/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

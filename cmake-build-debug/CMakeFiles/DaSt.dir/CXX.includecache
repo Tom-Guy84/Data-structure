@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/tomgu/source/semester3/dast/wet1/AVLTree.h
+/mnt/c/Users/proje/CLionProjects/DaSt/AVLTree.h
 cmath
 -
 cstdio
@@ -18,51 +18,51 @@ memory
 iostream
 -
 
-C:/Users/tomgu/source/semester3/dast/wet1/Group.cpp
+/mnt/c/Users/proje/CLionProjects/DaSt/Group.cpp
 Group.h
-C:/Users/tomgu/source/semester3/dast/wet1/Group.h
+/mnt/c/Users/proje/CLionProjects/DaSt/Group.h
 Player.h
-C:/Users/tomgu/source/semester3/dast/wet1/Player.h
+/mnt/c/Users/proje/CLionProjects/DaSt/Player.h
 
-C:/Users/tomgu/source/semester3/dast/wet1/Group.h
+/mnt/c/Users/proje/CLionProjects/DaSt/Group.h
 AVLTree.h
-C:/Users/tomgu/source/semester3/dast/wet1/AVLTree.h
+/mnt/c/Users/proje/CLionProjects/DaSt/AVLTree.h
 
-C:/Users/tomgu/source/semester3/dast/wet1/Player.cpp
+/mnt/c/Users/proje/CLionProjects/DaSt/Player.cpp
 iostream
 -
 Player.h
-C:/Users/tomgu/source/semester3/dast/wet1/Player.h
+/mnt/c/Users/proje/CLionProjects/DaSt/Player.h
 ostream
 -
 
-C:/Users/tomgu/source/semester3/dast/wet1/Player.h
+/mnt/c/Users/proje/CLionProjects/DaSt/Player.h
 ostream
 -
 Group.h
-C:/Users/tomgu/source/semester3/dast/wet1/Group.h
+/mnt/c/Users/proje/CLionProjects/DaSt/Group.h
 
-C:/Users/tomgu/source/semester3/dast/wet1/PlayerManager.cpp
+/mnt/c/Users/proje/CLionProjects/DaSt/PlayerManager.cpp
 PlayerManager.h
-C:/Users/tomgu/source/semester3/dast/wet1/PlayerManager.h
+/mnt/c/Users/proje/CLionProjects/DaSt/PlayerManager.h
 
-C:/Users/tomgu/source/semester3/dast/wet1/PlayerManager.h
+/mnt/c/Users/proje/CLionProjects/DaSt/PlayerManager.h
 iostream
 -
 Group.h
-C:/Users/tomgu/source/semester3/dast/wet1/Group.h
+/mnt/c/Users/proje/CLionProjects/DaSt/Group.h
 AVLTree.h
-C:/Users/tomgu/source/semester3/dast/wet1/AVLTree.h
+/mnt/c/Users/proje/CLionProjects/DaSt/AVLTree.h
 Player.h
-C:/Users/tomgu/source/semester3/dast/wet1/Player.h
+/mnt/c/Users/proje/CLionProjects/DaSt/Player.h
 library1.h
-C:/Users/tomgu/source/semester3/dast/wet1/library1.h
+/mnt/c/Users/proje/CLionProjects/DaSt/library1.h
 
-C:/Users/tomgu/source/semester3/dast/wet1/library1.cpp
+/mnt/c/Users/proje/CLionProjects/DaSt/library1.cpp
 PlayerManager.h
-C:/Users/tomgu/source/semester3/dast/wet1/PlayerManager.h
+/mnt/c/Users/proje/CLionProjects/DaSt/PlayerManager.h
 library1.h
-C:/Users/tomgu/source/semester3/dast/wet1/library1.h
+/mnt/c/Users/proje/CLionProjects/DaSt/library1.h
 
-C:/Users/tomgu/source/semester3/dast/wet1/library1.h
+/mnt/c/Users/proje/CLionProjects/DaSt/library1.h
 
