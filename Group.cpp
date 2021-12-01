@@ -105,10 +105,12 @@ namespace wet1_dast {
             if(!new_highest)
             {
                 Highest_Player = nullptr;
+                copy_non_empty = nullptr;
             }
             else
             {
-                Highest_Player = players_by_id.find(*new_highest);
+                Player new_highest_id(new_highest->getId(), 0, this, true, nullptr);
+                Highest_Player = players_by_id.find(new_highest_id);
             }
         }
         players_by_level.remove(*player_by_level);
