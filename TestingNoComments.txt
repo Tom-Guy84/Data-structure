@@ -196,6 +196,7 @@ RemovePlayer 3
 RemovePlayer 2  
 RemovePlayer 1 
 GetGroupsHighestLevel 2
+AddGroup 2
 AddGroup 3 
 AddGroup 4 
 AddGroup 5 
