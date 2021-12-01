@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Player.h"
-#include <ostream>
+
 
 
 namespace wet1_dast
@@ -40,12 +40,7 @@ namespace wet1_dast
         return player_id;
     }
 
-    std::ostream &operator<<(std::ostream &os, const Player &p)
-    {
-        os << "Player id: " << p.player_id << std::endl;
-        os << "Player level:" << p.level << std::endl;
-        return os;
-    }
+
 
     void Player::setGroup(Group *group_to_set)
     {

@@ -123,10 +123,6 @@ namespace wet1_dast {
     void Group::increaseLevelToPlayer(Player &player, int levelIncrease)
     {
         Player* player_to_up=player.createPlayerByLevel();//to find the player.
-        if(player.getId()==1494)
-        {
-            std::cout<<"zivziv"<<std::endl;
-        }
         players_by_level.remove(*player_to_up);//find him
 
         players_by_id.find(player)->setLevel(levelIncrease);

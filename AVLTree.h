@@ -74,8 +74,7 @@ namespace wet1_dast
         {
             if (*(ver->value) == val) //if we're in the location
             {
-                //problem here.
-                //valgrind says loc isn't inited.
+
                 *loc = ver; // mark this as the location.
                 *father_of_loc = ver->father;//mark father.
                 return ver->value; // return us the value.
@@ -129,7 +128,7 @@ namespace wet1_dast
 
         static void postOrderDelete(Node* ver, bool delete_values);
 
-        void printHelper(Node* ver);
+
 
 
     public:
@@ -239,7 +238,7 @@ namespace wet1_dast
 
         T* GetLowesValue();
 
-        void printTree();
+
 
     };
     static int max(int a, int b);
@@ -656,12 +655,7 @@ namespace wet1_dast
         T** values;
         if (!root)
             return nullptr;
-        try {
-            values=new T*[size];
-        }
-        catch ( std::exception& e ) {
-            std::cout<<e.what()<<std::endl;
-        }
+        values=new T*[size];
         int index=0;
         inorderHelper(values, &index, root, size);
         return values;
@@ -738,21 +732,8 @@ namespace wet1_dast
         delete ver;
     }
 
-    template<class T>
-    void AVLTree<T>::printTree()
-    {
-        printHelper(root);
-    }
 
-    template<class T>
-    void AVLTree<T>::printHelper(Node* ver)
-    {
-        if(!ver)
-            return;
-        printHelper(ver->left_son);
-        std::cout<<*(ver->value)<<std::endl;
-        printHelper(ver->right_son);
-    }
+
 
     template<class T>
     void AVLTree<T>::inorderInsert(T** values, int size)
