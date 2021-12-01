@@ -209,7 +209,7 @@ namespace wet1_dast
             if(group->GetSize() == 0)
             {
                 *numOfPlayers = 0;
-                Players = NULL;
+                *Players = NULL;
                 return SUCCESS;
             }
             return GetPlayersByLevel(group, Players, numOfPlayers);
