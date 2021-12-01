@@ -295,7 +295,7 @@ IncreaseLevel 1 1//failure(player doesn't exist.)
 AddPlayer 1 1 1 //success
 //from now on player 1 exists
 IncreaseLevel 1 1 // success
-IncreaseLevel 1 -1 // failure(trying to level 
+IncreaseLevel 1 -1 // Invalid_input(trying to level 
 RemovePlayer 1//success
 //from now on RemovePlayer Doesn't exist anymore
 IncreaseLevel 1 1 // failure
@@ -305,7 +305,7 @@ AddGroup 2 //success
 AddPlayer 2 2 2//success
 //from now on player 2 exists
 IncreaseLevel 2 2 // success
-IncreaseLevel 2 -2 // failure(trying to level 
+IncreaseLevel 2 -2 // Invalid_input(trying to level 
 RemovePlayer 2//success
 //from now on Player 2 Doesn't exist anymore
 IncreaseLevel 2 2 // failure
@@ -313,9 +313,10 @@ IncreaseLevel 2 -2  // Invalid_input
 //end of testing with lone groups
 //replaceGroups Testing with it.
 AddPlayer 2 2 2 //success
+AddPlayer 1 1 1 //succces
 ReplaceGroups 2 1 //deleting Group 2 
 IncreaseLevel 2 2 //success
-IncreaseLevel 1 1 //success
+IncreaseLevel 1 1 //
 AddPlayer 3 1 4 //success
 ReplaceGroups 1 1//Invalid_input 
 IncreaseLevel 2 2 //success
@@ -327,7 +328,7 @@ Init
 AddGroup 1
 AddPlayer 3 1 1
 GetHighestLevel -1 //return 3
-GetHighestLevel 1 // return 1
+GetHighestLevel 1 // return 3
 GetHighestLevel 0// INVALID_INPUT
 GetHighestLevel 3 //FAILURE
 RemovePlayer 3 // test the function after removing the only player
@@ -354,11 +355,13 @@ GetHighestLevel -4 //still returns 2
 RemovePlayer 2
 GetHighestLevel 2 //FAILURE
 GetHighestLevel -1 // 3 is the only player now
-AddPlayer 5 4 1
+AddPlayer 5 4 1 //sucess
 ReplaceGroups 4 1 //SUCCESS, testing both of the groups for highest player
-GetHighestLevel 1 //return 3
+GetHighestLevel 1 //return 5
 GetHighestLevel 4 // FAILURE
-GetHighestLevel -3// return 3
+GetHighestLevel -3// return 5
+RemovePlayer 5 //success(removing the highestPlayer)
+GetHighestLevel -3//return 3
 AddPlayer 9 5 111
 GetHighestLevel 5 // return 9
 ReplaceGroups 1 5 //now the highest player stay in his group
@@ -370,11 +373,12 @@ GetHighestLevel 1//FAILURE
 GetHighestLevel 5//return 9
 GetHighestLevel 4//FAILURE there is no group 4
 GetHighestLevel -1// return 9
-RemovePlayer 9
-GetHighestLevel 5// retrun -1 becuse there no players in the group 
+RemovePlayer 9 //success 
+GetHighestLevel 5// retrun 3 because of replaceGroups
 GetHighestLevel 1 //FAILURE
-GetHighestLevel -2//return -1
+GetHighestLevel -2//return 3
 RemovePlayer 1 //FAILURE
+RemovePlayer 3 //success(should remove player 3 from group 5)
 GetHighestLevel 5//FAILUER
 Quit
 //GetAllPlayersByLevel
