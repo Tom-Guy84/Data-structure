@@ -135,8 +135,8 @@ namespace wet1_dast
     public:
         friend void combineTrees(AVLTree<T> &to_delete, AVLTree<T>& to_insert)
         {
-            T** array_to_insert=to_insert.inorderOut(to_insert.getSize());
-            T** array_to_delete = to_delete.inorderOut(to_delete.getSize());
+            T** array_to_insert=to_insert.inorderOut(to_insert.size);
+            T** array_to_delete = to_delete.inorderOut(to_delete.size);
             T** all_players = new T*[to_insert.size + to_delete.size];
             int i = 0, j = 0, k;
             for (k = 0; k < to_insert.size + to_delete.size; k++)
@@ -338,21 +338,26 @@ namespace wet1_dast
             if (loc == loc->father->left_son)
             {
                 loc->father->left_son = loc->left_son;
+                loc->left_son->father = loc->father;
             } else
             {
                 loc->father->right_son = loc->left_son;
+                loc->left_son->father = loc->father;
             }
             easy_case = true;
         }
 
         if (!loc->left_son && loc->right_son)
         {
-            if (loc->value <= loc->father->value)
+            if (loc == loc->father->left_son)
             {
                 loc->father->left_son = loc->right_son;
+                loc->right_son->father = loc->father;
+
             } else
             {
                 loc->father->right_son = loc->right_son;
+                loc->right_son->father = loc->father;
             }
             easy_case = true;
         }
@@ -656,7 +661,7 @@ namespace wet1_dast
             return;
         }
         swapWithNext(loc, &ver);
-        ver = easyCaseRemove(loc, easy_case);
+        ver = easyCaseRemove(ver, easy_case);
         correctHeight(ver);
         checkForRolls(ver);
     }

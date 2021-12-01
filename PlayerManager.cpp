@@ -119,11 +119,19 @@ namespace wet1_dast
             Group* g_to_replace = All_Groups.find(group_replace);
             if(!g_to_delete ||!g_to_replace)
                 return FAILURE;
-            CombineGroups(g_to_delete, g_to_replace);
-            if(group_delete.GetSize() > 0)
+            if(g_to_delete->GetSize() > 0)
             {
                 Non_Empty_Groups.remove(group_delete);
+                if(g_to_replace->GetSize() == 0)
+                {
+                    Group* copy_of_replacement = new Group(ReplacementId);
+                    copy_of_replacement->setCopy(g_to_replace);
+                    g_to_replace->setCopy(copy_of_replacement);
+                    Non_Empty_Groups.insert(*copy_of_replacement);
+                }
             }
+            CombineGroups(g_to_delete, g_to_replace);
+
             All_Groups.remove(group_delete);
         }
         catch (std::exception& e)
@@ -206,11 +214,31 @@ namespace wet1_dast
             }
             return GetPlayersByLevel(group, Players, numOfPlayers);
         }
-        catch (std::exception* e)
+        catch (std::exception& e)
         {
         }
         return ALLOCATION_ERROR;
     }
+
+    StatusType PlayerManager::GetPlayersByLevel(Group *group, int **Players, int *numOfPlayers)
+    {
+        Player** players_of_the_group = group->getPlayersByLevel();
+        int* group_players = (int*)malloc(sizeof(int)*(group->GetSize()));
+        if(!group_players)
+        {
+            delete[] players_of_the_group;
+            return ALLOCATION_ERROR;
+        }
+        for(int i = 0; i < group->GetSize(); i++)
+        {
+            group_players[i] = players_of_the_group[group->GetSize() -i -1]->getId();
+        }
+        delete[] players_of_the_group;
+        *numOfPlayers = group->GetSize();
+        *Players = group_players;
+        return SUCCESS;
+    }
+
 
     StatusType PlayerManager::GetGroupsHighestLevel(int numOfGroups, int **Players)
     {
@@ -221,45 +249,26 @@ namespace wet1_dast
         {
             return FAILURE;
         }
-           int* players_temp= (int*)malloc(numOfGroups*sizeof(int));
-           if(!players_temp)
-           {
-               return ALLOCATION_ERROR;
-           }
-           Group** Groups_to_insert;
-           Groups_to_insert=Non_Empty_Groups.inorderOut(numOfGroups);
-           for(int i=0;i<numOfGroups;i++)
-           {
-               int Highest_Player_Id=Groups_to_insert[i]->getCopy()->Get_Highest_Player()->getId();
-               players_temp[i]=Highest_Player_Id;
-           }
-           delete[] Groups_to_insert;
-           *Players=players_temp;
+        int* players_temp= (int*)malloc(numOfGroups*sizeof(int));
+        if(!players_temp)
+        {
+            return ALLOCATION_ERROR;
+        }
+        Group** Groups_to_insert;
+        Groups_to_insert=Non_Empty_Groups.inorderOut(numOfGroups);
+        for(int i=0;i<numOfGroups;i++)
+        {
+            int Highest_Player_Id=Groups_to_insert[i]->GetCopy()->Get_Highest_Player()->getId();
+            players_temp[i]=Highest_Player_Id;
+        }
+        delete[] Groups_to_insert;
+        *Players=players_temp;
         return SUCCESS;
-    }
-
+}
     void Quit(PlayerManager *DS) {
         delete DS;
     }
 
-    StatusType PlayerManager::GetPlayersByLevel(Group *group, int **Players, int *numOfPlayers)
-    {
-        Player** players_of_the_group = group->getPlayersByLevel();
-        int *group_players = (int*)malloc(sizeof(int)*group->GetSize());
-        if(!group_players)
-        {
-            delete players_of_the_group;
-            return FAILURE;
-        }
-        for(int i = 0; i < group->GetSize(); i++)
-        {
-            group_players[i] = players_of_the_group[group->GetSize() -i -1]->getId();
-        }
-        *Players = group_players;
-        delete players_of_the_group;
-        *numOfPlayers = group->GetSize();
-        return SUCCESS;
-    }
 
 
 }

@@ -99,8 +99,6 @@ namespace wet1_dast {
     void Group::removePlayer(Player *player) {
         Player* player_by_level = player->createPlayerByLevel();
         Player* highest = Highest_Player->createPlayerByLevel();
-        players_by_level.remove(*player_by_level);
-        players_by_id.remove(*player);
         if (*highest == *player_by_level)
         {
             Player* new_highest = players_by_level.findClosestFromBelow(*player_by_level);
@@ -113,7 +111,8 @@ namespace wet1_dast {
                 Highest_Player = players_by_id.find(*new_highest);
             }
         }
-
+        players_by_level.remove(*player_by_level);
+        players_by_id.remove(*player);
         size--;
         delete player_by_level;
         delete highest;
@@ -141,8 +140,8 @@ namespace wet1_dast {
 
     Group::~Group()
     {
-        copy_non_empty=nullptr;
         Highest_Player = nullptr;
+        copy_non_empty = nullptr;
 
     }
 
@@ -150,7 +149,8 @@ namespace wet1_dast {
         copy_non_empty = copy;
     }
 
-    Group *Group::getCopy() {
+    Group *Group::GetCopy()
+    {
         return copy_non_empty;
     }
 

@@ -34,7 +34,7 @@ namespace wet1_dast {
          void increaseLevelToPlayer(Player& player, int levelIncrease); //increase level only in the playerByLevel tree
          Player ** getPlayersByLevel();
          void setCopy(Group* copy);
-         Group* getCopy();
+         Group* GetCopy();
     };
 
 
