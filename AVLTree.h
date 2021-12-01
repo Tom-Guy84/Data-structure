@@ -103,8 +103,6 @@ namespace wet1_dast
         int getHeight(Node *ver);
         int balance(Node *ver);
 
-        void correctHeight(Node *ver);
-
         Node *easyCaseRemove(Node *loc, bool &easy_case);
 
         void rootCaseRemove();
@@ -113,13 +111,13 @@ namespace wet1_dast
 
         void checkForRolls(Node *start);
 
-        void ll_roll(Node *first_ubl);
+        void ll_roll(Node *ubl);
 
-        void lr_roll(Node *first_ubl);
+        void lr_roll(Node *ubl);
 
-        void rl_roll(Node *first_ubl);
+        void rl_roll(Node *ubl);
 
-        void rr_roll(Node *first_ubl);
+        void rr_roll(Node *ubl);
 
         void inorderHelper(T* values[], int* index, Node *ver);
 
@@ -265,10 +263,6 @@ namespace wet1_dast
             (*size_of_tree)--;
             right_son->Tree_Creator_AUX(size_of_tree, height_of_tree - 1);
         }
-//        if(!(left_son->Tree_Creator_AUX(size_of_tree, height_of_tree - 1)))
-//            left_son = nullptr;
-//        if(!(right_son->Tree_Creator_AUX(size_of_tree, height_of_tree - 1)))
-//            right_son = nullptr;
         if (left_son!=nullptr)
             left_son->father = this;
         if (right_son!=nullptr)
@@ -304,17 +298,6 @@ namespace wet1_dast
         }
         return (this->getHeight(ver->left_son) - this->getHeight(ver->right_son));
     }
-
-    template<class T>
-    void AVLTree<T>::correctHeight(Node *ver)
-    {
-        while (ver!= nullptr)
-        {
-            ver->height = max(getHeight(ver->right_son), getHeight(ver->left_son)) + 1;
-            ver = ver->father;
-        }
-    }
-
 
     template<class T>
     typename AVLTree<T>::Node *AVLTree<T>::easyCaseRemove(AVLTree<T>::Node *loc, bool &easy_case)
@@ -400,7 +383,6 @@ namespace wet1_dast
         swapWithNext(root, &ver);
         bool easyCase;
         Node* place_to_fix = easyCaseRemove(ver, easyCase);
-        correctHeight(place_to_fix);
         checkForRolls(place_to_fix);
     }
 
@@ -431,8 +413,11 @@ namespace wet1_dast
     template<class T>
     void AVLTree<T>::checkForRolls(Node *start)
     {
+        Node* temp_father;
         while (start)
         {
+            start->height = max(getHeight(start->right_son), getHeight(start->left_son)) + 1;
+            temp_father = start->father;
             if (balance(start) > -2 && balance(start) < 2)
             {
                 start = start->father;
@@ -446,23 +431,25 @@ namespace wet1_dast
                         if (balance(start->left_son) >= 0)
                         {
                             ll_roll(start);
-                            return;
+                            start = temp_father;
+                            continue;
                         }
                         lr_roll(start);
-                        return;
+                        start = temp_father;
+                        continue;
                     }
                     case -2:
                     {
                         if (balance(start->right_son) <= 0)
                         {
                             rr_roll(start);
-                            return;
+                            start = temp_father;
+                            continue;
                         }
                         rl_roll(start);
-                        return;
+                        start = temp_father;
+                        continue;
                     }
-                    default: // not supposed to get here
-                        rr_roll(start);
                 }
             }
         }
@@ -474,8 +461,9 @@ namespace wet1_dast
     }
 
     template<class T>
-    void AVLTree<T>::ll_roll(Node *first_ubl)
+    void AVLTree<T>::ll_roll(Node *ubl)
     {
+        Node* first_ubl = ubl;
         Node *temp = first_ubl->left_son;
         if(first_ubl==root)
         {
@@ -503,21 +491,22 @@ namespace wet1_dast
     }
 
     template<class T>
-    void AVLTree<T>::lr_roll(Node *first_ubl)
+    void AVLTree<T>::lr_roll(Node *ubl)
     {
+        Node *first_ubl = ubl;
         Node *son = first_ubl->left_son;
         Node *grandson = son->right_son;
         first_ubl->left_son = grandson->right_son;
         son->right_son = grandson->left_son;
         grandson->left_son = son;
         grandson->right_son = first_ubl;
-        first_ubl->height = max(getHeight(first_ubl->left_son), getHeight(first_ubl->right_son)) + 1;
-        son->height = max(getHeight(son->left_son), getHeight(son->right_son)) + 1;
-        grandson->height = max(getHeight(grandson->left_son), getHeight(grandson->right_son)) + 1;
         Node* temp_father = first_ubl->father;
         first_ubl->father = grandson;
         son->father = grandson;
         grandson->father = temp_father;
+        first_ubl->height = max(getHeight(first_ubl->left_son), getHeight(first_ubl->right_son)) + 1;
+        son->height = max(getHeight(son->left_son), getHeight(son->right_son)) + 1;
+        grandson->height = max(getHeight(grandson->left_son), getHeight(grandson->right_son)) + 1;
         if(root == first_ubl)
             root = grandson;
         else
@@ -531,21 +520,22 @@ namespace wet1_dast
 
 
     template<class T>
-    void AVLTree<T>::rl_roll(Node *first_ubl)
+    void AVLTree<T>::rl_roll(Node *ubl)
     {
+        Node* first_ubl = ubl;
         Node *son = first_ubl->right_son;
         Node *grandson = son->left_son;
         first_ubl->right_son = grandson->left_son;
         son->left_son = grandson->right_son;
         grandson->right_son = son;
         grandson->left_son = first_ubl;
-        first_ubl->height = max(getHeight(first_ubl->left_son), getHeight(first_ubl->right_son)) + 1;
-        son->height = max(getHeight(son->left_son), getHeight(son->right_son)) + 1;
-        grandson->height = max(getHeight(grandson->left_son), getHeight(grandson->right_son)) + 1;
         Node* temp_father = first_ubl->father;
         first_ubl->father = grandson;
         son->father = grandson;
         grandson->father = temp_father;
+        first_ubl->height = max(getHeight(first_ubl->left_son), getHeight(first_ubl->right_son)) + 1;
+        son->height = max(getHeight(son->left_son), getHeight(son->right_son)) + 1;
+        grandson->height = max(getHeight(grandson->left_son), getHeight(grandson->right_son)) + 1;
 
         if(root == first_ubl)
             root = grandson;
@@ -560,8 +550,9 @@ namespace wet1_dast
 
 
     template<class T>
-    void AVLTree<T>::rr_roll(Node *first_ubl)
+    void AVLTree<T>::rr_roll(Node *ubl)
     {
+        Node* first_ubl = ubl;
         Node *temp = first_ubl->right_son; //save the right son
         if(first_ubl==root)
         {
@@ -623,13 +614,11 @@ namespace wet1_dast
         if (val <= *(father_of_loc->value))
         {
             father_of_loc->left_son =new Node(&val,father_of_loc);
-            correctHeight(father_of_loc->left_son);
             checkForRolls(father_of_loc->left_son);
 
         } else
         {
             father_of_loc->right_son = new Node(&val,father_of_loc);
-            correctHeight(father_of_loc->right_son);
             checkForRolls(father_of_loc->right_son);
         }
         size++;
@@ -656,13 +645,11 @@ namespace wet1_dast
         ver = easyCaseRemove(loc, easy_case);
         if (easy_case)
         {
-            correctHeight(ver);
             checkForRolls(ver);
             return;
         }
         swapWithNext(loc, &ver);
         ver = easyCaseRemove(ver, easy_case);
-        correctHeight(ver);
         checkForRolls(ver);
     }
 
