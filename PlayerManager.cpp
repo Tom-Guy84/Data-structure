@@ -1,157 +1,42 @@
 //
-// Created by Tom Guy on 11/23/2021.
+// Created by proje on 02/01/2022.
 //
 
 #include "PlayerManager.h"
-
-namespace wet1_dast
-{
-
-    PlayerManager* PlayerManager::init()
+namespace wet2_dast{
+    PlayerManager::PlayerManager(int k, int scale)
     {
-        try
-        {
-            auto* Manager = new PlayerManager();
-            return Manager;
-        }
-        catch (const std::exception& e)
-        {
-            return nullptr;
-        }
-
+        num_of_groups = k;
+        this->scale = scale;
+        groups = new Union_Find<Group>(k+1); //time complexity is O(k+1) because the function creates
+                                                 // all the groups in the structure
     }
 
-    StatusType PlayerManager::AddGroup(int GroupId)
-    {
-        if(GroupId <= 0)
-        {
-            return INVALID_INPUT;
-        }
-        try
-        {
-            Group g(GroupId);
-            if(All_Groups.find(g))
-                return FAILURE;
-            Group* new_group = new Group(GroupId);
-            All_Groups.insert(*new_group); //insert the group
-            return SUCCESS;
-        }
-        catch (const AVLTree<Group>::ItemExist& exist)
-        {
-            return FAILURE;
-        }
-        catch (const std::exception& e)
-        {
-            return ALLOCATION_ERROR;
-        }
-    }
-
-    StatusType PlayerManager::AddPlayer(int PlayerId, int GroupId, int level)
-    {
-        if(PlayerId <= 0 || GroupId <= 0 || level < 0)
-        {
-            return INVALID_INPUT;
-        }
+    PlayerManager *PlayerManager::Init(int k, int scale) {
+        if (k <= 0 || scale <= 0 || scale > 200)
+            return NULL;
         try {
-            Group g(GroupId);
-            Group *playersGroup = All_Groups.find(g);
-            Player *player_exist = players.findPlayer(PlayerId);
-            if (!playersGroup || player_exist) {
-                return FAILURE;
-            }
-            if(playersGroup->GetSize() == 0)
-            {
-                Group* copy_of_group = new Group(GroupId);
-                copy_of_group->setCopy(playersGroup);
-                playersGroup->setCopy(copy_of_group);
-                Non_Empty_Groups.insert(*copy_of_group);
-            }
-            Player *player_in_players = new Player(PlayerId, level, playersGroup, true, nullptr);
-            Player *player_in_group = new Player(PlayerId, level, playersGroup, true, player_in_players);
-            player_in_players->SetPlayerPointer(player_in_group);
-            players.AddPlayer(*player_in_players);
-            playersGroup->AddPlayer(*player_in_group);
+            auto *manager = new PlayerManager(k, scale);
+            return manager;
         }
-        catch (const AVLTree<Player>::ItemExist& e)
-        {
-            return FAILURE;
+        catch (std::exception &e) {
+            return NULL;
         }
-        catch (const AVLTree<Group>::ItemNotExist& e)
-        {
-            return FAILURE;
-        }
-        return SUCCESS;
     }
 
-    StatusType PlayerManager::RemovePlayer(int PlayerId)
+    StatusType PlayerManager::mergeGroups(int GroupID1, int GroupID2)
     {
-        if(PlayerId <= 0)
+        if(GroupID1 <=0 || GroupID1 > num_of_groups || GroupID2 <= 0 || GroupID2 > num_of_groups)
         {
             return INVALID_INPUT;
         }
-        Player *player = players.findPlayer(PlayerId);
-        if(!player)
+        if(GroupID1==GroupID2)
         {
-            return FAILURE;
-        }
-        Group* players_group = player->getGroup();
-        players.removePlayer(player);
-        Player *player_in_group = players_group->findPlayer(PlayerId);
-        players_group->removePlayer(player_in_group);
-        if(players_group->GetSize() == 0)
-        {
-            Non_Empty_Groups.remove(*(players_group));
-        }
-        return SUCCESS;
-    }
-
-    StatusType PlayerManager::ReplaceGroup(int GroupId, int ReplacementId)
-    {
-        if(GroupId == ReplacementId || GroupId <= 0 || ReplacementId <= 0)
-        {
-            return INVALID_INPUT;
+            return SUCCESS;
         }
         try
         {
-            Group group_delete(GroupId);
-            Group* g_to_delete = All_Groups.find(group_delete);
-            Group group_replace(ReplacementId);
-            Group* g_to_replace = All_Groups.find(group_replace);
-            if(!g_to_delete ||!g_to_replace)
-                return FAILURE;
-            if(g_to_delete->GetSize() > 0)
-            {
-                Non_Empty_Groups.remove(group_delete);
-                if(g_to_replace->GetSize() == 0)
-                {
-                    Group* copy_of_replacement = new Group(ReplacementId);
-                    copy_of_replacement->setCopy(g_to_replace);
-                    g_to_replace->setCopy(copy_of_replacement);
-                    Non_Empty_Groups.insert(*copy_of_replacement);
-                }
-            }
-            CombineGroups(g_to_delete, g_to_replace);
-
-            All_Groups.remove(group_delete);
-        }
-        catch (std::exception& e)
-        {
-            return ALLOCATION_ERROR;
-        }
-        return SUCCESS;
-    }
-
-    StatusType PlayerManager::IncreaseLevel(int PlayerId, int LevelIncrease)
-    {
-        if(PlayerId <= 0 || LevelIncrease <= 0)
-            return INVALID_INPUT;
-        try
-        {
-            Player* player = players.findPlayer(PlayerId);
-            if(!player)
-                return FAILURE;
-            player->getGroup()->increaseLevelToPlayer(*player, LevelIncrease);
-            players.increaseLevelToPlayer(*player, LevelIncrease);
+            groups->Union(GroupID1, GroupID2);
             return SUCCESS;
         }
         catch (std::exception& e)
@@ -160,24 +45,142 @@ namespace wet1_dast
         }
     }
 
-    StatusType PlayerManager::GetHighestLevel(int GroupId, int *PlayerId)
+    StatusType PlayerManager::addPlayer(int PlayerID, int GroupID, int score)
     {
-        if(GroupId == 0 || !PlayerId)
+        if(PlayerID <= 0 || GroupID <= 0 || GroupID > num_of_groups || score <=0 || score > scale)
+            return INVALID_INPUT;
+        auto *player = new Player(PlayerID, 0, GroupID, true, score);
+        try
+        {
+
+            Group* group = groups->find(0);
+            group->AddPlayer(*player);
+            auto* player_in_group = new Player(PlayerID, 0, GroupID, true, score);
+            Group* players_group = groups->find(GroupID);
+            players_group->AddPlayer(*player_in_group);
+            return SUCCESS;
+        }
+        catch (HashTable<Player>::exceptions& e)
+        {
+            delete player;
+            return FAILURE;
+        }
+        catch (std::exception& e)
+        {
+            return ALLOCATION_ERROR;
+        }
+    }
+
+    StatusType PlayerManager::removePlayer(int PlayerID)
+    {
+        if(PlayerID <= 0)
             return INVALID_INPUT;
         try
         {
-            if(GroupId < 0)
+            Group* group = groups->find(0);
+            Player* player = group->findPlayer(PlayerID);
+            int GroupID = player->getGroup();
+            Group* players_group = groups->find(GroupID);
+            players_group->removePlayer(PlayerID);
+            group->removePlayer(PlayerID);
+            return SUCCESS;
+        }
+        catch (std::exception& e)
+        {
+            return FAILURE;
+        }
+    }
+
+    StatusType PlayerManager::increasePlayerIDLevel(int PlayerID, int LevelIncrease)
+    {
+        if(PlayerID <= 0 || LevelIncrease <= 0)
+            return INVALID_INPUT;
+        try
+        {
+            Group* group = groups->find(0);
+            Player* player = group->findPlayer(PlayerID);
+            Group* players_group = groups->find(player->getGroup());
+            players_group->increaseLevelToPlayer(PlayerID, LevelIncrease);
+            group->increaseLevelToPlayer(PlayerID, LevelIncrease);
+            return SUCCESS;
+        }
+        catch (HashTable<Player>::exceptions& e)
+        {
+            return FAILURE;
+        }
+        catch (std::exception& e)
+        {
+            return ALLOCATION_ERROR;
+        }
+    }
+
+    StatusType PlayerManager::changePlayerIDScore(int PlayerID, int NewScore)
+    {
+        if(PlayerID <= 0 || NewScore <= 0 || NewScore > scale)
+            return INVALID_INPUT;
+        try
+        {
+            Group* group = groups->find(0);
+            Player* player = group->findPlayer(PlayerID);
+            Group* players_group = groups->find(player->getGroup());
+            players_group->increaseScoreToPlayer(PlayerID, NewScore);
+            group->increaseScoreToPlayer(PlayerID, NewScore);
+            return SUCCESS;
+        }
+        catch (HashTable<Player>::exceptions& e)
+        {
+            return FAILURE;
+        }
+        catch (std::exception& e)
+        {
+            return ALLOCATION_ERROR;
+        }
+    }
+
+    StatusType
+    PlayerManager::getPercentOfPlayersWithScoreInBounds(int GroupID, int score, int lowerLevel, int higherLevel,
+                                                        double *players)
+    {
+        if(!players || GroupID < 0 || GroupID > num_of_groups)
+            return INVALID_INPUT;
+        try
+        {
+            Group* group = groups->find(GroupID);
+            if(lowerLevel > higherLevel || higherLevel < 0)
+                return FAILURE;
+
+            *players = group->getPercentOfPlayersWithScoreInBounds(score, lowerLevel, higherLevel);
+            if(score <= 0 || score > scale)
             {
-                (players.Get_Highest_Player() == nullptr)? *PlayerId = -1 :
-                        *PlayerId = players.Get_Highest_Player()->getId();
+                *players = 0;
                 return SUCCESS;
             }
-            Group g(GroupId);
-            Group* group = All_Groups.find(g);
-            if(!group)
+            return SUCCESS;
+        }
+        catch (AVLRankTree<Player>::exceptions& e)
+        {
+            return FAILURE;
+        }
+        catch (Group::exceptions&  e)
+        {
+            return FAILURE;
+        }
+        catch (std::exception& e)
+        {
+            return ALLOCATION_ERROR;
+        }
+    }
+
+    StatusType PlayerManager::averageHighestPlayerLevelByGroup(int GroupID, int m, double *avgLevel)
+    {
+        if(GroupID < 0 || GroupID > num_of_groups || m <=0)
+            return INVALID_INPUT;
+        try
+        {
+            Group* group = groups->find(GroupID);
+            if(m > group->GetSize())
                 return FAILURE;
-            (group->Get_Highest_Player() == nullptr)? *PlayerId = -1 :
-                    *PlayerId = group->Get_Highest_Player()->getId();
+            *avgLevel = group->averageHighestPlayerLevel(m);
             return SUCCESS;
         }
         catch (std::exception& e)
@@ -186,89 +189,16 @@ namespace wet1_dast
         }
     }
 
-    StatusType PlayerManager::GetAllPlayersByLevel(int GroupId, int **Players, int *numOfPlayers)
+    StatusType
+    PlayerManager::getPlayersBound(int , int , int , int *, int *)
     {
-        if (GroupId == 0 || !Players || !numOfPlayers)
-            return INVALID_INPUT;
-        try
-        {
-            if(GroupId < 0)
-            {
-                if (players.GetSize() == 0)
-                {
-                    *numOfPlayers = 0;
-                    *Players = NULL;
-                    return SUCCESS;
-                }
-                return GetPlayersByLevel(&players, Players, numOfPlayers);
-            }
-            Group g(GroupId);
-            Group* group = All_Groups.find(g);
-            if(!group)
-                return FAILURE;
-            if(group->GetSize() == 0)
-            {
-                *numOfPlayers = 0;
-                *Players = NULL;
-                return SUCCESS;
-            }
-            return GetPlayersByLevel(group, Players, numOfPlayers);
-        }
-        catch (std::exception& e)
-        {
-        }
-        return ALLOCATION_ERROR;
+        return FAILURE;
     }
 
-    StatusType PlayerManager::GetPlayersByLevel(Group *group, int **Players, int *numOfPlayers)
+    PlayerManager::~PlayerManager()
     {
-        Player** players_of_the_group = group->getPlayersByLevel();
-        int* group_players = (int*)malloc(sizeof(int)*(group->GetSize()));
-        if(!group_players)
-        {
-            delete[] players_of_the_group;
-            return ALLOCATION_ERROR;
-        }
-        for(int i = 0; i < group->GetSize(); i++)
-        {
-            group_players[i] = players_of_the_group[group->GetSize() -i -1]->getId();
-        }
-        delete[] players_of_the_group;
-        *numOfPlayers = group->GetSize();
-        *Players = group_players;
-        return SUCCESS;
+        delete groups;
     }
 
 
-    StatusType PlayerManager::GetGroupsHighestLevel(int numOfGroups, int **Players)
-    {
-        if(numOfGroups < 1 || !Players)
-            return INVALID_INPUT;
-        int non_empty_size=Non_Empty_Groups.getSize();
-        if(non_empty_size==0||numOfGroups>non_empty_size)
-        {
-            return FAILURE;
-        }
-        int* players_temp= (int*)malloc(numOfGroups*sizeof(int));
-        if(!players_temp)
-        {
-            return ALLOCATION_ERROR;
-        }
-        Group** Groups_to_insert;
-        Groups_to_insert=Non_Empty_Groups.inorderOut(numOfGroups);
-        for(int i=0;i<numOfGroups;i++)
-        {
-            int Highest_Player_Id=Groups_to_insert[i]->GetCopy()->Get_Highest_Player()->getId();
-            players_temp[i]=Highest_Player_Id;
-        }
-        delete[] Groups_to_insert;
-        *Players=players_temp;
-        return SUCCESS;
-}
-    void Quit(PlayerManager *DS) {
-        delete DS;
-    }
-
-
-
-}
+} //namespace wet2_dast
